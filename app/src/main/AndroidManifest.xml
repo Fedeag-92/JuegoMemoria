@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JuegoMemoria">
-        <activity android:name=".Ranking"></activity>
+        <activity android:name=".Juego" />
+        <activity android:name=".Ranking" />
         <activity android:name=".Dificultad" />
         <activity android:name=".Registro" />
         <activity android:name=".MainActivity">
