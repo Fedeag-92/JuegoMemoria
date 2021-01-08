@@ -27,10 +27,10 @@ public class Ranking extends AppCompatActivity {
 
         tlTabla = findViewById(R.id.tlTabla);
 
-        listaUsuarios.add(new Usuario("Sergio", "123456789", "sergio@hola.es"));
-        listaUsuarios.add(new Usuario("Laura", "987654321", "laura@hola.es"));
-        listaUsuarios.add(new Usuario("Ana", "543216789", "ana@hola.es"));
-        listaUsuarios.add(new Usuario("Juan", "987656789", "juan@hola.es"));
+        listaUsuarios.add(new Usuario("Sergio", "asdas", "sergio", "12345"));
+        listaUsuarios.add(new Usuario("Laura", "gvfdsgfd", "laura", "12345"));
+        listaUsuarios.add(new Usuario("Ana", "ghfh", "ana", "12345"));
+        listaUsuarios.add(new Usuario("Juan", "hfghfg", "juan", "12345"));
 
         TableRow.LayoutParams layoutFila = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
         TableRow.LayoutParams layoutUsuario = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
@@ -73,20 +73,20 @@ public class Ranking extends AppCompatActivity {
                 tlTabla.addView(fila);
             } else {
                 tvUsuario = new TextView(this);
-                tvUsuario.setText(listaUsuarios.get(i).getUsuario());
+                tvUsuario.setText(listaUsuarios.get(i).getUsername());
                 tvUsuario.setPadding(10, 10, 10, 10);
                 tvUsuario.setLayoutParams(layoutUsuario);
                 fila.addView(tvUsuario);
 
                 tvTelefono = new TextView(this);
                 tvTelefono.setGravity(Gravity.CENTER);
-                tvTelefono.setText(listaUsuarios.get(i).getTelefono());
+                tvTelefono.setText(listaUsuarios.get(i).getApellido());
                 tvTelefono.setPadding(10, 10, 10, 10);
                 tvTelefono.setLayoutParams(layoutTelefono);
                 fila.addView(tvTelefono);
 
                 tvEmail = new TextView(this);
-                tvEmail.setText(listaUsuarios.get(i).getEmail());
+                tvEmail.setText(listaUsuarios.get(i).getNombre());
                 tvEmail.setPadding(10, 10, 10, 10);
                 tvEmail.setLayoutParams(layoutEmail);
                 fila.addView(tvEmail);
