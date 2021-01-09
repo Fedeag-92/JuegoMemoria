@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Registro extends AppCompatActivity {
-    EditText edtNombreusuario, edtNombre, edtApellido, edtClave;
+    EditText txt_username, txt_nombre, txt_apellido, txt_password;
     Button btnRegistrar;
 
     @Override
@@ -17,17 +17,32 @@ public class Registro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        edtNombreusuario = (EditText)findViewById(R.id.nombre_usuario);
-        edtNombre = (EditText)findViewById(R.id.nombre);
-        edtApellido = (EditText)findViewById(R.id.apellido);
-        edtClave = (EditText)findViewById(R.id.clave);
+        txt_username = (EditText)findViewById(R.id.nombre_usuario);
+        txt_nombre = (EditText)findViewById(R.id.nombre);
+        txt_apellido = (EditText)findViewById(R.id.apellido);
+        txt_password = (EditText)findViewById(R.id.clave);
 
         final bdjuegomemoria bdjuegomemoria= new bdjuegomemoria(getApplicationContext());
         btnRegistrar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                bdjuegomemoria.agregarUsuario(edtNombreusuario.getText().toString(),edtNombre.getText().toString(),edtApellido.getText().toString(),edtClave.getText().toString());
-                Toast.makeText(getApplicationContext(),"USUARIO REGISTRADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+
+                String nombre = txt_nombre.getText().toString();
+                String apellido = txt_apellido.getText().toString();
+                String username = txt_username.getText().toString();
+                String password = txt_password.getText().toString();
+
+                if (nombre.length() == 0 || apellido.length() == 0 || username.length() == 0 || password.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Faltan completar campos", Toast.LENGTH_LONG).show();
+                } else {
+                    bdjuegomemoria.agregarUsuario(username, nombre, apellido, password);
+                    Toast.makeText(getApplicationContext(), "Registro en proceso...", Toast.LENGTH_LONG).show();
+                    //Intent i = new Intent(this, Dificultad.class);
+                    //startActivity(i);
+                }
+            }
+            public void clickRegresar(View view) {
+                onBackPressed();
             }
         });
     }

@@ -27,11 +27,11 @@ public class bdjuegomemoria extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(TABLA_USUARIO);
     }
 
-    public void agregarUsuario(String nombre_usuario,String nombre, String apellido, String clave){
+    public void agregarUsuario(String username,String nombre, String apellido, String password){
         SQLiteDatabase bd=getWritableDatabase();
 
         if(bd!=null){
-            bd.execSQL("INSERT INTO USUARIO VALUES('"+nombre_usuario+"','"+nombre+"','"+apellido+"','"+clave+"')");
+            bd.execSQL("INSERT INTO USUARIO VALUES('"+username+"','"+nombre+"','"+apellido+"','"+password+"')");
             bd.close();
         }
     }
