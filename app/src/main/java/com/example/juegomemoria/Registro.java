@@ -2,6 +2,7 @@ package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -32,9 +33,16 @@ public class Registro extends AppCompatActivity {
 
         if (nombre.length() == 0 || apellido.length() == 0 || username.length() == 0 || password.length() == 0) {
             Toast.makeText(this, "Faltan completar campos", Toast.LENGTH_LONG).show();
-        } else Toast.makeText(this, "Registro en proceso..", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Registro en proceso...", Toast.LENGTH_LONG).show();
 
-    //Validar con BD usuario
+            Intent i = new Intent(this, Dificultad.class);
+            startActivity(i);
+        }
+        //Validar con BD usuario
     }
 
+    public void clickRegresar(View view) {
+        onBackPressed();
+    }
 }
