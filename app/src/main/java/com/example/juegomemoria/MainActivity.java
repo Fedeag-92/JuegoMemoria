@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnLogin:
                 if(user.getText().toString().length() != 0 && pass.getText().toString().length() != 0){
                     Intent i = new Intent(MainActivity.this, Dificultad.class);
+                    i.putExtra("user",this.user.getText().toString());
+
                     startActivity(i);
                 }
                 else{
