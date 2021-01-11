@@ -3,8 +3,10 @@ package com.example.juegomemoria;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +16,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     EditText user, pass;
     Button btnLogin, btnRegister;
+    private ConexionSQLiteHelper dbHelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,21 +31,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
-        //ConexionSQLiteHelper conexion=new ConexionSQLiteHelper(this,"bd_juegomemoria",null,1);
-        //SQLiteDatabase db = conexion.getWritableDatabase();
 
+        dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
+        db = dbHelper.getWritableDatabase();
     }
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        String username = user.getText().toString();
+        String password = pass.getText().toString();
+        switch (v.getId()) {
             case R.id.btnLogin:
-                if(user.getText().toString().length() != 0 && pass.getText().toString().length() != 0){
-                    Intent i = new Intent(MainActivity.this, Dificultad.class);
-                    startActivity(i);
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "Error: debe completar ambos campos", Toast.LENGTH_LONG).show();
+                if (username.length() != 0 && password.length() != 0) {
+                    if (verificarPassword(username, password)) {
+                        Toast.makeText(getApplicationContext(), "Bienvenido", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(MainActivity.this, Dificultad.class);
+                        startActivity(i);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Campos incompletos", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.btnRegistrar:
@@ -49,5 +59,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
                 break;
         }
+    }
+
+    public boolean verificarPassword(String username, String pass) {
+        Cursor c = db.rawQuery("SELECT username FROM usuario WHERE username = '" + username + "' AND passwordtext = '" + pass + "'", null);
+        return (c.moveToFirst());
     }
 }
