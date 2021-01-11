@@ -3,15 +3,18 @@ package com.example.juegomemoria;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.juegomemoria.utlidades.Utilidades;
+
 public class Registro extends AppCompatActivity {
 
     private EditText txt_nombre, txt_apellido, txt_username, txt_password;
-
+    private ConexionSQLiteHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +24,7 @@ public class Registro extends AppCompatActivity {
         txt_apellido = (EditText) findViewById(R.id.apellido);
         txt_username = (EditText) findViewById(R.id.username);
         txt_password = (EditText) findViewById(R.id.password);
+        db = new ConexionSQLiteHelper(this,"bd_juegomemoria",null,1);
 
     }
 
@@ -36,10 +40,11 @@ public class Registro extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Registro en proceso...", Toast.LENGTH_LONG).show();
 
+            db.execSQL("INSERT INTO USUARIO VALUES('"+ Utilidades.USERNAME+"','"+Utilidades.NOMBRE+"','"+Utilidades.APELLIDO+"','"+Utilidades.PASSWORD+"')");
+            db.close();
             Intent i = new Intent(this, Dificultad.class);
             startActivity(i);
         }
-        //Validar con BD usuario
     }
 
     public void clickRegresar(View view) {

@@ -1,0 +1,32 @@
+package com.example.juegomemoria;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import androidx.annotation.Nullable;
+
+import com.example.juegomemoria.utlidades.Utilidades;
+
+public class ConexionSQLiteHelper extends SQLiteOpenHelper {
+
+    public ConexionSQLiteHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(Utilidades.TABLA_USUARIO);
+        //db.execSQL(Utilidades.TABLA_IMAGEN);
+        //db.execSQL(Utilidades.TABLA_RANKING);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int versionAntigua, int versionNueva) {
+        db.execSQL("DROP TABLE IF EXISTS USUARIO");
+        onCreate(db);
+    }
+
+    public void execSQL(String s) {
+    }
+}
