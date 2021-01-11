@@ -27,6 +27,7 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void execSQL(String s) {
+    public void insertar(String s, SQLiteDatabase db) {
+        db.execSQL(s);
     }
 }

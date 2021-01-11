@@ -1,4 +1,4 @@
-package com.example.juegomemoria;
+package com.example.juegomemoria.utlidades;
 
 import android.text.TextUtils;
 import android.util.Patterns;

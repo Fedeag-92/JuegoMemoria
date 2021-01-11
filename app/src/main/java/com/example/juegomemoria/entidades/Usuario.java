@@ -7,11 +7,11 @@ public class Usuario {
     private String apellido;
     private String password;
 
-    public Usuario(String username, String nombre, String apellido, String password){
-        this.username=username;
-        this.nombre=nombre;
-        this.apellido=apellido;
-        this.password=password;
+    public Usuario(String username, String nombre, String apellido, String password) {
+        this.username = username;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.password = password;
     }
 
     public String getUsername() {
