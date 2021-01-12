@@ -1,15 +1,17 @@
 <resources>
-    <string name="app_name">JuegoMemoria</string>
-    <string name="titulo_app">Juego de la memoria</string>
-    <string name="colocarN">Usuario</string>
-    <string name="colocarP">Password</string>
-    <string name="login">Login</string>
-    <string name="register">Registrarse</string>
+    <string name="app_name">Juego de la Memoria</string>
+    <string name="Registro">Registro</string>
+    <string name="txt_nombre">Nombre</string>
+    <string name="txt_apellido">Apellido</string>
+    <string name="txt_usuario">Username</string>
+    <string name="txt_password">Password</string>
+    <string name="btn_registro">Registrarse</string>
+    <string name="Ranking">Ranking</string>
+    <string name="btn_ingresar">Ingresar</string>
     <string name="eleccionDif">Elegir dificultad</string>
     <string name="dificultadFacil">Fácil</string>
     <string name="dificultadNormal">Normal</string>
     <string name="dificultadDificil">Dificil</string>
     <string name="jugar">Jugar</string>
     <string name="sonido">Sonido</string>
-
 </resources>

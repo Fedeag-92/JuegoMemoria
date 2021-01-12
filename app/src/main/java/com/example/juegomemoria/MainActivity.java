@@ -3,6 +3,7 @@ package com.example.juegomemoria;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -14,9 +15,9 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    MediaPlayer mediaPlayer;
     EditText user, pass;
     Button btnLogin, btnRegister;
-    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
 
-
     }
 
     @Override
@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(user.getText().toString().length() != 0 && pass.getText().toString().length() != 0){
                     Intent i = new Intent(MainActivity.this, Dificultad.class);
                     i.putExtra("user",this.user.getText().toString());
-
                     startActivity(i);
                 }
                 else{
