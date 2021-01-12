@@ -2,13 +2,15 @@ package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
+
 
 public class Juego extends AppCompatActivity {
     int points, record, difficulty;
@@ -18,41 +20,23 @@ public class Juego extends AppCompatActivity {
     int pos;
     ArrayList<Integer> imagenes = new ArrayList<>();
     ArrayList<Integer> imagenesUsadas = new ArrayList<>();
+    Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
 
-        imagenes.add(R.drawable.card1);
-        imagenes.add(R.drawable.card2);
-        imagenes.add(R.drawable.card3);
-        imagenes.add(R.drawable.card4);
-        imagenes.add(R.drawable.card5);
-        imagenes.add(R.drawable.card6);
-        imagenes.add(R.drawable.card7);
-        imagenes.add(R.drawable.card8);
-        imagenes.add(R.drawable.card9);
-        imagenes.add(R.drawable.card10);
-        imagenes.add(R.drawable.card11);
-        imagenes.add(R.drawable.card12);
-        imagenes.add(R.drawable.card13);
-        imagenes.add(R.drawable.card14);
-        imagenes.add(R.drawable.card15);
-        imagenes.add(R.drawable.card16);
-        imagenes.add(R.drawable.card17);
-        imagenes.add(R.drawable.card18);
-        imagenes.add(R.drawable.card19);
-        imagenes.add(R.drawable.card20);
+        imagenes.addAll(Arrays.asList(R.drawable.card1, R.drawable.card2, R.drawable.card3, R.drawable.card4, R.drawable.card5, R.drawable.card6, R.drawable.card7, R.drawable.card8, R.drawable.card9, R.drawable.card10, R.drawable.card11, R.drawable.card12, R.drawable.card13, R.drawable.card14, R.drawable.card15, R.drawable.card16, R.drawable.card17, R.drawable.card18, R.drawable.card19, R.drawable.card20));
 
         imagenesUsadas = (ArrayList<Integer>) imagenes.clone();
 
-        points = 0;
         difficulty = getIntent().getIntExtra("choice", 0);
         int k;
 
         switch (difficulty) {
             case 1:
+                points = 0;
                 cards = new ImageView[12];
                 k = 0;
                 for (int j = 0; j < 14; j++) {
@@ -68,10 +52,15 @@ public class Juego extends AppCompatActivity {
                 for (int i = 0; i < 14; i++) {
                     imagenesUsadas.remove(random.nextInt(Integer.valueOf(imagenesUsadas.size())));
                 }
-                playEasy();
+                try {
+                    playEasy();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 break;
             case 2:
+                points = 0;
                 cards = new ImageView[24];
                 k = 0;
                 for (int j = 0; j < 29; j++) {
@@ -91,6 +80,7 @@ public class Juego extends AppCompatActivity {
                 playNormal();
                 break;
             case 3:
+                points = 0;
                 cards = new ImageView[40];
                 for (int j = 0; j < 40; j++) {
                     String cardName = "card" + (j + 1);
@@ -106,7 +96,7 @@ public class Juego extends AppCompatActivity {
 
     }
 
-    public void playEasy() {
+    public void playEasy() throws InterruptedException {
         int j = 6;
         int imgRandom;
 
@@ -126,6 +116,16 @@ public class Juego extends AppCompatActivity {
             imagenesUsadas.remove(imgRandom);
             j--;
         }
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                for (int i = 0; i < cards.length; i++) {
+                    cards[i].setImageResource(R.drawable.dona);
+                }
+            }
+        }, 5000);   //5 seconds
+
+
     }
 
     public void playNormal() {
@@ -148,6 +148,14 @@ public class Juego extends AppCompatActivity {
             imagenesUsadas.remove(imgRandom);
             j--;
         }
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                for (int i = 0; i < cards.length; i++) {
+                    cards[i].setImageResource(R.drawable.dona);
+                }
+            }
+        }, 5000);   //5 seconds
     }
 
     public void playHard() {
@@ -170,5 +178,13 @@ public class Juego extends AppCompatActivity {
             imagenesUsadas.remove(imgRandom);
             j--;
         }
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                for (int i = 0; i < cards.length; i++) {
+                    cards[i].setImageResource(R.drawable.dona);
+                }
+            }
+        }, 5000);   //5 seconds
     }
 }
