@@ -2,8 +2,7 @@ package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.drawable.Drawable;
-import android.media.Image;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,143 +13,162 @@ import java.util.Random;
 public class Juego extends AppCompatActivity {
     int points, record, difficulty;
     String user;
-    ImageView cards [];
+    ImageView cards[];
     Random random = new Random();
     int pos;
-    ArrayList<Integer> imagenesID = new ArrayList<>();
+    ArrayList<Integer> imagenes = new ArrayList<>();
+    ArrayList<Integer> imagenesUsadas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
 
-        imagenesID.add(R.drawable.card1);
-        imagenesID.add(R.drawable.card2);
-        imagenesID.add(R.drawable.card3);
-        imagenesID.add(R.drawable.card4);
-        imagenesID.add(R.drawable.card5);
-        imagenesID.add(R.drawable.card6);
+        imagenes.add(R.drawable.card1);
+        imagenes.add(R.drawable.card2);
+        imagenes.add(R.drawable.card3);
+        imagenes.add(R.drawable.card4);
+        imagenes.add(R.drawable.card5);
+        imagenes.add(R.drawable.card6);
+        imagenes.add(R.drawable.card7);
+        imagenes.add(R.drawable.card8);
+        imagenes.add(R.drawable.card9);
+        imagenes.add(R.drawable.card10);
+        imagenes.add(R.drawable.card11);
+        imagenes.add(R.drawable.card12);
+        imagenes.add(R.drawable.card13);
+        imagenes.add(R.drawable.card14);
+        imagenes.add(R.drawable.card15);
+        imagenes.add(R.drawable.card16);
+        imagenes.add(R.drawable.card17);
+        imagenes.add(R.drawable.card18);
+        imagenes.add(R.drawable.card19);
+        imagenes.add(R.drawable.card20);
+
+        imagenesUsadas = (ArrayList<Integer>) imagenes.clone();
 
         points = 0;
-        difficulty = getIntent().getIntExtra("choice",0);
+        difficulty = getIntent().getIntExtra("choice", 0);
+        int k;
 
-
-        switch (difficulty){
+        switch (difficulty) {
             case 1:
                 cards = new ImageView[12];
-                cards[0] = (ImageView) findViewById(R.id.card1);
-                cards[1] = (ImageView) findViewById(R.id.card2);
-                cards[2] = (ImageView) findViewById(R.id.card3);
-                cards[3] = (ImageView) findViewById(R.id.card4);
-                cards[4] = (ImageView) findViewById(R.id.card6);
-                cards[5] = (ImageView) findViewById(R.id.card7);
-                cards[6] = (ImageView) findViewById(R.id.card8);
-                cards[7] = (ImageView) findViewById(R.id.card9);
-                cards[8] = (ImageView) findViewById(R.id.card11);
-                cards[9] = (ImageView) findViewById(R.id.card12);
-                cards[10] = (ImageView) findViewById(R.id.card13);
-                cards[11] = (ImageView) findViewById(R.id.card14);
+                k = 0;
+                for (int j = 0; j < 14; j++) {
+                    if (j != 4 && j != 9) {
+                        String cardName = "card" + (j + 1);
+                        int resIDcard = getResources().getIdentifier(cardName, "id", getPackageName());
+                        cards[k] = ((ImageView) findViewById(resIDcard));
+                        cards[k].setVisibility(View.VISIBLE);
+                        k++;
+                    }
+                }
+
+                for (int i = 0; i < 14; i++) {
+                    imagenesUsadas.remove(random.nextInt(Integer.valueOf(imagenesUsadas.size())));
+                }
                 playEasy();
 
-            break;
-            case 2: playNormal(); break;
-            case 3: playHard(); break;
+                break;
+            case 2:
+                cards = new ImageView[24];
+                k = 0;
+                for (int j = 0; j < 29; j++) {
+                    if (j != 4 && j != 9 && j != 14 && j != 19 && j != 24) {
+                        String cardName = "card" + (j + 1);
+                        int resIDcard = getResources().getIdentifier(cardName, "id", getPackageName());
+                        cards[k] = ((ImageView) findViewById(resIDcard));
+                        cards[k].setVisibility(View.VISIBLE);
+                        k++;
+                    }
+                }
+
+                for (int i = 0; i < 8; i++) {
+                    imagenesUsadas.remove(random.nextInt(Integer.valueOf(imagenesUsadas.size())));
+                }
+
+                playNormal();
+                break;
+            case 3:
+                cards = new ImageView[40];
+                for (int j = 0; j < 40; j++) {
+                    String cardName = "card" + (j + 1);
+                    int resIDcard = getResources().getIdentifier(cardName, "id", getPackageName());
+                    cards[j] = ((ImageView) findViewById(resIDcard));
+                    cards[j].setVisibility(View.VISIBLE);
+                }
+
+                playHard();
+                break;
         }
 
 
     }
 
-    public void playEasy(){
-        for (int i = 0; i < cards.length; i++) {
-            cards[i].setVisibility(View.VISIBLE);
-        }
+    public void playEasy() {
         int j = 6;
         int imgRandom;
+
         ArrayList<Integer> elements = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             elements.add(i);
         }
 
-        while(j > 0){
+        while (j > 0) {
             pos = elements.get(random.nextInt(elements.size()));
-            imgRandom = random.nextInt(imagenesID.size());
-            cards[pos].setImageResource(imagenesID.get(imgRandom));
+            imgRandom = random.nextInt(imagenesUsadas.size());
+            cards[pos].setImageResource(imagenesUsadas.get(imgRandom));
             elements.remove(Integer.valueOf(pos));
             pos = elements.get(random.nextInt(elements.size()));
-            cards[pos].setImageResource(imagenesID.get(imgRandom));
+            cards[pos].setImageResource(imagenesUsadas.get(imgRandom));
             elements.remove(Integer.valueOf(pos));
-            imagenesID.remove(imgRandom);
+            imagenesUsadas.remove(imgRandom);
             j--;
         }
     }
 
-    public void playNormal(){
-        findViewById(R.id.card1).setVisibility(View.VISIBLE);
-        findViewById(R.id.card2).setVisibility(View.VISIBLE);
-        findViewById(R.id.card3).setVisibility(View.VISIBLE);
-        findViewById(R.id.card4).setVisibility(View.VISIBLE);
-        findViewById(R.id.card6).setVisibility(View.VISIBLE);
-        findViewById(R.id.card7).setVisibility(View.VISIBLE);
-        findViewById(R.id.card8).setVisibility(View.VISIBLE);
-        findViewById(R.id.card9).setVisibility(View.VISIBLE);
-        findViewById(R.id.card11).setVisibility(View.VISIBLE);
-        findViewById(R.id.card12).setVisibility(View.VISIBLE);
-        findViewById(R.id.card13).setVisibility(View.VISIBLE);
-        findViewById(R.id.card14).setVisibility(View.VISIBLE);
-        findViewById(R.id.card16).setVisibility(View.VISIBLE);
-        findViewById(R.id.card17).setVisibility(View.VISIBLE);
-        findViewById(R.id.card18).setVisibility(View.VISIBLE);
-        findViewById(R.id.card19).setVisibility(View.VISIBLE);
-        findViewById(R.id.card21).setVisibility(View.VISIBLE);
-        findViewById(R.id.card22).setVisibility(View.VISIBLE);
-        findViewById(R.id.card23).setVisibility(View.VISIBLE);
-        findViewById(R.id.card24).setVisibility(View.VISIBLE);
-        findViewById(R.id.card26).setVisibility(View.VISIBLE);
-        findViewById(R.id.card27).setVisibility(View.VISIBLE);
-        findViewById(R.id.card28).setVisibility(View.VISIBLE);
-        findViewById(R.id.card29).setVisibility(View.VISIBLE);
+    public void playNormal() {
+        int j = 12;
+        int imgRandom;
+
+        ArrayList<Integer> elements = new ArrayList<>();
+        for (int i = 0; i < 24; i++) {
+            elements.add(i);
+        }
+
+        while (j > 0) {
+            pos = elements.get(random.nextInt(elements.size()));
+            imgRandom = random.nextInt(imagenesUsadas.size());
+            cards[pos].setImageResource(imagenesUsadas.get(imgRandom));
+            elements.remove(Integer.valueOf(pos));
+            pos = elements.get(random.nextInt(elements.size()));
+            cards[pos].setImageResource(imagenesUsadas.get(imgRandom));
+            elements.remove(Integer.valueOf(pos));
+            imagenesUsadas.remove(imgRandom);
+            j--;
+        }
     }
 
-    public void playHard(){
-        findViewById(R.id.card1).setVisibility(View.VISIBLE);
-        findViewById(R.id.card2).setVisibility(View.VISIBLE);
-        findViewById(R.id.card3).setVisibility(View.VISIBLE);
-        findViewById(R.id.card4).setVisibility(View.VISIBLE);
-        findViewById(R.id.card5).setVisibility(View.VISIBLE);
-        findViewById(R.id.card6).setVisibility(View.VISIBLE);
-        findViewById(R.id.card7).setVisibility(View.VISIBLE);
-        findViewById(R.id.card8).setVisibility(View.VISIBLE);
-        findViewById(R.id.card9).setVisibility(View.VISIBLE);
-        findViewById(R.id.card10).setVisibility(View.VISIBLE);
-        findViewById(R.id.card11).setVisibility(View.VISIBLE);
-        findViewById(R.id.card12).setVisibility(View.VISIBLE);
-        findViewById(R.id.card13).setVisibility(View.VISIBLE);
-        findViewById(R.id.card14).setVisibility(View.VISIBLE);
-        findViewById(R.id.card15).setVisibility(View.VISIBLE);
-        findViewById(R.id.card16).setVisibility(View.VISIBLE);
-        findViewById(R.id.card17).setVisibility(View.VISIBLE);
-        findViewById(R.id.card18).setVisibility(View.VISIBLE);
-        findViewById(R.id.card19).setVisibility(View.VISIBLE);
-        findViewById(R.id.card20).setVisibility(View.VISIBLE);
-        findViewById(R.id.card21).setVisibility(View.VISIBLE);
-        findViewById(R.id.card22).setVisibility(View.VISIBLE);
-        findViewById(R.id.card23).setVisibility(View.VISIBLE);
-        findViewById(R.id.card24).setVisibility(View.VISIBLE);
-        findViewById(R.id.card25).setVisibility(View.VISIBLE);
-        findViewById(R.id.card26).setVisibility(View.VISIBLE);
-        findViewById(R.id.card27).setVisibility(View.VISIBLE);
-        findViewById(R.id.card28).setVisibility(View.VISIBLE);
-        findViewById(R.id.card29).setVisibility(View.VISIBLE);
-        findViewById(R.id.card30).setVisibility(View.VISIBLE);
-        findViewById(R.id.card31).setVisibility(View.VISIBLE);
-        findViewById(R.id.card32).setVisibility(View.VISIBLE);
-        findViewById(R.id.card33).setVisibility(View.VISIBLE);
-        findViewById(R.id.card34).setVisibility(View.VISIBLE);
-        findViewById(R.id.card35).setVisibility(View.VISIBLE);
-        findViewById(R.id.card36).setVisibility(View.VISIBLE);
-        findViewById(R.id.card37).setVisibility(View.VISIBLE);
-        findViewById(R.id.card38).setVisibility(View.VISIBLE);
-        findViewById(R.id.card39).setVisibility(View.VISIBLE);
-        findViewById(R.id.card40).setVisibility(View.VISIBLE);
+    public void playHard() {
+        int j = 20;
+        int imgRandom;
+
+        ArrayList<Integer> elements = new ArrayList<>();
+        for (int i = 0; i < 40; i++) {
+            elements.add(i);
+        }
+
+        while (j > 0) {
+            pos = elements.get(random.nextInt(elements.size()));
+            imgRandom = random.nextInt(imagenesUsadas.size());
+            cards[pos].setImageResource(imagenesUsadas.get(imgRandom));
+            elements.remove(Integer.valueOf(pos));
+            pos = elements.get(random.nextInt(elements.size()));
+            cards[pos].setImageResource(imagenesUsadas.get(imgRandom));
+            elements.remove(Integer.valueOf(pos));
+            imagenesUsadas.remove(imgRandom);
+            j--;
+        }
     }
 }
