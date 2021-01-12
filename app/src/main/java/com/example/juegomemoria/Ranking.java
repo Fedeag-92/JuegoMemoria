@@ -3,6 +3,7 @@ package com.example.juegomemoria;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 
 public class Ranking extends AppCompatActivity {
 
@@ -10,5 +11,10 @@ public class Ranking extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
+    }
+
+    public void clickRegresar(View view) {
+        onBackPressed();
+
     }
 }

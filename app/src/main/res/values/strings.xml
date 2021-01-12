@@ -7,4 +7,11 @@
     <string name="txt_password">Password</string>
     <string name="btn_registro">Registrarse</string>
     <string name="Ranking">Ranking</string>
+    <string name="btn_ingresar">Ingresar</string>
+    <string name="eleccionDif">Elegir dificultad</string>
+    <string name="dificultadFacil">Fácil</string>
+    <string name="dificultadNormal">Normal</string>
+    <string name="dificultadDificil">Dificil</string>
+    <string name="jugar">Jugar</string>
+    <string name="sonido">Sonido</string>
 </resources>
