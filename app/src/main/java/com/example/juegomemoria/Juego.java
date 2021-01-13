@@ -1,30 +1,23 @@
 package com.example.juegomemoria;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class Juego extends AppCompatActivity implements View.OnClickListener {
     int points, record, difficulty, turns, aciertos, errores;
     String user;
-    ImageView cards[];
+    ArrayList<ImageView> cards;
     Random random = new Random();
     int pos;
-    ImageView cardsSinOcultar[];
+    ArrayList<ImageView> cardsSinOcultar;
     ArrayList<Integer> imagenes = new ArrayList<>();
     ArrayList<Integer> imagenesUsadas = new ArrayList<>();
     Handler handler = new Handler();
@@ -49,17 +42,17 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
             case 1:
                 turns = 6;
                 points = 0;
-                cards = new ImageView[12];
-                k = 0;
+                ImageView card;
+                cards = new ArrayList<ImageView>(12);
                 for (int j = 0; j < 14; j++) {
                     if (j != 4 && j != 9) {
                         String cardName = "card" + (j + 1);
                         int resIDcard = getResources().getIdentifier(cardName, "id", getPackageName());
-                        cards[k] = ((ImageView) findViewById(resIDcard));
-                        cards[k].setOnClickListener(this);
-                        cards[k].setVisibility(View.VISIBLE);
-                        cards[k].setEnabled(false);
-                        k++;
+                        card = ((ImageView) findViewById(resIDcard));
+                        card.setOnClickListener(this);
+                        card.setVisibility(View.VISIBLE);
+                        card.setEnabled(false);
+                        cards.add(card);
                     }
                 }
 
@@ -75,15 +68,16 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                 break;
             case 2:
                 points = 0;
-                cards = new ImageView[24];
-                k = 0;
+                cards = new ArrayList<ImageView>(24);
                 for (int j = 0; j < 29; j++) {
                     if (j != 4 && j != 9 && j != 14 && j != 19 && j != 24) {
                         String cardName = "card" + (j + 1);
                         int resIDcard = getResources().getIdentifier(cardName, "id", getPackageName());
-                        cards[k] = ((ImageView) findViewById(resIDcard));
-                        cards[k].setVisibility(View.VISIBLE);
-                        k++;
+                        card = ((ImageView) findViewById(resIDcard));
+                        card.setOnClickListener(this);
+                        card.setVisibility(View.VISIBLE);
+                        card.setEnabled(false);
+                        cards.add(card);
                     }
                 }
 
@@ -95,19 +89,20 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                 break;
             case 3:
                 points = 0;
-                cards = new ImageView[40];
+                cards = new ArrayList<ImageView>(40);
                 for (int j = 0; j < 40; j++) {
                     String cardName = "card" + (j + 1);
                     int resIDcard = getResources().getIdentifier(cardName, "id", getPackageName());
-                    cards[j] = ((ImageView) findViewById(resIDcard));
-                    cards[j].setVisibility(View.VISIBLE);
+                    card = ((ImageView) findViewById(resIDcard));
+                    card.setOnClickListener(this);
+                    card.setVisibility(View.VISIBLE);
+                    card.setEnabled(false);
+                    cards.add(card);
                 }
 
                 playHard();
                 break;
         }
-
-
     }
 
     public void playEasy() throws InterruptedException {
@@ -122,24 +117,25 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         while (j > 0) {
             pos = elements.get(random.nextInt(elements.size()));
             imgRandom = random.nextInt(imagenesUsadas.size());
-            cards[pos].setImageResource(imagenesUsadas.get(imgRandom));
+            cards.get(pos).setImageResource(imagenesUsadas.get(imgRandom));
             elements.remove(Integer.valueOf(pos));
             pos = elements.get(random.nextInt(elements.size()));
-            cards[pos].setImageResource(imagenesUsadas.get(imgRandom));
+            cards.get(pos).setImageResource(imagenesUsadas.get(imgRandom));
             elements.remove(Integer.valueOf(pos));
             imagenesUsadas.remove(imgRandom);
             j--;
         }
-        cardsSinOcultar = this.cards.clone();
+        clonar();
 
         handler.postDelayed(new Runnable() {
             public void run() {
-                for (int i = 0; i < cards.length; i++) {
-                    cards[i].setImageResource(R.drawable.dona);
-                    cards[i].setEnabled(true);
+                for (int i = 0; i < cards.size(); i++) {
+                    cards.get(i).setImageResource(R.drawable.dona);
+                    cards.get(i).setEnabled(true);
                 }
             }
         }, 5000);   //5 seconds
+
 
     }
 
@@ -156,10 +152,10 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         while (j > 0) {
             pos = elements.get(random.nextInt(elements.size()));
             imgRandom = random.nextInt(imagenesUsadas.size());
-            cards[pos].setImageResource(imagenesUsadas.get(imgRandom));
+            cards.get(pos).setImageResource(imagenesUsadas.get(imgRandom));
             elements.remove(Integer.valueOf(pos));
             pos = elements.get(random.nextInt(elements.size()));
-            cards[pos].setImageResource(imagenesUsadas.get(imgRandom));
+            cards.get(pos).setImageResource(imagenesUsadas.get(imgRandom));
             elements.remove(Integer.valueOf(pos));
             imagenesUsadas.remove(imgRandom);
             j--;
@@ -167,8 +163,8 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
 
         handler.postDelayed(new Runnable() {
             public void run() {
-                for (int i = 0; i < cards.length; i++) {
-                    cards[i].setImageResource(R.drawable.dona);
+                for (int i = 0; i < cards.size(); i++) {
+                    cards.get(i).setImageResource(R.drawable.dona);
                 }
             }
         }, 5000);   //5 seconds
@@ -186,10 +182,10 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         while (j > 0) {
             pos = elements.get(random.nextInt(elements.size()));
             imgRandom = random.nextInt(imagenesUsadas.size());
-            cards[pos].setImageResource(imagenesUsadas.get(imgRandom));
+            cards.get(pos).setImageResource(imagenesUsadas.get(imgRandom));
             elements.remove(Integer.valueOf(pos));
             pos = elements.get(random.nextInt(elements.size()));
-            cards[pos].setImageResource(imagenesUsadas.get(imgRandom));
+            cards.get(pos).setImageResource(imagenesUsadas.get(imgRandom));
             elements.remove(Integer.valueOf(pos));
             imagenesUsadas.remove(imgRandom);
             j--;
@@ -197,8 +193,8 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
 
         handler.postDelayed(new Runnable() {
             public void run() {
-                for (int i = 0; i < cards.length; i++) {
-                    cards[i].setImageResource(R.drawable.dona);
+                for (int i = 0; i < cards.size(); i++) {
+                    cards.get(i).setImageResource(R.drawable.dona);
                 }
             }
         }, 5000);   //5 seconds
@@ -209,15 +205,36 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View view) {
         if(firstCard == null){
             firstCard = findViewById(view.getId());
+            firstCard.setImageDrawable(cardsSinOcultar.get(cardsSinOcultar.indexOf(firstCard)).getDrawable());
             firstCard.setEnabled(false);
         }
         else{
             seconedCard = findViewById(view.getId());
+            seconedCard.setImageResource(cardsSinOcultar.indexOf(firstCard));
             seconedCard.setEnabled(false);
         }
 
         if(firstCard != null && seconedCard != null){
+            if(firstCard.getDrawable() == seconedCard.getDrawable()){
+                aciertos++;
+                firstCard.setVisibility(View.INVISIBLE);
+                seconedCard.setVisibility(View.INVISIBLE);
+            }
+            else {
+                errores++;
+                firstCard.setImageResource(R.drawable.dona);
+                seconedCard.setImageResource(R.drawable.dona);
+                firstCard.setEnabled(true);
+                seconedCard.setEnabled(true);
+            }
+        }
+    }
 
+    public void clonar (){
+        for (int i = 0; i < cards.size(); i++) {
+            ImageView nuevo;
+            nuevo = cards.get(i);
+            cardsSinOcultar.add(nuevo);
         }
     }
 }
