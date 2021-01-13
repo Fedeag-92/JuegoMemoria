@@ -1,31 +1,42 @@
 package com.example.juegomemoria;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-
+import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
-public class Juego extends AppCompatActivity {
-    int points, record, difficulty;
+public class Juego extends AppCompatActivity implements View.OnClickListener {
+    int points, record, difficulty, turns, aciertos, errores;
     String user;
     ImageView cards[];
     Random random = new Random();
     int pos;
+    ImageView cardsSinOcultar[];
     ArrayList<Integer> imagenes = new ArrayList<>();
     ArrayList<Integer> imagenesUsadas = new ArrayList<>();
     Handler handler = new Handler();
+    private static Object lock = new Object();
+    private ImageView firstCard;
+    private ImageView seconedCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
+        this.aciertos = 0;
 
         imagenes.addAll(Arrays.asList(R.drawable.card1, R.drawable.card2, R.drawable.card3, R.drawable.card4, R.drawable.card5, R.drawable.card6, R.drawable.card7, R.drawable.card8, R.drawable.card9, R.drawable.card10, R.drawable.card11, R.drawable.card12, R.drawable.card13, R.drawable.card14, R.drawable.card15, R.drawable.card16, R.drawable.card17, R.drawable.card18, R.drawable.card19, R.drawable.card20));
 
@@ -36,6 +47,7 @@ public class Juego extends AppCompatActivity {
 
         switch (difficulty) {
             case 1:
+                turns = 6;
                 points = 0;
                 cards = new ImageView[12];
                 k = 0;
@@ -44,7 +56,9 @@ public class Juego extends AppCompatActivity {
                         String cardName = "card" + (j + 1);
                         int resIDcard = getResources().getIdentifier(cardName, "id", getPackageName());
                         cards[k] = ((ImageView) findViewById(resIDcard));
+                        cards[k].setOnClickListener(this);
                         cards[k].setVisibility(View.VISIBLE);
+                        cards[k].setEnabled(false);
                         k++;
                     }
                 }
@@ -116,17 +130,19 @@ public class Juego extends AppCompatActivity {
             imagenesUsadas.remove(imgRandom);
             j--;
         }
+        cardsSinOcultar = this.cards.clone();
 
         handler.postDelayed(new Runnable() {
             public void run() {
                 for (int i = 0; i < cards.length; i++) {
                     cards[i].setImageResource(R.drawable.dona);
+                    cards[i].setEnabled(true);
                 }
             }
         }, 5000);   //5 seconds
 
-
     }
+
 
     public void playNormal() {
         int j = 12;
@@ -186,5 +202,22 @@ public class Juego extends AppCompatActivity {
                 }
             }
         }, 5000);   //5 seconds
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        if(firstCard == null){
+            firstCard = findViewById(view.getId());
+            firstCard.setEnabled(false);
+        }
+        else{
+            seconedCard = findViewById(view.getId());
+            seconedCard.setEnabled(false);
+        }
+
+        if(firstCard != null && seconedCard != null){
+
+        }
     }
 }
