@@ -61,14 +61,26 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="80dp"
         android:backgroundTint="#69F0AE"
-        android:text="Ranking"
+        android:text="@string/Ranking"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.967"
+        app:layout_constraintHorizontal_bias="0.99"
         app:layout_constraintStart_toEndOf="@+id/btnSonido"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.049" />
+        app:layout_constraintVertical_bias="0.047" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="53dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.019"
+        app:layout_constraintStart_toEndOf="@+id/SonidoDificultad"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <ImageView
         android:id="@+id/btnAtras"
@@ -81,28 +93,16 @@
         app:layout_constraintTop_toBottomOf="@+id/tituloDificultad"
         app:srcCompat="?attr/actionModeCloseDrawable" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="53dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="52dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/SonidoDificultad"
-        app:layout_constraintTop_toBottomOf="@+id/divider2"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
-
     <TextView
         android:id="@+id/textEleccionDif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:fontFamily="@font/permanent_marker"
         android:text="@string/eleccionDif"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAtras" />
 
@@ -111,6 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
+        android:fontFamily="@font/permanent_marker"
         android:text="@string/app_name"
         android:textColor="#FFFFFF"
         android:textSize="24sp"

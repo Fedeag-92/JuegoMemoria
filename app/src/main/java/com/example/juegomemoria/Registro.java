@@ -48,11 +48,11 @@ public class Registro extends AppCompatActivity {
             if (verificarUsuario(username)) {
                 Toast.makeText(this, "ERROR. Username ya existe.", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Registro en proceso...", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Registrado exitosamente...", Toast.LENGTH_LONG).show();
                 dbHelper.insertar("INSERT INTO USUARIO VALUES('" + username + "','" + nombre + "','" + apellido + "','" + password + "')", db);
 
-                //dbHelper.close();
-                Intent i = new Intent(this, Dificultad.class);
+                dbHelper.close();
+                Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
             }
         }

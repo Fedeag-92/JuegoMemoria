@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         String username = user.getText().toString();
         String password = pass.getText().toString();
+
         switch (v.getId()) {
             case R.id.btnLogin:
                 if (username.length() != 0 && password.length() != 0) {
@@ -89,4 +90,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
+
+
 }

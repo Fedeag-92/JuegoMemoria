@@ -10,7 +10,7 @@ public class bdjuegomemoria extends SQLiteOpenHelper {
 
     private static final String NOMBRE_BD="juegomemoria.bd";
     private static final int VERSION_BD=1;
-    private static final String TABLA_USUARIO="CREATE TABLE USUARIO(NOMBRE_USUARIO TEXT PRIMARY KEY, NOMBRE TEXT, APELLIDO TEXT, CLAVE TEXT)";
+    private static final String TABLA_USUARIO="CREATE TRABLE USUARIO(NOMBRE_USUARIO TEXT PRIMARY KEY, NOMBRE TEXT, APELLIDO TEXT, CLAVE TEXT)";
 
     public bdjuegomemoria(Context context) {
         super(context, NOMBRE_BD, null, VERSION_BD);
