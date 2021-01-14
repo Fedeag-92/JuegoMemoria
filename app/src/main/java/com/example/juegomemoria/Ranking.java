@@ -16,7 +16,7 @@ public class Ranking extends AppCompatActivity {
         setContentView(R.layout.activity_ranking);
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
         db = dbHelper.getWritableDatabase();
-        cargarRanking();
+        //cargarRanking();
 
     }
 
@@ -25,8 +25,14 @@ public class Ranking extends AppCompatActivity {
     }
 
     public void cargarRanking(){
-        dbHelper.insertar("INSERT INTO RANKING VALUES('1','fvidalsoto','1432')", db);
-        dbHelper.close();
+        //dbHelper.insertar("INSERT INTO RANKING VALUES('1','fvidalsoto','1432')", db);
+        //dbHelper.insertar("INSERT INTO RANKING(USERNAME,PUNTAJE) VALUES('patricioenriquesebastian','653')", db);
+        dbHelper.insertar("INSERT INTO RANKING(USERNAME,PUNTAJE) VALUES('mpalavecino','1245')", db);
+        dbHelper.insertar("INSERT INTO RANKING(USERNAME,PUNTAJE) VALUES('fedeaguilera','1652')", db);
+        dbHelper.insertar("INSERT INTO RANKING(USERNAME,PUNTAJE) VALUES('fvidalsoto','653')", db);
+        dbHelper.insertar("INSERT INTO RANKING(USERNAME,PUNTAJE) VALUES('mvillalba','357')", db);
+        //db.close();
+
         //dbHelper.insertar("INSERT INTO RANKING(USERNAME_RANKING,PUNTAJE) VALUES('fvidalsoto','1432')", db);
         //dbHelper.insertar("INSERT INTO RANKING(USERNAME_RANKING,PUNTAJE) VALUES('mpalavecino','2461')", db);
         //dbHelper.insertar("INSERT INTO RANKING(USERNAME_RANKING,PUNTAJE) VALUES('fmaguilera','1')", db);

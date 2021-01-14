@@ -97,5 +97,4 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         }
         ;
     }
-
 }

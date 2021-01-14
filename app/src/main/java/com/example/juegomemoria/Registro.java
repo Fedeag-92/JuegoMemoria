@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.example.juegomemoria.Registro;
 
 import com.example.juegomemoria.utlidades.Utilidades;
 
@@ -29,6 +30,7 @@ public class Registro extends AppCompatActivity {
         txt_apellido = (EditText) findViewById(R.id.apellido);
         txt_username = (EditText) findViewById(R.id.username);
         txt_password = (EditText) findViewById(R.id.password);
+
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
         db = dbHelper.getWritableDatabase();
 
@@ -50,10 +52,10 @@ public class Registro extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Registrado exitosamente...", Toast.LENGTH_LONG).show();
                 dbHelper.insertar("INSERT INTO USUARIO VALUES('" + username + "','" + nombre + "','" + apellido + "','" + password + "')", db);
-
                 dbHelper.close();
-                Intent i = new Intent(this, MainActivity.class);
-                startActivity(i);
+                onBackPressed();
+                //Intent i = new Intent(this, MainActivity.class);
+                //startActivity(i);
             }
         }
     }

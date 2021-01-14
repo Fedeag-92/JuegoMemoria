@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnLogin, btnRegister;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
+
+    private static final String TAG = "MyActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
 
-        dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
-        db = dbHelper.getWritableDatabase();
     }
 
     @Override
@@ -47,16 +48,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String username = user.getText().toString();
         String password = pass.getText().toString();
 
+        this.conectarBD();
+
         switch (v.getId()) {
             case R.id.btnLogin:
                 if (username.length() != 0 && password.length() != 0) {
                     if (verificarPassword(username, password)) {
+                        dbHelper.close();
                         Intent i = new Intent(MainActivity.this, Dificultad.class);
                         i.putExtra("user", this.user.getText().toString());
                         startActivity(i);
                     } else {
                         Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
                     }
+                   //
                 } else {
                     Toast.makeText(getApplicationContext(), "Campos incompletos", Toast.LENGTH_LONG).show();
                 }
@@ -69,7 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public boolean verificarPassword(String username, String pass) {
-        Cursor c = db.rawQuery("SELECT username FROM usuario WHERE username = '" + username + "' AND passwordtext = '" + pass + "'", null);
+        Cursor c = db.rawQuery("SELECT username FROM USUARIO WHERE username = '" + username + "' AND password = '" + pass + "'", null);
+        //Log.i(TAG,"Cursor es: "+c+" con resultado: "+c.moveToFirst());
         return (c.moveToFirst());
     }
 
@@ -91,5 +97,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return mediaPlayer;
     }
 
+    public void conectarBD(){
+        dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
+        db = dbHelper.getWritableDatabase();
+    }
 
 }
