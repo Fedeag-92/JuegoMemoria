@@ -51,9 +51,7 @@ public class Registro extends AppCompatActivity {
                 Toast.makeText(this, "Registro en proceso...", Toast.LENGTH_LONG).show();
                 dbHelper.insertar("INSERT INTO USUARIO VALUES('" + username + "','" + nombre + "','" + apellido + "','" + password + "')", db);
 
-                //dbHelper.close();
-                Intent i = new Intent(this, Dificultad.class);
-                startActivity(i);
+                onBackPressed();
             }
         }
     }
