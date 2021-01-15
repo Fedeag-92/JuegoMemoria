@@ -467,7 +467,7 @@
         android:textOff="Sonido Off"
         android:textOn="Sonido On"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.73"
+        app:layout_constraintHorizontal_bias="0.788"
         app:layout_constraintStart_toEndOf="@+id/btnBackJ"
         app:layout_constraintTop_toTopOf="parent" />
 

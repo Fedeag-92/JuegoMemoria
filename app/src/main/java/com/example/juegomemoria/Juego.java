@@ -2,28 +2,36 @@ package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
 
 public class Juego extends AppCompatActivity implements View.OnClickListener {
-    int points, record, difficulty, turns, aciertos, errores;
+    int points, record, difficulty, aciertos, errores, erroresMax, turns;
+    boolean gameOver = false;
     String user;
     ArrayList<ImageView> cards;
     Random random = new Random();
     int pos;
-    ArrayList<ImageView> cardsSinOcultar;
+    ArrayList<Drawable> cardsSinOcultar;
     ArrayList<Integer> imagenes = new ArrayList<>();
     ArrayList<Integer> imagenesUsadas = new ArrayList<>();
     Handler handler = new Handler();
     private static Object lock = new Object();
     private ImageView firstCard;
-    private ImageView seconedCard;
+    private ImageView secondCard;
+    private Bitmap firstImage;
+    private Bitmap secondImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +41,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
 
         imagenes.addAll(Arrays.asList(R.drawable.card1, R.drawable.card2, R.drawable.card3, R.drawable.card4, R.drawable.card5, R.drawable.card6, R.drawable.card7, R.drawable.card8, R.drawable.card9, R.drawable.card10, R.drawable.card11, R.drawable.card12, R.drawable.card13, R.drawable.card14, R.drawable.card15, R.drawable.card16, R.drawable.card17, R.drawable.card18, R.drawable.card19, R.drawable.card20));
 
-        imagenesUsadas = (ArrayList<Integer>) imagenes.clone();
+        imagenesUsadas = new ArrayList(imagenes);
 
         difficulty = getIntent().getIntExtra("choice", 0);
         int k;
@@ -41,6 +49,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         switch (difficulty) {
             case 1:
                 turns = 6;
+                erroresMax = Integer.MAX_VALUE;
                 points = 0;
                 ImageView card;
                 cards = new ArrayList<ImageView>(12);
@@ -125,7 +134,20 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
             imagenesUsadas.remove(imgRandom);
             j--;
         }
-        clonar();
+
+        cardsSinOcultar = new ArrayList();
+        cardsSinOcultar.addAll(Arrays.asList(cards.get(0).getDrawable(),
+                cards.get(1).getDrawable(),
+                cards.get(2).getDrawable(),
+                cards.get(3).getDrawable(),
+                cards.get(4).getDrawable(),
+                cards.get(5).getDrawable(),
+                cards.get(6).getDrawable(),
+                cards.get(7).getDrawable(),
+                cards.get(8).getDrawable(),
+                cards.get(9).getDrawable(),
+                cards.get(10).getDrawable(),
+                cards.get(11).getDrawable()));
 
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -203,38 +225,107 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if(firstCard == null){
-            firstCard = findViewById(view.getId());
-            firstCard.setImageDrawable(cardsSinOcultar.get(cardsSinOcultar.indexOf(firstCard)).getDrawable());
-            firstCard.setEnabled(false);
+        if (!gameOver) {
+            switch (view.getId()) {
+                case R.id.card1:
+                    cards.get(0).setImageDrawable(cardsSinOcultar.get(0));
+                    break;
+                case R.id.card2:
+                    cards.get(1).setImageDrawable(cardsSinOcultar.get(1));
+                    break;
+                case R.id.card3:
+                    cards.get(2).setImageDrawable(cardsSinOcultar.get(2));
+                    break;
+                case R.id.card4:
+                    cards.get(3).setImageDrawable(cardsSinOcultar.get(3));
+                    break;
+                case R.id.card6:
+                    cards.get(4).setImageDrawable(cardsSinOcultar.get(4));
+                    break;
+                case R.id.card7:
+                    cards.get(5).setImageDrawable(cardsSinOcultar.get(5));
+                    break;
+                case R.id.card8:
+                    cards.get(6).setImageDrawable(cardsSinOcultar.get(6));
+                    break;
+                case R.id.card9:
+                    cards.get(7).setImageDrawable(cardsSinOcultar.get(7));
+                    break;
+                case R.id.card11:
+                    cards.get(8).setImageDrawable(cardsSinOcultar.get(8));
+                    break;
+                case R.id.card12:
+                    cards.get(9).setImageDrawable(cardsSinOcultar.get(9));
+                    break;
+                case R.id.card13:
+                    cards.get(10).setImageDrawable(cardsSinOcultar.get(10));
+                    break;
+                case R.id.card14:
+                    cards.get(11).setImageDrawable(cardsSinOcultar.get(11));
+                    break;
+            }
+            if (firstCard == null) {
+                firstCard = (ImageView) findViewById(view.getId());
+                firstImage = ((BitmapDrawable) (firstCard).getDrawable()).getBitmap();
+                firstCard.setEnabled(false);
+            } else {
+                secondCard = (ImageView) findViewById(view.getId());
+                secondImage = ((BitmapDrawable) (secondCard).getDrawable()).getBitmap();
+            }
+            if (firstCard != null && secondCard != null) {
+                for (int i = 0; i < cards.size(); i++) {
+                    if (cards.get(i).getVisibility() == View.VISIBLE)
+                        cards.get(i).setEnabled(false);
+                }
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        if (firstImage.sameAs(secondImage)) {
+                            turns--;
+                            aciertos++;
+                            Toast.makeText(getApplicationContext(), "Acierto! Total: " + aciertos, Toast.LENGTH_LONG).show();
+                            firstCard.setVisibility(View.INVISIBLE);
+                            secondCard.setVisibility(View.INVISIBLE);
+                        } else {
+                            errores++;
+                            Toast.makeText(getApplicationContext(), "Error! Total: " + errores, Toast.LENGTH_LONG).show();
+                            if(difficulty == 2 || difficulty == 3)
+                                Toast.makeText(getApplicationContext(), erroresMax + " errores mas y pierdes", Toast.LENGTH_LONG).show();
+                            firstCard.setImageResource(R.drawable.dona);
+                            secondCard.setImageResource(R.drawable.dona);
+                        }
+                        for (int i = 0; i < cards.size(); i++) {
+                            if (cards.get(i).getVisibility() == View.VISIBLE)
+                                cards.get(i).setEnabled(true);
+                        }
+                        firstCard = null;
+                        secondCard = null;
+                        firstImage = null;
+                        secondImage = null;
+                    }
+
+                }, 3000);   //5 seconds
+            }
         }
-        else{
-            seconedCard = findViewById(view.getId());
-            seconedCard.setImageResource(cardsSinOcultar.indexOf(firstCard));
-            seconedCard.setEnabled(false);
+        else
+            Toast.makeText(getApplicationContext(), "Juego terminado, empiece uno nuevo yendo hacia atras", Toast.LENGTH_LONG).show();
+
+        if (!gameOver && errores >= erroresMax) {
+            gameOver = true;
+            Toast.makeText(getApplicationContext(), "Juego terminado, te has equivocado" + erroresMax + " veces", Toast.LENGTH_LONG).show();
+        }
+        if(!gameOver && turns == 0){
+            gameOver = true;
+            Toast.makeText(getApplicationContext(), "Juego terminado, has acertado todas las fichas!" + erroresMax + " veces", Toast.LENGTH_LONG).show();
+        }
+        if(gameOver){
+            points = aciertos / errores;
+            Toast.makeText(getApplicationContext(), "Puntaje final: " + points, Toast.LENGTH_LONG).show();
+            if(points > record){
+                record = points;
+                Toast.makeText(getApplicationContext(), "Nuevo record!", Toast.LENGTH_LONG).show();
+            }
         }
 
-        if(firstCard != null && seconedCard != null){
-            if(firstCard.getDrawable() == seconedCard.getDrawable()){
-                aciertos++;
-                firstCard.setVisibility(View.INVISIBLE);
-                seconedCard.setVisibility(View.INVISIBLE);
-            }
-            else {
-                errores++;
-                firstCard.setImageResource(R.drawable.dona);
-                seconedCard.setImageResource(R.drawable.dona);
-                firstCard.setEnabled(true);
-                seconedCard.setEnabled(true);
-            }
-        }
     }
 
-    public void clonar (){
-        for (int i = 0; i < cards.size(); i++) {
-            ImageView nuevo;
-            nuevo = cards.get(i);
-            cardsSinOcultar.add(nuevo);
-        }
-    }
 }
