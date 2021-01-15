@@ -16,11 +16,12 @@ public class Utilidades {
 
     //VARIABLES TABLA RANKING
     public static final String RANKING="RANKING";
-    public static final Integer ID_RANKING = null;
-    public static final String USERNAME_RANKING="USERNAME_RANKING";
-    public static final Integer PUNTAJE=0;
+    public static final String ID_RANKING = "ID_RANKING";
+    public static final String USERNAME_RANKING="USERNAME";
+    public static final String PUNTAJE="PUNTAJE";
 
     public static final String TABLA_USUARIO="CREATE TABLE "+USUARIO+"("+USERNAME+" TEXT PRIMARY KEY,"+NOMBRE+" TEXT,"+APELLIDO+" TEXT,"+PASSWORD+" TEXT)";
     //public static final String TABLA_IMAGEN="CREATE TABLE "+IMAGEN+"("+ID_IMAGEN+" INTEGER PRIMARY KEY,"+NOMBRE_IMAGEN+"TEXT,"+RELACION+"INTEGER)";
-    public static final String TABLA_RANKING="CREATE TABLE "+RANKING+"("+ID_RANKING+" INTEGER PRIMARY KEY AUTOINCREMENT,"+USERNAME_RANKING+"TEXT,"+PUNTAJE+"INTEGER)";
+    public static final String TABLA_RANKING="CREATE TABLE "+RANKING+"("+ID_RANKING+" INTEGER PRIMARY KEY AUTOINCREMENT,"+USERNAME_RANKING+" TEXT,"+PUNTAJE+" INTEGER)";
+    //public static final String TABLA_RANKING="CREATE TABLE "+RANKING+"("+ID_RANKING+" INTEGER PRIMARY KEY AUTOINCREMENT,"+USERNAME_RANKING+" TEXT, "+PUNTAJE+" INTEGER)";
 }
