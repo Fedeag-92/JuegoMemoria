@@ -17,12 +17,12 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     private int points, record, difficulty, hits, errors, errorsMax, turns;
     private boolean gameOver = false;
     private String user;
-    private Random random = new Random();
+    private final Random random = new Random();
     private ArrayList<ImageView> cards;
     ArrayList<Integer> images = new ArrayList<>();
     ArrayList<Integer> usedImages;
     ArrayList<Drawable> drawableLocation;
-    Handler handler = new Handler();
+    final Handler handler = new Handler();
     private ImageView firstCard;
     private ImageView secondCard;
     private Bitmap firstImage;
@@ -37,7 +37,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         points = 0;
         images = new ArrayList<>();
         images.addAll(Arrays.asList(R.drawable.card1, R.drawable.card2, R.drawable.card3, R.drawable.card4, R.drawable.card5, R.drawable.card6, R.drawable.card7, R.drawable.card8, R.drawable.card9, R.drawable.card10, R.drawable.card11, R.drawable.card12, R.drawable.card13, R.drawable.card14, R.drawable.card15, R.drawable.card16, R.drawable.card17, R.drawable.card18, R.drawable.card19, R.drawable.card20));
-        usedImages = new ArrayList(images);
+        usedImages = new ArrayList<>(images);
         difficulty = getIntent().getIntExtra("choice", 0);
 
         switch (difficulty) {
@@ -54,11 +54,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                 for (int i = 0; i < images.size() - turns; i++) {
                     usedImages.remove(random.nextInt(Integer.valueOf(usedImages.size())));
                 }
-                try {
-                    play(turns);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                play(turns);
 
                 break;
             case 2:
@@ -75,11 +71,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                     usedImages.remove(random.nextInt(Integer.valueOf(usedImages.size())));
                 }
 
-                try {
-                    play(turns);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                play(turns);
                 break;
             case 3:
                 turns = 20;
@@ -89,11 +81,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                     addCard(j);
                 }
 
-                try {
-                    play(turns);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                play(turns);
                 break;
         }
     }
@@ -110,7 +98,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         cards.add(card);
     }
 
-    public void play(int cantImages) throws InterruptedException {
+    public void play(int cantImages) {
         int posCeld, posImage, j;
 
         ArrayList<Integer> elements = new ArrayList<>();
@@ -131,7 +119,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
             cantImages--;
         }
 
-        drawableLocation = new ArrayList();
+        drawableLocation = new ArrayList<>();
         for (int i = 0; i < cards.size(); i++) {
             drawableLocation.add(cards.get(i).getDrawable());
         }

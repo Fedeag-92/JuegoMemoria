@@ -1,7 +1,6 @@
 package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
@@ -18,7 +17,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     MediaPlayer mediaPlayer;
     EditText user, pass;
     Button btnLogin, btnRegister;
-    private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
 
     @Override
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
 
-        dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
+        ConexionSQLiteHelper dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
         db = dbHelper.getWritableDatabase();
     }
 
@@ -71,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public boolean verificarPassword(String username, String pass) {
         Cursor c = db.rawQuery("SELECT username FROM usuario WHERE username = '" + username + "' AND password = '" + pass + "'", null);
+        c.close();
         return (c.moveToFirst());
     }
 

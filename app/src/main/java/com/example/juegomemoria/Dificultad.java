@@ -82,10 +82,7 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
 
                 break;
             case R.id.btnSonido:
-                if(btnSound.isChecked())
-                    amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
-                else
-                    amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+                amanager.setStreamMute(AudioManager.STREAM_MUSIC, !btnSound.isChecked());
                 break;
             case R.id.btnRanking:
                 Intent i = new Intent(Dificultad.this, Ranking.class);
@@ -95,7 +92,6 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
                 onBackPressed();
                 break;
         }
-        ;
     }
 
 }

@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="80dp"
         android:backgroundTint="#69F0AE"
-        android:text="Ranking"
+        android:text="@string/Ranking"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +79,8 @@
         app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tituloDificultad"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
+        app:srcCompat="?attr/actionModeCloseDrawable"
+        android:contentDescription="@string/back" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -91,7 +92,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/SonidoDificultad"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
+        app:srcCompat="@android:drawable/btn_star_big_on"
+        android:contentDescription="@string/Ranking" />
 
     <TextView
         android:id="@+id/textEleccionDif"
@@ -137,7 +139,7 @@
         android:layout_height="44dp"
         android:layout_marginStart="64dp"
         android:background="#69F0AE"
-        android:text="Sonido"
+        android:text="@string/sonido"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
