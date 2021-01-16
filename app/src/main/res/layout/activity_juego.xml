@@ -7,11 +7,22 @@
     android:background="#536DFE"
     tools:context=".Juego">
 
+    <TextView
+        android:id="@+id/timeJ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="3dp"
+        android:text="@string/timeGame"
+        app:layout_constraintStart_toEndOf="@+id/error6"
+        app:layout_constraintTop_toBottomOf="@+id/btnSoundJ" />
+
     <ImageView
         android:id="@+id/error6"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:visibility="invisible"
+        app:tint="#B2FF59"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/error5"
         app:layout_constraintTop_toTopOf="@+id/errorsJ"
         app:srcCompat="@android:drawable/ic_delete" />
@@ -20,7 +31,8 @@
         android:id="@+id/error5"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:visibility="invisible"
+        app:tint="#B2FF59"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/error4"
         app:layout_constraintTop_toTopOf="@+id/errorsJ"
         app:srcCompat="@android:drawable/ic_delete" />
@@ -29,7 +41,8 @@
         android:id="@+id/error4"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:visibility="invisible"
+        app:tint="#B2FF59"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/error3"
         app:layout_constraintTop_toTopOf="@+id/errorsJ"
         app:srcCompat="@android:drawable/ic_delete" />
@@ -38,7 +51,8 @@
         android:id="@+id/error3"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:visibility="invisible"
+        app:tint="#B2FF59"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/error2"
         app:layout_constraintTop_toTopOf="@+id/errorsJ"
         app:srcCompat="@android:drawable/ic_delete" />
@@ -47,7 +61,8 @@
         android:id="@+id/error2"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:visibility="invisible"
+        app:tint="#B2FF59"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/error1"
         app:layout_constraintTop_toTopOf="@+id/errorsJ"
         app:srcCompat="@android:drawable/ic_delete" />
@@ -555,15 +570,26 @@
 
     <ToggleButton
         android:id="@+id/btnSoundJ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="64dp"
         android:layout_marginTop="12dp"
         android:text="@string/sonido"
         android:textOff="@string/sonidooff"
         android:textOn="@string/sonidoon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/error1"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        app:tint="#B2FF59"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/errorsJ"
+        app:layout_constraintTop_toTopOf="@+id/errorsJ"
+        app:srcCompat="@android:drawable/ic_delete" />
 
     <TextView
         android:id="@+id/pointsJ"
@@ -574,16 +600,6 @@
         app:layout_constraintStart_toEndOf="@+id/btnBackJ"
         app:layout_constraintTop_toBottomOf="@+id/userNameJ" />
 
-    <ImageView
-        android:id="@+id/error1"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintStart_toEndOf="@+id/errorsJ"
-        app:layout_constraintTop_toTopOf="@+id/errorsJ"
-        app:srcCompat="@android:drawable/ic_delete"
-        android:visibility="invisible" />
-
     <TextView
         android:id="@+id/userNameJ"
         android:layout_width="wrap_content"
@@ -593,5 +609,14 @@
         android:text="@string/txt_usuario"
         app:layout_constraintStart_toEndOf="@+id/btnBackJ"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="51dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toEndOf="@+id/timeJ"
+        app:layout_constraintTop_toBottomOf="@+id/btnSoundJ" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
