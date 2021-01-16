@@ -9,11 +9,7 @@ public class Validaciones {
     //metodo para validar si es un email
     public boolean isEmail(String cadena) {
         boolean resultado;
-        if (Patterns.EMAIL_ADDRESS.matcher(cadena).matches()) {
-            resultado = true;
-        } else {
-            resultado = false;
-        }
+        resultado = Patterns.EMAIL_ADDRESS.matcher(cadena).matches();
 
         return resultado;
     }
