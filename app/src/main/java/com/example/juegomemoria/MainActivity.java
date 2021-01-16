@@ -1,6 +1,7 @@
 package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     MediaPlayer mediaPlayer;
     EditText user, pass;
     Button btnLogin, btnRegister;
+    private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
 
     @Override
@@ -36,14 +38,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
 
-        ConexionSQLiteHelper dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
-        db = dbHelper.getWritableDatabase();
     }
 
     @Override
     public void onClick(View v) {
         String username = user.getText().toString();
         String password = pass.getText().toString();
+
+        this.conectarBD();
+
         switch (v.getId()) {
             case R.id.btnLogin:
                 if (username.length() != 0 && password.length() != 0) {
@@ -59,8 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnRegistrar:
-                user.getText().clear();
-                pass.getText().clear();
                 Intent i = new Intent(MainActivity.this, Registro.class);
                 startActivity(i);
                 break;
@@ -88,6 +89,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
+    }
+
+    public void conectarBD(){
+        dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
+        db = dbHelper.getWritableDatabase();
     }
 
 }

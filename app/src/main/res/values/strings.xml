@@ -24,4 +24,6 @@
     <string name="errors">Errores: </string>
     <string name="record">Record: </string>
     <string name="timeGame">Tiempo: </string>
+    <string name="dificultad">Dificultad</string>
+    <string name="puntaje">Puntaje</string>
 </resources>

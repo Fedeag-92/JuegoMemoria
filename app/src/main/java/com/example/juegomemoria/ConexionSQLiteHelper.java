@@ -17,13 +17,14 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Utilidades.TABLA_USUARIO);
-        //db.execSQL(Utilidades.TABLA_IMAGEN);
-        //db.execSQL(Utilidades.TABLA_RANKING);
+        db.execSQL(Utilidades.TABLA_RANKING);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int versionAntigua, int versionNueva) {
         db.execSQL("DROP TABLE IF EXISTS USUARIO");
+        db.execSQL("DROP TABLE IF EXISTS RANKING");
         onCreate(db);
     }
 
