@@ -18,7 +18,6 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Utilidades.TABLA_USUARIO);
         db.execSQL(Utilidades.TABLA_RANKING);
-        //db.execSQL(Utilidades.TABLA_IMAGEN);
 
     }
 

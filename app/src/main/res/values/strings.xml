@@ -14,4 +14,6 @@
     <string name="dificultadDificil">Dificil</string>
     <string name="jugar">Jugar</string>
     <string name="sonido">Sonido</string>
+    <string name="dificultad">Dificultad</string>
+    <string name="puntaje">Puntaje</string>
 </resources>

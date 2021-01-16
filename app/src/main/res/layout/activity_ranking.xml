@@ -12,7 +12,7 @@
         android:id="@+id/imageView4"
         android:layout_width="35dp"
         android:layout_height="38dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:onClick="clickRegresar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.042"
@@ -50,7 +50,7 @@
 
     <LinearLayout
         android:layout_width="370dp"
-        android:layout_height="453dp"
+        android:layout_height="526dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,25 +62,37 @@
         <TableLayout
             android:id="@+id/listaRanking"
             android:layout_width="match_parent"
-            android:layout_height="400dp">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="2dp"
+                android:background="#E31919"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp">
 
                 <TextView
                     android:id="@+id/textView10"
                     android:layout_width="170dp"
                     android:layout_height="match_parent"
                     android:text="@string/txt_usuario"
-                    android:textAlignment="viewStart" />
+                    android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/textView9"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:text="Puntaje"
-                    android:textAlignment="viewStart" />
+                    android:text="@string/puntaje"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/dificultad"
+                    android:textAlignment="center" />
 
             </TableRow>
 
