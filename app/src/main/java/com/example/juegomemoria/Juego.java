@@ -1,14 +1,26 @@
 package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -16,7 +28,10 @@ import java.util.Random;
 public class Juego extends AppCompatActivity implements View.OnClickListener {
     private int points, record, difficulty, hits, errors, errorsMax, turns;
     private boolean gameOver = false;
-    private String user;
+    private TextView user, pointsState, errorsState;
+    private ImageView buttonBack;
+    private ToggleButton buttonSound;
+    private AudioManager amanager;
     private final Random random = new Random();
     private ArrayList<ImageView> cards;
     ArrayList<Integer> images = new ArrayList<>();
@@ -33,9 +48,21 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
 
+        user = (TextView) findViewById(R.id.userNameJ);
+        pointsState = (TextView) findViewById(R.id.pointsJ);
+        errorsState = (TextView) findViewById(R.id.errorsJ);
+        buttonBack = (ImageView) findViewById(R.id.btnBackJ);
+        buttonBack.setOnClickListener(this);
+        buttonSound = (ToggleButton) findViewById(R.id.btnSoundJ);
+        buttonSound.setOnClickListener(this);
+
+        amanager = (AudioManager) getSystemService(AUDIO_SERVICE);
+
+        user.setText(getIntent().getStringExtra("user"));
         this.hits = 0;
         points = 0;
         images = new ArrayList<>();
+        errors = 1;
         images.addAll(Arrays.asList(R.drawable.card1, R.drawable.card2, R.drawable.card3, R.drawable.card4, R.drawable.card5, R.drawable.card6, R.drawable.card7, R.drawable.card8, R.drawable.card9, R.drawable.card10, R.drawable.card11, R.drawable.card12, R.drawable.card13, R.drawable.card14, R.drawable.card15, R.drawable.card16, R.drawable.card17, R.drawable.card18, R.drawable.card19, R.drawable.card20));
         usedImages = new ArrayList<>(images);
         difficulty = getIntent().getIntExtra("choice", 0);
@@ -45,10 +72,12 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                 turns = 6;
                 errorsMax = Integer.MAX_VALUE;
                 cards = new ArrayList<ImageView>(12);
-                for (int j = 0; j < 14; j++) {
-                    if (j != 4 && j != 9) {
+                for (int j = 0; j < 40; j++) {
+                    if (j != 4 && j != 9 && j != 14 && (j < 15)) {
                         addCard(j);
                     }
+                    else
+                        quitCard(j);
                 }
 
                 for (int i = 0; i < images.size() - turns; i++) {
@@ -86,30 +115,48 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    public void addCard(int j){
+    public void quitCard(int j){
+        ImageView card = searchCard(j);
+        card.setVisibility(View.GONE);
+    }
+
+    public void addCard(int j) {
+        ImageView card = searchCard(j);
+
+        card.setOnClickListener(this);
+        card.setVisibility(View.VISIBLE);
+        card.setEnabled(false);
+        cards.add(card);
+
+        if(difficulty != 3 && (j == 0 || j == 5 || j == 10 || j == 15 || j == 20 || j == 25)){
+            ConstraintLayout.LayoutParams parameter = (ConstraintLayout.LayoutParams) card.getLayoutParams();
+            parameter.setMarginStart(150);
+            card.setLayoutParams(parameter);
+        }
+    }
+
+    public ImageView searchCard(int j){
         ImageView card;
 
         String cardName = "card" + (j + 1);
         int resIDcard = getResources().getIdentifier(cardName, "id", getPackageName());
         card = ((ImageView) findViewById(resIDcard));
-        card.setOnClickListener(this);
-        card.setVisibility(View.VISIBLE);
-        card.setEnabled(false);
-        cards.add(card);
+
+        return card;
     }
 
     public void play(int cantImages) {
         int posCeld, posImage, j;
 
         ArrayList<Integer> elements = new ArrayList<>();
-        for (int i = 0; i < cantImages*2; i++) {
+        for (int i = 0; i < cantImages * 2; i++) {
             elements.add(i);
         }
 
         while (cantImages > 0) {
             j = 0;
             posImage = random.nextInt(usedImages.size());
-            while(j < 2){
+            while (j < 2) {
                 posCeld = elements.get(random.nextInt(elements.size()));
                 cards.get(posCeld).setImageResource(usedImages.get(posImage));
                 elements.remove(Integer.valueOf(posCeld));
@@ -136,76 +183,101 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View view) {
-        if (!gameOver) {
-            if (difficulty == 1)
-                repaintEasy(view);
-            else if (difficulty == 2)
-                repaintNormal(view);
-            else
-                repaintHard(view);
+    public void onClick(View v) {
+        if (v.getId() == buttonBack.getId())
+            onBackPressed();
+        else if (v.getId() == buttonSound.getId()) {
+            amanager.setStreamMute(AudioManager.STREAM_MUSIC, !buttonSound.isChecked());
+        } else {
+            if (!gameOver) {
+                if (difficulty == 1)
+                    repaintEasy(v);
+                else if (difficulty == 2)
+                    repaintNormal(v);
+                else
+                    repaintHard(v);
 
-            if (firstCard == null) {
-                firstCard = (ImageView) findViewById(view.getId());
-                firstImage = ((BitmapDrawable) (firstCard).getDrawable()).getBitmap();
-                firstCard.setEnabled(false);
-            } else {
-                secondCard = (ImageView) findViewById(view.getId());
-                secondImage = ((BitmapDrawable) (secondCard).getDrawable()).getBitmap();
-            }
-            if (firstCard != null && secondCard != null) {
-                for (int i = 0; i < cards.size(); i++) {
-                    if (cards.get(i).getVisibility() == View.VISIBLE)
-                        cards.get(i).setEnabled(false);
+                if (firstCard == null) {
+                    firstCard = (ImageView) findViewById(v.getId());
+                    firstImage = ((BitmapDrawable) (firstCard).getDrawable()).getBitmap();
+                    firstCard.setEnabled(false);
+                } else {
+                    secondCard = (ImageView) findViewById(v.getId());
+                    secondImage = ((BitmapDrawable) (secondCard).getDrawable()).getBitmap();
                 }
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        if (firstImage.sameAs(secondImage)) {
-                            turns--;
-                            hits++;
-                            Toast.makeText(getApplicationContext(), "Acierto! Total: " + hits, Toast.LENGTH_LONG).show();
-                            firstCard.setVisibility(View.INVISIBLE);
-                            secondCard.setVisibility(View.INVISIBLE);
-                        } else {
-                            errors++;
-                            Toast.makeText(getApplicationContext(), "Error! Total: " + errors, Toast.LENGTH_LONG).show();
-                            if (difficulty == 2 || difficulty == 3)
-                                Toast.makeText(getApplicationContext(), errorsMax + " errores mas y pierdes", Toast.LENGTH_LONG).show();
-                            firstCard.setImageResource(R.drawable.dona);
-                            secondCard.setImageResource(R.drawable.dona);
-                        }
-                        for (int i = 0; i < cards.size(); i++) {
-                            if (cards.get(i).getVisibility() == View.VISIBLE)
-                                cards.get(i).setEnabled(true);
-                        }
-                        firstCard = null;
-                        secondCard = null;
-                        firstImage = null;
-                        secondImage = null;
+                if (firstCard != null && secondCard != null) {
+                    for (int i = 0; i < cards.size(); i++) {
+                        if (cards.get(i).getVisibility() == View.VISIBLE)
+                            cards.get(i).setEnabled(false);
                     }
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            if (firstImage.sameAs(secondImage)) {
+                                turns--;
+                                hits++;
+                                points = hits / errors;
+                                Toast.makeText(getApplicationContext(), "Acierto!", Toast.LENGTH_LONG).show();
+                                firstCard.setVisibility(View.INVISIBLE);
+                                secondCard.setVisibility(View.INVISIBLE);
+                            } else {
+                                errors++;
+                                paintErrors();
+                                points = hits / errors;
+                                Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_LONG).show();
+                                if (difficulty == 2 || difficulty == 3)
+                                    Toast.makeText(getApplicationContext(), errorsMax + " errores mas y pierdes", Toast.LENGTH_LONG).show();
+                                firstCard.setImageResource(R.drawable.dona);
+                                secondCard.setImageResource(R.drawable.dona);
+                            }
+                            pointsState.setText("Puntaje: "+points);
+                            for (int i = 0; i < cards.size(); i++) {
+                                if (cards.get(i).getVisibility() == View.VISIBLE)
+                                    cards.get(i).setEnabled(true);
+                            }
+                            firstCard = null;
+                            secondCard = null;
+                            firstImage = null;
+                            secondImage = null;
+                        }
 
-                }, 3000);   //5 seconds
+                    }, 3000);   //5 seconds
+                }
+            } else
+                Toast.makeText(getApplicationContext(), "Juego terminado, empiece uno nuevo yendo hacia atras", Toast.LENGTH_LONG).show();
+
+            if (!gameOver && errors >= errorsMax) {
+                gameOver = true;
+                Toast.makeText(getApplicationContext(), "Juego terminado, te has equivocado" + errorsMax + " veces", Toast.LENGTH_LONG).show();
             }
-        } else
-            Toast.makeText(getApplicationContext(), "Juego terminado, empiece uno nuevo yendo hacia atras", Toast.LENGTH_LONG).show();
-
-        if (!gameOver && errors >= errorsMax) {
-            gameOver = true;
-            Toast.makeText(getApplicationContext(), "Juego terminado, te has equivocado" + errorsMax + " veces", Toast.LENGTH_LONG).show();
-        }
-        if (!gameOver && turns == 0) {
-            gameOver = true;
-            Toast.makeText(getApplicationContext(), "Juego terminado, has acertado todas las fichas!" + errorsMax + " veces", Toast.LENGTH_LONG).show();
-        }
-        if (gameOver) {
-            points = hits / errors;
-            Toast.makeText(getApplicationContext(), "Puntaje final: " + points, Toast.LENGTH_LONG).show();
-            if (points > record) {
-                record = points;
-                Toast.makeText(getApplicationContext(), "Nuevo record!", Toast.LENGTH_LONG).show();
+            if (!gameOver && turns == 0) {
+                gameOver = true;
+                Toast.makeText(getApplicationContext(), "Juego terminado, has acertado todas las fichas!" + errorsMax + " veces", Toast.LENGTH_LONG).show();
+            }
+            if (gameOver) {
+                points = hits / errors;
+                Toast.makeText(getApplicationContext(), "Puntaje final: " + points, Toast.LENGTH_LONG).show();
+                if (points > record) {
+                    record = points;
+                    Toast.makeText(getApplicationContext(), "Nuevo record!", Toast.LENGTH_LONG).show();
+                }
             }
         }
+    }
 
+    public void paintErrors(){
+        switch (errors){
+            case 2: (findViewById(R.id.error1)).setVisibility(View.VISIBLE); break;
+            case 3: (findViewById(R.id.error2)).setVisibility(View.VISIBLE); break;
+            case 4: (findViewById(R.id.error3)).setVisibility(View.VISIBLE); break;
+            case 5: (findViewById(R.id.error4)).setVisibility(View.VISIBLE); break;
+            case 6: (findViewById(R.id.error5)).setVisibility(View.VISIBLE); break;
+            case 7: (findViewById(R.id.error6)).setVisibility(View.VISIBLE); break;
+        }
+    }
+
+    public void endGame(){
+        Intent i = new Intent(Juego.this, FinJuego.class);
+        startActivity(i);
     }
 
     public void repaintEasy(View v) {

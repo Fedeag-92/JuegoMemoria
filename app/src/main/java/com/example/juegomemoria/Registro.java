@@ -54,7 +54,6 @@ public class Registro extends AppCompatActivity {
 
     public boolean verificarUsuario(String username) {
         Cursor c = db.rawQuery("SELECT username FROM usuario WHERE username = '" + username + "'", null);
-        c.close();
         return (c.moveToFirst());
     }
 

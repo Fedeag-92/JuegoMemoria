@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public boolean verificarPassword(String username, String pass) {
         Cursor c = db.rawQuery("SELECT username FROM usuario WHERE username = '" + username + "' AND password = '" + pass + "'", null);
-        c.close();
         return (c.moveToFirst());
     }
 
@@ -90,4 +89,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
+
 }
