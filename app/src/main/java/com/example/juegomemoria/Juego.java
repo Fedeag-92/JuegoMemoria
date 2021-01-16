@@ -306,6 +306,11 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         calculatePoints();
         Toast.makeText(getApplicationContext(), "Tiempo: " + elapsed + " segundos.", Toast.LENGTH_LONG).show();
         Intent i = new Intent(Juego.this, FinJuego.class);
+        i.putExtra("user", this.user.getText());
+        i.putExtra("points", this.points);
+        i.putExtra("record", this.record);
+        i.putExtra("difficulty", this.difficulty);
+        i.putExtra("errors", this.errors);
         startActivity(i);
     }
 
