@@ -2,16 +2,12 @@ package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.example.juegomemoria.utlidades.Utilidades;
 
 public class Registro extends AppCompatActivity {
 
@@ -51,9 +47,7 @@ public class Registro extends AppCompatActivity {
                 Toast.makeText(this, "Registro en proceso...", Toast.LENGTH_LONG).show();
                 dbHelper.insertar("INSERT INTO USUARIO VALUES('" + username + "','" + nombre + "','" + apellido + "','" + password + "')", db);
 
-                //dbHelper.close();
-                Intent i = new Intent(this, Dificultad.class);
-                startActivity(i);
+                onBackPressed();
             }
         }
     }

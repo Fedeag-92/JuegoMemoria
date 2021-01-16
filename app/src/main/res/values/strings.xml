@@ -17,4 +17,11 @@
     <string name="sonidooff">Sonido Off</string>
     <string name="sonidoon">Sonido On</string>
     <string name="card"> </string>
+    <string name="back">Atras</string>
+    <string name="end">Fin Juego</string>
+    <string name="points">Puntaje: </string>
+    <string name="difficulty">Dificultad: </string>
+    <string name="errors">Errores: </string>
+    <string name="record">Record: </string>
+    <string name="timeGame">Tiempo: </string>
 </resources>

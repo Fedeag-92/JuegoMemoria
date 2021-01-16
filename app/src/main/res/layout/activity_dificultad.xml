@@ -59,27 +59,26 @@
         android:id="@+id/btnRanking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
+        android:layout_marginStart="96dp"
         android:backgroundTint="#69F0AE"
-        android:text="Ranking"
+        android:text="@string/Ranking"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.967"
         app:layout_constraintStart_toEndOf="@+id/btnSonido"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.049" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/btnAtras"
-        android:layout_width="35dp"
-        android:layout_height="38dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_marginTop="8dp"
+        android:contentDescription="@string/back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tituloDificultad"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
+        app:srcCompat="@drawable/back_button" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -87,8 +86,7 @@
         android:layout_height="39dp"
         android:layout_marginStart="116dp"
         android:layout_marginTop="52dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:contentDescription="@string/Ranking"
         app:layout_constraintStart_toEndOf="@+id/SonidoDificultad"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
         app:srcCompat="@android:drawable/btn_star_big_on" />
@@ -98,6 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:fontFamily="@font/permanent_marker"
         android:text="@string/eleccionDif"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
@@ -111,6 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
+        android:fontFamily="@font/permanent_marker"
         android:text="@string/app_name"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
@@ -137,7 +137,10 @@
         android:layout_height="44dp"
         android:layout_marginStart="64dp"
         android:background="#69F0AE"
-        android:text="Sonido"
+        android:rotation="0"
+        android:rotationX="0"
+        android:rotationY="0"
+        android:text="@string/sonido"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
