@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -12,18 +13,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
-import com.google.android.material.color.MaterialColors;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -262,7 +256,6 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                     gameOver = true;
                                     endGame();
                                 }
-                                calculatePoints();
                                 firstCard.setVisibility(View.INVISIBLE);
                                 secondCard.setVisibility(View.INVISIBLE);
                             } else {
@@ -271,17 +264,16 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                     gameOver = true;
                                     endGame();
                                 }
-                                calculatePoints();
                                 Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_LONG).show();
                                 if (difficulty == 2 || difficulty == 3) {
                                     ImageView errorImg;
                                     ((ImageView) (findViewById(getResources().getIdentifier("error" + (errors - 1), "id", getPackageName())))).setColorFilter(R.color.errorEnable);
                                     Toast.makeText(getApplicationContext(), (errorsMax - errors) + " errores mas y pierdes", Toast.LENGTH_LONG).show();
                                 }
-
                                 firstCard.setImageResource(R.drawable.dona);
                                 secondCard.setImageResource(R.drawable.dona);
                             }
+                            points = (hits * 100) / (errors);
                             pointsState.setText("Puntaje: " + points);
                             for (int i = 0; i < cards.size(); i++) {
                                 if (cards.get(i).getVisibility() == View.VISIBLE)
@@ -303,22 +295,21 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
 
     public void endGame() {
         pauseChronometer();
-        calculatePoints();
+        elapsed = (int) (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
+        calculateFinalPoints(elapsed);
         Toast.makeText(getApplicationContext(), "Tiempo: " + elapsed + " segundos.", Toast.LENGTH_LONG).show();
         Intent i = new Intent(Juego.this, FinJuego.class);
         i.putExtra("user", this.user.getText());
-        i.putExtra("points", this.points);
-        i.putExtra("record", this.record);
+        i.putExtra("points", this.finalPoints);
         i.putExtra("difficulty", this.difficulty);
         i.putExtra("errors", this.errors);
+        i.putExtra("time", elapsed);
+
         startActivity(i);
     }
 
-    public void calculatePoints(){
-        elapsed = (int) (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
-        points = (hits * 100) / (errors);
-        if(gameOver)
-            finalPoints = (hits * 100) / (errors * elapsed);
+    public void calculateFinalPoints(int seconds){
+        finalPoints = ((hits * 100) / (errors + elapsed))*10;
     }
 
     public void repaintEasy(View v) {

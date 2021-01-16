@@ -2,28 +2,77 @@ package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class FinJuego extends AppCompatActivity {
-    private int points, record, difficulty,errors;
+    private int points, difficulty, errors, time;
+    private boolean isRecord;
     private String user;
     private static final String TAG = "MyActivity";
+    private TextView pointsV, errorsV, difficultyV;
+    private ImageView recOn, recOff;
+    private ConexionSQLiteHelper dbHelper;
+    private SQLiteDatabase db, dbr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fin_juego);
+        conectarBD();
 
         user = getIntent().getStringExtra("user");
         points = getIntent().getIntExtra("points", 0);
-        record = getIntent().getIntExtra("record", 0);
+        isRecord = getIntent().getBooleanExtra("record", false);
         difficulty = getIntent().getIntExtra("difficulty", 0);
         errors = getIntent().getIntExtra("errors", 0);
+        time = getIntent().getIntExtra("time", 0);
+        ((TextView) findViewById(R.id.pointsEnd)).setText("Puntaje: " + points);
+        ((TextView) findViewById(R.id.errorsEnd)).setText("Errores: " + errors);
+        String dif;
+        if (difficulty == 1) {
+            dif = "Facil";
+        } else if (difficulty == 2) {
+            dif = "Normal";
+        } else {
+            dif = "Dificil";
+        }
+        Cursor c = dbr.rawQuery("SELECT * FROM RANKING WHERE username= '" + user + "'", null);
+        if (!c.moveToFirst()){
+            dbHelper.insertar("INSERT INTO RANKING(USERNAME,PUNTAJE,DIFICULTAD) VALUES('" + user + "','" + points + "','" + dif + "')", db);
+            isRecord = true;
+        }
 
-        Log.i(TAG,"USER"+user);
-        Log.i(TAG,"PUNTOS"+points);
-        Log.i(TAG,"RECORD"+record);
-        Log.i(TAG,"DIFICULTAD"+difficulty);
-        Log.i(TAG,"ERRORES"+errors);
+        else if (Integer.parseInt(c.getString(2)) < points){
+            db.execSQL("UPDATE RANKING SET PUNTAJE='" + points + "', DIFICULTAD='"+dif+"' WHERE USERNAME='" + user + "'");
+            isRecord = true;
+        }
+
+        ((TextView) findViewById(R.id.difficultyEnd)).setText("Dificultad: " + dif);
+        String timeString = "";
+        if (time > 60) {
+            timeString = timeString + time / 60 + ":" + time % 60;
+            ((TextView) findViewById(R.id.timeEnd)).setText("Tiempo: " + timeString);
+        } else
+            ((TextView) findViewById(R.id.timeEnd)).setText("Tiempo: 00:" + time);
+
+        ((TextView) findViewById(R.id.userNameEnd)).setText(user);
+        if (isRecord) {
+            ((ImageView) findViewById(R.id.checkRecordOn)).setVisibility(View.VISIBLE);
+            ((ImageView) findViewById(R.id.checkRecordOff)).setVisibility(View.INVISIBLE);
+        } else {
+            ((ImageView) findViewById(R.id.checkRecordOn)).setVisibility(View.INVISIBLE);
+            ((ImageView) findViewById(R.id.checkRecordOff)).setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void conectarBD() {
+        dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
+        db = dbHelper.getWritableDatabase();
+        dbr = dbHelper.getReadableDatabase();
     }
 }
