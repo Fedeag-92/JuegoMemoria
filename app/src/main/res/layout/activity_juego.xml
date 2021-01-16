@@ -7,12 +7,82 @@
     android:background="#536DFE"
     tools:context=".Juego">
 
+    <TextView
+        android:id="@+id/timeJ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="3dp"
+        android:text="@string/timeGame"
+        app:layout_constraintStart_toEndOf="@+id/error6"
+        app:layout_constraintTop_toBottomOf="@+id/btnSoundJ" />
+
+    <ImageView
+        android:id="@+id/error6"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:tint="#B2FF59"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/error5"
+        app:layout_constraintTop_toTopOf="@+id/errorsJ"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/error5"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:tint="#B2FF59"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/error4"
+        app:layout_constraintTop_toTopOf="@+id/errorsJ"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/error4"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:tint="#B2FF59"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/error3"
+        app:layout_constraintTop_toTopOf="@+id/errorsJ"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/error3"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:tint="#B2FF59"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/error2"
+        app:layout_constraintTop_toTopOf="@+id/errorsJ"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/error2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:tint="#B2FF59"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/error1"
+        app:layout_constraintTop_toTopOf="@+id/errorsJ"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <TextView
+        android:id="@+id/errorsJ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:text="@string/errors"
+        app:layout_constraintStart_toEndOf="@+id/btnBackJ"
+        app:layout_constraintTop_toBottomOf="@+id/pointsJ" />
+
     <ImageView
         android:id="@+id/card37"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:contentDescription="@string/card"
         android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/card36"
         app:layout_constraintTop_toBottomOf="@+id/card32"
@@ -25,6 +95,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card38"
         app:layout_constraintTop_toBottomOf="@+id/card34"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -36,6 +107,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card39"
         app:layout_constraintTop_toBottomOf="@+id/card35"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -47,6 +119,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card37"
         app:layout_constraintTop_toBottomOf="@+id/card33"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -58,6 +131,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card31"
         app:layout_constraintTop_toBottomOf="@+id/card27"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -69,6 +143,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card33"
         app:layout_constraintTop_toBottomOf="@+id/card29"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -80,6 +155,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card34"
         app:layout_constraintTop_toBottomOf="@+id/card30"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -91,6 +167,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card32"
         app:layout_constraintTop_toBottomOf="@+id/card28"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -102,6 +179,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card26"
         app:layout_constraintTop_toBottomOf="@+id/card22"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -113,6 +191,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card28"
         app:layout_constraintTop_toBottomOf="@+id/card24"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -124,6 +203,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card29"
         app:layout_constraintTop_toBottomOf="@+id/card25"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -135,6 +215,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card27"
         app:layout_constraintTop_toBottomOf="@+id/card23"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -146,6 +227,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card21"
         app:layout_constraintTop_toBottomOf="@+id/card17"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -157,6 +239,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card23"
         app:layout_constraintTop_toBottomOf="@+id/card19"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -168,6 +251,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card24"
         app:layout_constraintTop_toBottomOf="@+id/card20"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -179,6 +263,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card22"
         app:layout_constraintTop_toBottomOf="@+id/card18"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -190,6 +275,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card16"
         app:layout_constraintTop_toBottomOf="@+id/card12"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -201,6 +287,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card18"
         app:layout_constraintTop_toBottomOf="@+id/card14"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -212,6 +299,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card19"
         app:layout_constraintTop_toBottomOf="@+id/card15"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -223,6 +311,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card17"
         app:layout_constraintTop_toBottomOf="@+id/card13"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -234,6 +323,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card11"
         app:layout_constraintTop_toBottomOf="@+id/card7"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -245,6 +335,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card13"
         app:layout_constraintTop_toBottomOf="@+id/card9"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -256,6 +347,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card14"
         app:layout_constraintTop_toBottomOf="@+id/card10"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -267,6 +359,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card12"
         app:layout_constraintTop_toBottomOf="@+id/card8"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -278,6 +371,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card9"
         app:layout_constraintTop_toBottomOf="@+id/card5"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -289,6 +383,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card8"
         app:layout_constraintTop_toBottomOf="@+id/card4"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -300,6 +395,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card7"
         app:layout_constraintTop_toBottomOf="@+id/card3"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -311,6 +407,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card31"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -323,6 +420,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card2"
         app:layout_constraintTop_toBottomOf="@+id/btnBackJ"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -334,6 +432,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnBackJ"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -345,6 +444,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card6"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -356,6 +456,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card3"
         app:layout_constraintTop_toBottomOf="@+id/btnBackJ"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -367,6 +468,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card16"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -378,6 +480,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card21"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -389,6 +492,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card4"
         app:layout_constraintTop_toBottomOf="@+id/btnBackJ"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -400,6 +504,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card1"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -411,6 +516,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card6"
         app:layout_constraintTop_toBottomOf="@+id/card2"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -422,6 +528,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card26"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -433,6 +540,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toEndOf="@+id/card1"
         app:layout_constraintTop_toBottomOf="@+id/btnBackJ"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -444,31 +552,71 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card11"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <ImageView
         android:id="@+id/btnBackJ"
-        android:layout_width="43dp"
+        android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:contentDescription="@string/card"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
+        app:srcCompat="@drawable/back_button" />
 
     <ToggleButton
         android:id="@+id/btnSoundJ"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/sonido"
+        android:textOff="@string/sonidooff"
+        android:textOn="@string/sonidoon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/error1"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        app:tint="#B2FF59"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/errorsJ"
+        app:layout_constraintTop_toTopOf="@+id/errorsJ"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <TextView
+        android:id="@+id/pointsJ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="ToggleButton"
-        android:textOff="Sonido Off"
-        android:textOn="Sonido On"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.73"
+        android:layout_marginStart="28dp"
+        android:text="@string/points"
+        app:layout_constraintStart_toEndOf="@+id/btnBackJ"
+        app:layout_constraintTop_toBottomOf="@+id/userNameJ" />
+
+    <TextView
+        android:id="@+id/userNameJ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/txt_usuario"
         app:layout_constraintStart_toEndOf="@+id/btnBackJ"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="51dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toEndOf="@+id/timeJ"
+        app:layout_constraintTop_toBottomOf="@+id/btnSoundJ" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

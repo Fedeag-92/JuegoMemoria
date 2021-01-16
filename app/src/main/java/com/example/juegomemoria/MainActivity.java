@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,8 +20,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnLogin, btnRegister;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
-
-    private static final String TAG = "MyActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +51,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnLogin:
                 if (username.length() != 0 && password.length() != 0) {
                     if (verificarPassword(username, password)) {
-                        dbHelper.close();
                         Intent i = new Intent(MainActivity.this, Dificultad.class);
                         i.putExtra("user", this.user.getText().toString());
                         startActivity(i);
                     } else {
                         Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
                     }
-                   //
                 } else {
                     Toast.makeText(getApplicationContext(), "Campos incompletos", Toast.LENGTH_LONG).show();
                 }
@@ -74,8 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public boolean verificarPassword(String username, String pass) {
-        Cursor c = db.rawQuery("SELECT username FROM USUARIO WHERE username = '" + username + "' AND password = '" + pass + "'", null);
-        //Log.i(TAG,"Cursor es: "+c+" con resultado: "+c.moveToFirst());
+        Cursor c = db.rawQuery("SELECT username FROM usuario WHERE username = '" + username + "' AND passwordtext = '" + pass + "'", null);
         return (c.moveToFirst());
     }
 

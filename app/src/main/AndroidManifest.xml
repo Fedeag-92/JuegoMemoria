@@ -4,16 +4,28 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label=""
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Juego" />
-        <activity android:name=".Ranking" />
-        <activity android:name=".Dificultad" />
-        <activity android:name=".Registro" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".FinJuego"></activity>
+        <activity
+            android:name=".Juego"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Ranking"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Dificultad"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Registro"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

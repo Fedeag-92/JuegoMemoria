@@ -2,17 +2,12 @@ package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.example.juegomemoria.Registro;
-
-import com.example.juegomemoria.utlidades.Utilidades;
 
 public class Registro extends AppCompatActivity {
 
@@ -30,7 +25,6 @@ public class Registro extends AppCompatActivity {
         txt_apellido = (EditText) findViewById(R.id.apellido);
         txt_username = (EditText) findViewById(R.id.username);
         txt_password = (EditText) findViewById(R.id.password);
-
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
         db = dbHelper.getWritableDatabase();
 
@@ -50,12 +44,10 @@ public class Registro extends AppCompatActivity {
             if (verificarUsuario(username)) {
                 Toast.makeText(this, "ERROR. Username ya existe.", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Registrado exitosamente...", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Registro en proceso...", Toast.LENGTH_LONG).show();
                 dbHelper.insertar("INSERT INTO USUARIO VALUES('" + username + "','" + nombre + "','" + apellido + "','" + password + "')", db);
-                dbHelper.close();
+
                 onBackPressed();
-                //Intent i = new Intent(this, MainActivity.class);
-                //startActivity(i);
             }
         }
     }
