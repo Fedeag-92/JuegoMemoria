@@ -1,6 +1,7 @@
 package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
@@ -20,7 +21,7 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
     Button btnPlay;
     ToggleButton btnSound;
     Button btnRanking;
-    ImageView btnBack;
+    ImageView btnBack, imgBart;
     int choice = 0;
     AudioManager amanager;
 
@@ -39,6 +40,7 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         btnRanking = (Button) findViewById(R.id.btnRanking);
         btnBack = (ImageView) findViewById(R.id.btnAtras);
         btnSound.setChecked(true);
+        imgBart = (ImageView) findViewById(R.id.bartDif) ;
 
         btnEasy.setOnClickListener(this);
         btnNormal.setOnClickListener(this);
@@ -51,20 +53,35 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+        if(choice!=0)
+            imgBart.setVisibility(View.VISIBLE);
+        ConstraintLayout.LayoutParams params;
         switch (v.getId()) {
             case R.id.btnFacil:
+                params = (ConstraintLayout.LayoutParams) imgBart.getLayoutParams();
+                params.topToTop = R.id.btnFacil;
+                params.bottomToBottom = R.id.btnFacil;
+                imgBart.requestLayout();
                 choice = 1;
                 btnEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifActivado));
                 btnNormal.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 btnHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 break;
             case R.id.btnNormal:
+                params = (ConstraintLayout.LayoutParams) imgBart.getLayoutParams();
+                params.topToTop = R.id.btnNormal;
+                params.bottomToBottom = R.id.btnNormal;
+                imgBart.requestLayout();
                 choice = 2;
                 btnEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 btnNormal.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifActivado));
                 btnHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 break;
             case R.id.btnDificil:
+                params = (ConstraintLayout.LayoutParams) imgBart.getLayoutParams();
+                params.topToTop = R.id.btnDificil;
+                params.bottomToBottom = R.id.btnDificil;
+                imgBart.requestLayout();
                 choice = 3;
                 btnEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 btnNormal.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));

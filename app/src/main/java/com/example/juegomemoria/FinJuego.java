@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class FinJuego extends AppCompatActivity {
     private int points, difficulty, errors, time;
@@ -18,6 +21,8 @@ public class FinJuego extends AppCompatActivity {
     private ImageView recOn, recOff;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db, dbr;
+    ArrayList<Drawable> imgWin;
+    ArrayList<Drawable> imgLose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,8 @@ public class FinJuego extends AppCompatActivity {
         setContentView(R.layout.activity_fin_juego);
         conectarBD();
 
+
+;
         user = getIntent().getStringExtra("user");
         points = getIntent().getIntExtra("points", 0);
         isRecord = getIntent().getBooleanExtra("record", false);

@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (username.length() != 0 && password.length() != 0) {
                     if (verificarPassword(username, password)) {
                         verif.setVisibility(View.VISIBLE);
-                        long random = (long) (Math.random() * 6000 + 3000);
+                        long random = (long) (Math.random() * 3000 + 3000);
                         handler.postDelayed(new Runnable() {
                             public void run() {
                                 verif.setVisibility(View.INVISIBLE);
