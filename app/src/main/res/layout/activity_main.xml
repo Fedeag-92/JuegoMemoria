@@ -4,71 +4,144 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#536DFE"
+    android:background="@drawable/back"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/logVerif"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:visibility="invisible"
+        android:src="@drawable/loginverif"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.277" />
+
+    <Button
+        android:id="@+id/btnRegisterM"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:fontFamily="@font/permanent_marker"
-        android:text="@string/app_name"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/loginUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
-        android:ems="10"
-        android:hint="@string/txt_usuario"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:autofillHints="" />
-
-    <EditText
-        android:id="@+id/loginPassword"
-        android:layout_width="205dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="40dp"
-        android:ems="10"
-        android:hint="@string/txt_password"
-        android:inputType="textPassword"
+        android:layout_marginBottom="14dp"
+        android:backgroundTint="#FF6E40"
+        android:text="@string/btn_registro"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/imgMain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginUserName"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginBottom="37dp"
         android:backgroundTint="#FF6E40"
         android:text="@string/btn_ingresar"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegisterM"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordMain" />
 
-    <Button
-        android:id="@+id/btnRegistrar"
+    <EditText
+        android:id="@+id/passwordMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="#FF6E40"
-        android:text="@string/btn_registro"
+        android:layout_marginBottom="56dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/txt_password"
+        android:inputType="textPassword"
+        android:textColorHint="#000000"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/userNameMain" />
+
+    <EditText
+        android:id="@+id/userNameMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="37dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/txt_usuario"
+        android:inputType="textPersonName"
+        android:textColorHint="#000000"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/passwordMain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tittleMain" />
+
+    <ImageView
+        android:id="@+id/imgMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegisterM"
+        app:srcCompat="@drawable/main" />
+
+    <ImageView
+        android:id="@+id/imgIntro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="68dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="52dp"
+        app:layout_constraintBottom_toTopOf="@id/imgLoading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/intro" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/imgLoading"
+        android:layout_width="195dp"
+        android:layout_height="206dp"
+        android:layout_marginBottom="152dp"
+        android:layout_marginEnd="166dp"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="78dp"
+        android:src="@drawable/loading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgIntro"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tittleMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="34dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/permanent_marker"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor="#FFD740"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/userNameMain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,11 @@
 package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -12,6 +13,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageView;
@@ -28,12 +30,11 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     private boolean gameOver, runningTime;
     private TextView user, pointsState, errorsState, time;
     private ImageView buttonBack;
-    private ToggleButton buttonSound;
+    //private ToggleButton buttonSound;
     private AudioManager amanager;
     private final Random random = new Random();
-    private ArrayList<ImageView> cards;
+    private ArrayList<ImageView> cells;
     ArrayList<Integer> images = new ArrayList<>();
-    ArrayList<Integer> usedImages;
     ArrayList<Drawable> drawableLocation;
     final Handler handler = new Handler();
     private ImageView firstCard;
@@ -60,8 +61,9 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         errorsState = (TextView) findViewById(R.id.errorsJ);
         buttonBack = (ImageView) findViewById(R.id.btnBackJ);
         buttonBack.setOnClickListener(this);
-        buttonSound = (ToggleButton) findViewById(R.id.btnSoundJ);
-        buttonSound.setOnClickListener(this);
+
+        //buttonSound = (ToggleButton) findViewById(R.id.btnSoundJ);
+        //buttonSound.setOnClickListener(this);
 
         amanager = (AudioManager) getSystemService(AUDIO_SERVICE);
 
@@ -71,7 +73,6 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         images = new ArrayList<>();
         errors = 1;
         images.addAll(Arrays.asList(R.drawable.card1, R.drawable.card2, R.drawable.card3, R.drawable.card4, R.drawable.card5, R.drawable.card6, R.drawable.card7, R.drawable.card8, R.drawable.card9, R.drawable.card10, R.drawable.card11, R.drawable.card12, R.drawable.card13, R.drawable.card14, R.drawable.card15, R.drawable.card16, R.drawable.card17, R.drawable.card18, R.drawable.card19, R.drawable.card20));
-        usedImages = new ArrayList<>(images);
         difficulty = getIntent().getIntExtra("choice", 0);
 
         switch (difficulty) {
@@ -79,54 +80,44 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                 for (int i = 0; i < 6; i++) {
                     ((ImageView) (findViewById(getResources().getIdentifier("error" + (i + 1), "id", getPackageName())))).setVisibility(View.INVISIBLE);
                 }
-                time.setTranslationX(-100);
-                chronometer.setTranslationX(-100);
                 errorsState.setText("Errores: SIN LIMITES");
                 turns = 6;
                 errorsMax = Integer.MAX_VALUE;
-                cards = new ArrayList<ImageView>(12);
-                for (int j = 0; j < 40; j++) {
-                    if (j != 4 && j != 9 && j != 14 && (j < 15)) {
-                        addCard(j);
-                    } else
-                        quitCard(j);
-                }
+                cells = new ArrayList<ImageView>(turns * 2);
 
-                for (int i = 0; i < images.size() - turns; i++) {
-                    usedImages.remove(random.nextInt(Integer.valueOf(usedImages.size())));
-                }
+                paintCells(turns * 2);
+
                 play(turns);
 
                 break;
             case 2:
-                turns = 12;
+                turns = 10;
                 errorsMax = 7;
-                cards = new ArrayList<ImageView>(24);
-                for (int j = 0; j < 29; j++) {
-                    if (j != 4 && j != 9 && j != 14 && j != 19 && j != 24) {
-                        addCard(j);
-                    }
-                }
-
-                for (int i = 0; i < images.size() - turns; i++) {
-                    usedImages.remove(random.nextInt(Integer.valueOf(usedImages.size())));
-                }
+                cells = new ArrayList<ImageView>(turns * 2);
+                paintCells(turns * 2);
 
                 play(turns);
                 break;
             case 3:
-                for (int i = 3; i < 6; i++) {
+                for (int i = 4; i < 6; i++) {
                     ((ImageView) (findViewById(getResources().getIdentifier("error" + (i + 1), "id", getPackageName())))).setVisibility(View.INVISIBLE);
                 }
-                turns = 20;
-                errorsMax = 4;
-                cards = new ArrayList<ImageView>(40);
-                for (int j = 0; j < 40; j++) {
-                    addCard(j);
-                }
+                turns = 14;
+                errorsMax = 5;
+                cells = new ArrayList<ImageView>(turns * 2);
+                paintCells(turns * 2);
 
                 play(turns);
                 break;
+        }
+    }
+
+    public void paintCells(int cantCells) {
+        for (int j = 0; j < 28; j++) {
+            if (j < cantCells)
+                addCell(j);
+            else
+                quitCell(j);
         }
     }
 
@@ -151,30 +142,25 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         pauseOffset = 0;
     }
 
-    public void quitCard(int j) {
-        ImageView card = searchCard(j);
+    public void quitCell(int j) {
+        ImageView card = searchCell(j);
         card.setVisibility(View.GONE);
     }
 
-    public void addCard(int j) {
-        ImageView card = searchCard(j);
+    public void addCell(int j) {
+        ImageView card = searchCell(j);
 
         card.setOnClickListener(this);
         card.setVisibility(View.VISIBLE);
         card.setEnabled(false);
-        cards.add(card);
+        cells.add(card);
 
-        if (difficulty != 3 && (j == 0 || j == 5 || j == 10 || j == 15 || j == 20 || j == 25)) {
-            ConstraintLayout.LayoutParams parameter = (ConstraintLayout.LayoutParams) card.getLayoutParams();
-            parameter.setMarginStart(150);
-            card.setLayoutParams(parameter);
-        }
     }
 
-    public ImageView searchCard(int j) {
+    public ImageView searchCell(int j) {
         ImageView card;
 
-        String cardName = "card" + (j + 1);
+        String cardName = "cell" + (j + 1);
         int resIDcard = getResources().getIdentifier(cardName, "id", getPackageName());
         card = ((ImageView) findViewById(resIDcard));
 
@@ -182,7 +168,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void play(int cantImages) {
-        int posCeld, posImage, j;
+        int posCell, posImage, j;
 
         ArrayList<Integer> elements = new ArrayList<>();
         for (int i = 0; i < cantImages * 2; i++) {
@@ -191,28 +177,28 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
 
         while (cantImages > 0) {
             j = 0;
-            posImage = random.nextInt(usedImages.size());
+            posImage = random.nextInt(images.size());
             while (j < 2) {
-                posCeld = elements.get(random.nextInt(elements.size()));
-                cards.get(posCeld).setImageResource(usedImages.get(posImage));
-                elements.remove(Integer.valueOf(posCeld));
+                posCell = elements.get(random.nextInt(elements.size()));
+                cells.get(posCell).setImageResource(images.get(posImage));
+                elements.remove(Integer.valueOf(posCell));
                 j++;
             }
-            usedImages.remove(posImage);
+            images.remove(posImage);
             cantImages--;
         }
 
         drawableLocation = new ArrayList<>();
-        for (int i = 0; i < cards.size(); i++) {
-            drawableLocation.add(cards.get(i).getDrawable());
+        for (int i = 0; i < cells.size(); i++) {
+            drawableLocation.add(cells.get(i).getDrawable());
         }
 
         handler.postDelayed(new Runnable() {
             public void run() {
-                for (int i = 0; i < cards.size(); i++) {
+                for (int i = 0; i < cells.size(); i++) {
+                    cells.get(i).setImageResource(R.drawable.dona);
+                    cells.get(i).setEnabled(true);
                     startChronometer();
-                    cards.get(i).setImageResource(R.drawable.dona);
-                    cards.get(i).setEnabled(true);
                 }
             }
         }, 5000);   //5 seconds
@@ -223,9 +209,10 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == buttonBack.getId())
             onBackPressed();
-        else if (v.getId() == buttonSound.getId()) {
-            amanager.setStreamMute(AudioManager.STREAM_MUSIC, !buttonSound.isChecked());
-        } else {
+            // else if (v.getId() == buttonSound.getId()) {
+            //     amanager.setStreamMute(AudioManager.STREAM_MUSIC, !buttonSound.isChecked());
+            // }
+        else {
             if (!gameOver) {
                 if (difficulty == 1)
                     repaintEasy(v);
@@ -243,9 +230,9 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                     secondImage = ((BitmapDrawable) (secondCard).getDrawable()).getBitmap();
                 }
                 if (firstCard != null && secondCard != null) {
-                    for (int i = 0; i < cards.size(); i++) {
-                        if (cards.get(i).getVisibility() == View.VISIBLE)
-                            cards.get(i).setEnabled(false);
+                    for (int i = 0; i < cells.size(); i++) {
+                        if (cells.get(i).getVisibility() == View.VISIBLE)
+                            cells.get(i).setEnabled(false);
                     }
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -275,9 +262,9 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                             }
                             points = (hits * 100) / (errors);
                             pointsState.setText("Puntaje: " + points);
-                            for (int i = 0; i < cards.size(); i++) {
-                                if (cards.get(i).getVisibility() == View.VISIBLE)
-                                    cards.get(i).setEnabled(true);
+                            for (int i = 0; i < cells.size(); i++) {
+                                if (cells.get(i).getVisibility() == View.VISIBLE)
+                                    cells.get(i).setEnabled(true);
                             }
                             firstCard = null;
                             secondCard = null;
@@ -285,12 +272,13 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                             secondImage = null;
                         }
 
-                    }, 3000);   //5 seconds
+                    }, 1000);
                 }
             } else
                 Toast.makeText(getApplicationContext(), "Juego terminado, empiece uno nuevo yendo hacia atras", Toast.LENGTH_LONG).show();
 
         }
+
     }
 
     public void endGame() {
@@ -304,254 +292,227 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         i.putExtra("difficulty", this.difficulty);
         i.putExtra("errors", this.errors);
         i.putExtra("time", elapsed);
-
+        finish();
         startActivity(i);
     }
 
-    public void calculateFinalPoints(int seconds){
-        finalPoints = ((hits * 100) / (errors + elapsed))*10;
+    public void calculateFinalPoints(int seconds) {
+        finalPoints = ((hits * 100) / (errors + elapsed)) * 10;
     }
 
     public void repaintEasy(View v) {
         switch (v.getId()) {
-            case R.id.card1:
-                cards.get(0).setImageDrawable(drawableLocation.get(0));
+            case R.id.cell1:
+                cells.get(0).setImageDrawable(drawableLocation.get(0));
                 break;
-            case R.id.card2:
-                cards.get(1).setImageDrawable(drawableLocation.get(1));
+            case R.id.cell2:
+                cells.get(1).setImageDrawable(drawableLocation.get(1));
                 break;
-            case R.id.card3:
-                cards.get(2).setImageDrawable(drawableLocation.get(2));
+            case R.id.cell3:
+                cells.get(2).setImageDrawable(drawableLocation.get(2));
                 break;
-            case R.id.card4:
-                cards.get(3).setImageDrawable(drawableLocation.get(3));
+            case R.id.cell4:
+                cells.get(3).setImageDrawable(drawableLocation.get(3));
                 break;
-            case R.id.card6:
-                cards.get(4).setImageDrawable(drawableLocation.get(4));
+            case R.id.cell5:
+                cells.get(4).setImageDrawable(drawableLocation.get(4));
                 break;
-            case R.id.card7:
-                cards.get(5).setImageDrawable(drawableLocation.get(5));
+            case R.id.cell6:
+                cells.get(5).setImageDrawable(drawableLocation.get(5));
                 break;
-            case R.id.card8:
-                cards.get(6).setImageDrawable(drawableLocation.get(6));
+            case R.id.cell7:
+                cells.get(6).setImageDrawable(drawableLocation.get(6));
                 break;
-            case R.id.card9:
-                cards.get(7).setImageDrawable(drawableLocation.get(7));
+            case R.id.cell8:
+                cells.get(7).setImageDrawable(drawableLocation.get(7));
                 break;
-            case R.id.card11:
-                cards.get(8).setImageDrawable(drawableLocation.get(8));
+            case R.id.cell9:
+                cells.get(8).setImageDrawable(drawableLocation.get(8));
                 break;
-            case R.id.card12:
-                cards.get(9).setImageDrawable(drawableLocation.get(9));
+            case R.id.cell10:
+                cells.get(9).setImageDrawable(drawableLocation.get(9));
                 break;
-            case R.id.card13:
-                cards.get(10).setImageDrawable(drawableLocation.get(10));
+            case R.id.cell11:
+                cells.get(10).setImageDrawable(drawableLocation.get(10));
                 break;
-            case R.id.card14:
-                cards.get(11).setImageDrawable(drawableLocation.get(11));
+            case R.id.cell12:
+                cells.get(11).setImageDrawable(drawableLocation.get(11));
                 break;
         }
     }
 
     public void repaintNormal(View v) {
         switch (v.getId()) {
-            case R.id.card1:
-                cards.get(0).setImageDrawable(drawableLocation.get(0));
+            case R.id.cell1:
+                cells.get(0).setImageDrawable(drawableLocation.get(0));
                 break;
-            case R.id.card2:
-                cards.get(1).setImageDrawable(drawableLocation.get(1));
+            case R.id.cell2:
+                cells.get(1).setImageDrawable(drawableLocation.get(1));
                 break;
-            case R.id.card3:
-                cards.get(2).setImageDrawable(drawableLocation.get(2));
+            case R.id.cell3:
+                cells.get(2).setImageDrawable(drawableLocation.get(2));
                 break;
-            case R.id.card4:
-                cards.get(3).setImageDrawable(drawableLocation.get(3));
+            case R.id.cell4:
+                cells.get(3).setImageDrawable(drawableLocation.get(3));
                 break;
-            case R.id.card6:
-                cards.get(4).setImageDrawable(drawableLocation.get(4));
+            case R.id.cell5:
+                cells.get(4).setImageDrawable(drawableLocation.get(4));
                 break;
-            case R.id.card7:
-                cards.get(5).setImageDrawable(drawableLocation.get(5));
+            case R.id.cell6:
+                cells.get(5).setImageDrawable(drawableLocation.get(5));
                 break;
-            case R.id.card8:
-                cards.get(6).setImageDrawable(drawableLocation.get(6));
+            case R.id.cell7:
+                cells.get(6).setImageDrawable(drawableLocation.get(6));
                 break;
-            case R.id.card9:
-                cards.get(7).setImageDrawable(drawableLocation.get(7));
+            case R.id.cell8:
+                cells.get(7).setImageDrawable(drawableLocation.get(7));
                 break;
-            case R.id.card11:
-                cards.get(8).setImageDrawable(drawableLocation.get(8));
+            case R.id.cell9:
+                cells.get(8).setImageDrawable(drawableLocation.get(8));
                 break;
-            case R.id.card12:
-                cards.get(9).setImageDrawable(drawableLocation.get(9));
+            case R.id.cell10:
+                cells.get(9).setImageDrawable(drawableLocation.get(9));
                 break;
-            case R.id.card13:
-                cards.get(10).setImageDrawable(drawableLocation.get(10));
+            case R.id.cell11:
+                cells.get(10).setImageDrawable(drawableLocation.get(10));
                 break;
-            case R.id.card14:
-                cards.get(11).setImageDrawable(drawableLocation.get(11));
+            case R.id.cell12:
+                cells.get(11).setImageDrawable(drawableLocation.get(11));
                 break;
-            case R.id.card16:
-                cards.get(12).setImageDrawable(drawableLocation.get(12));
+            case R.id.cell13:
+                cells.get(12).setImageDrawable(drawableLocation.get(12));
                 break;
-            case R.id.card17:
-                cards.get(13).setImageDrawable(drawableLocation.get(13));
+            case R.id.cell14:
+                cells.get(13).setImageDrawable(drawableLocation.get(13));
                 break;
-            case R.id.card18:
-                cards.get(14).setImageDrawable(drawableLocation.get(14));
+            case R.id.cell15:
+                cells.get(14).setImageDrawable(drawableLocation.get(14));
                 break;
-            case R.id.card19:
-                cards.get(15).setImageDrawable(drawableLocation.get(15));
+            case R.id.cell16:
+                cells.get(15).setImageDrawable(drawableLocation.get(15));
                 break;
-            case R.id.card21:
-                cards.get(16).setImageDrawable(drawableLocation.get(16));
+            case R.id.cell17:
+                cells.get(16).setImageDrawable(drawableLocation.get(16));
                 break;
-            case R.id.card22:
-                cards.get(17).setImageDrawable(drawableLocation.get(17));
+            case R.id.cell18:
+                cells.get(17).setImageDrawable(drawableLocation.get(17));
                 break;
-            case R.id.card23:
-                cards.get(18).setImageDrawable(drawableLocation.get(18));
+            case R.id.cell19:
+                cells.get(18).setImageDrawable(drawableLocation.get(18));
                 break;
-            case R.id.card24:
-                cards.get(19).setImageDrawable(drawableLocation.get(19));
-                break;
-            case R.id.card26:
-                cards.get(20).setImageDrawable(drawableLocation.get(20));
-                break;
-            case R.id.card27:
-                cards.get(21).setImageDrawable(drawableLocation.get(21));
-                break;
-            case R.id.card28:
-                cards.get(22).setImageDrawable(drawableLocation.get(22));
-                break;
-            case R.id.card29:
-                cards.get(23).setImageDrawable(drawableLocation.get(23));
+            case R.id.cell20:
+                cells.get(19).setImageDrawable(drawableLocation.get(19));
                 break;
         }
     }
 
     public void repaintHard(View v) {
         switch (v.getId()) {
-            case R.id.card1:
-                cards.get(0).setImageDrawable(drawableLocation.get(0));
+            case R.id.cell1:
+                cells.get(0).setImageDrawable(drawableLocation.get(0));
                 break;
-            case R.id.card2:
-                cards.get(1).setImageDrawable(drawableLocation.get(1));
+            case R.id.cell2:
+                cells.get(1).setImageDrawable(drawableLocation.get(1));
                 break;
-            case R.id.card3:
-                cards.get(2).setImageDrawable(drawableLocation.get(2));
+            case R.id.cell3:
+                cells.get(2).setImageDrawable(drawableLocation.get(2));
                 break;
-            case R.id.card4:
-                cards.get(3).setImageDrawable(drawableLocation.get(3));
+            case R.id.cell4:
+                cells.get(3).setImageDrawable(drawableLocation.get(3));
                 break;
-            case R.id.card5:
-                cards.get(4).setImageDrawable(drawableLocation.get(4));
+            case R.id.cell5:
+                cells.get(4).setImageDrawable(drawableLocation.get(4));
                 break;
-            case R.id.card6:
-                cards.get(5).setImageDrawable(drawableLocation.get(5));
+            case R.id.cell6:
+                cells.get(5).setImageDrawable(drawableLocation.get(5));
                 break;
-            case R.id.card7:
-                cards.get(6).setImageDrawable(drawableLocation.get(6));
+            case R.id.cell7:
+                cells.get(6).setImageDrawable(drawableLocation.get(6));
                 break;
-            case R.id.card8:
-                cards.get(7).setImageDrawable(drawableLocation.get(7));
+            case R.id.cell8:
+                cells.get(7).setImageDrawable(drawableLocation.get(7));
                 break;
-            case R.id.card9:
-                cards.get(8).setImageDrawable(drawableLocation.get(8));
+            case R.id.cell9:
+                cells.get(8).setImageDrawable(drawableLocation.get(8));
                 break;
-            case R.id.card10:
-                cards.get(9).setImageDrawable(drawableLocation.get(9));
+            case R.id.cell10:
+                cells.get(9).setImageDrawable(drawableLocation.get(9));
                 break;
-            case R.id.card11:
-                cards.get(10).setImageDrawable(drawableLocation.get(10));
+            case R.id.cell11:
+                cells.get(10).setImageDrawable(drawableLocation.get(10));
                 break;
-            case R.id.card12:
-                cards.get(11).setImageDrawable(drawableLocation.get(11));
+            case R.id.cell12:
+                cells.get(11).setImageDrawable(drawableLocation.get(11));
                 break;
-            case R.id.card13:
-                cards.get(12).setImageDrawable(drawableLocation.get(12));
+            case R.id.cell13:
+                cells.get(12).setImageDrawable(drawableLocation.get(12));
                 break;
-            case R.id.card14:
-                cards.get(13).setImageDrawable(drawableLocation.get(13));
+            case R.id.cell14:
+                cells.get(13).setImageDrawable(drawableLocation.get(13));
                 break;
-            case R.id.card15:
-                cards.get(14).setImageDrawable(drawableLocation.get(14));
+            case R.id.cell15:
+                cells.get(14).setImageDrawable(drawableLocation.get(14));
                 break;
-            case R.id.card16:
-                cards.get(15).setImageDrawable(drawableLocation.get(15));
+            case R.id.cell16:
+                cells.get(15).setImageDrawable(drawableLocation.get(15));
                 break;
-            case R.id.card17:
-                cards.get(16).setImageDrawable(drawableLocation.get(16));
+            case R.id.cell17:
+                cells.get(16).setImageDrawable(drawableLocation.get(16));
                 break;
-            case R.id.card18:
-                cards.get(17).setImageDrawable(drawableLocation.get(17));
+            case R.id.cell18:
+                cells.get(17).setImageDrawable(drawableLocation.get(17));
                 break;
-            case R.id.card19:
-                cards.get(18).setImageDrawable(drawableLocation.get(18));
+            case R.id.cell19:
+                cells.get(18).setImageDrawable(drawableLocation.get(18));
                 break;
-            case R.id.card20:
-                cards.get(19).setImageDrawable(drawableLocation.get(19));
+            case R.id.cell20:
+                cells.get(19).setImageDrawable(drawableLocation.get(19));
                 break;
-            case R.id.card21:
-                cards.get(20).setImageDrawable(drawableLocation.get(20));
+            case R.id.cell21:
+                cells.get(20).setImageDrawable(drawableLocation.get(20));
                 break;
-            case R.id.card22:
-                cards.get(21).setImageDrawable(drawableLocation.get(21));
+            case R.id.cell22:
+                cells.get(21).setImageDrawable(drawableLocation.get(21));
                 break;
-            case R.id.card23:
-                cards.get(22).setImageDrawable(drawableLocation.get(22));
+            case R.id.cell23:
+                cells.get(22).setImageDrawable(drawableLocation.get(22));
                 break;
-            case R.id.card24:
-                cards.get(23).setImageDrawable(drawableLocation.get(23));
+            case R.id.cell24:
+                cells.get(23).setImageDrawable(drawableLocation.get(23));
                 break;
-            case R.id.card25:
-                cards.get(24).setImageDrawable(drawableLocation.get(24));
+            case R.id.cell25:
+                cells.get(24).setImageDrawable(drawableLocation.get(24));
                 break;
-            case R.id.card26:
-                cards.get(25).setImageDrawable(drawableLocation.get(25));
+            case R.id.cell26:
+                cells.get(25).setImageDrawable(drawableLocation.get(25));
                 break;
-            case R.id.card27:
-                cards.get(26).setImageDrawable(drawableLocation.get(26));
+            case R.id.cell27:
+                cells.get(26).setImageDrawable(drawableLocation.get(26));
                 break;
-            case R.id.card28:
-                cards.get(27).setImageDrawable(drawableLocation.get(27));
-                break;
-            case R.id.card29:
-                cards.get(28).setImageDrawable(drawableLocation.get(28));
-                break;
-            case R.id.card30:
-                cards.get(29).setImageDrawable(drawableLocation.get(29));
-                break;
-            case R.id.card31:
-                cards.get(30).setImageDrawable(drawableLocation.get(30));
-                break;
-            case R.id.card32:
-                cards.get(31).setImageDrawable(drawableLocation.get(31));
-                break;
-            case R.id.card33:
-                cards.get(32).setImageDrawable(drawableLocation.get(32));
-                break;
-            case R.id.card34:
-                cards.get(33).setImageDrawable(drawableLocation.get(33));
-                break;
-            case R.id.card35:
-                cards.get(34).setImageDrawable(drawableLocation.get(34));
-                break;
-            case R.id.card36:
-                cards.get(35).setImageDrawable(drawableLocation.get(35));
-                break;
-            case R.id.card37:
-                cards.get(36).setImageDrawable(drawableLocation.get(36));
-                break;
-            case R.id.card38:
-                cards.get(37).setImageDrawable(drawableLocation.get(37));
-                break;
-            case R.id.card39:
-                cards.get(38).setImageDrawable(drawableLocation.get(38));
-                break;
-            case R.id.card40:
-                cards.get(39).setImageDrawable(drawableLocation.get(39));
+            case R.id.cell28:
+                cells.get(27).setImageDrawable(drawableLocation.get(27));
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(Juego.this);
+        builder.setMessage("Si sales se perderá el progreso.");
+        builder.setCancelable(true);
+        builder.setNegativeButton("Continuar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        builder.setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

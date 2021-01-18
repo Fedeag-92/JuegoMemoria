@@ -24,7 +24,7 @@ public class Registro extends AppCompatActivity {
         txt_nombre = (EditText) findViewById(R.id.nombre);
         txt_apellido = (EditText) findViewById(R.id.apellido);
         txt_username = (EditText) findViewById(R.id.username);
-        txt_password = (EditText) findViewById(R.id.password);
+        txt_password = (EditText) findViewById(R.id.passwordReg);
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
         db = dbHelper.getWritableDatabase();
 

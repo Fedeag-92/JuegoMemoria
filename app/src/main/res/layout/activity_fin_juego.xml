@@ -7,14 +7,59 @@
     android:background="#536DFE"
     tools:context=".FinJuego">
 
+    <ImageView
+        android:id="@+id/btnBackJ2"
+        android:layout_width="43dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="662dp"
+        android:layout_marginEnd="320dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/card"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_button" />
+
+    <ImageView
+        android:id="@+id/checkRecordOn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="149dp"
+        android:layout_marginEnd="194dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recordEnd"
+        app:layout_constraintTop_toBottomOf="@+id/difficultyEnd"
+        app:srcCompat="@android:drawable/checkbox_on_background" />
+
+    <ImageView
+        android:id="@+id/checkRecordOff"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="149dp"
+        android:layout_marginEnd="194dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recordEnd"
+        app:layout_constraintTop_toBottomOf="@+id/difficultyEnd"
+        app:srcCompat="@android:drawable/checkbox_off_background" />
+
     <TextView
         android:id="@+id/timeEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="389dp"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/permanent_marker"
         android:text="@string/timeGame"
         android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.167"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,10 +69,14 @@
         android:id="@+id/userNameEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="667dp"
+        android:layout_marginEnd="183dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="32dp"
         android:text="@string/txt_usuario"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnBackJ2"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,10 +84,12 @@
         android:id="@+id/pointsEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="469dp"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/permanent_marker"
         android:text="@string/points"
         android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.173"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,23 +99,30 @@
         android:id="@+id/endGameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="548dp"
+        android:layout_marginTop="60dp"
         android:fontFamily="@font/permanent_marker"
         android:text="@string/end"
         android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="191dp" />
+        app:layout_constraintTop_toBottomOf="@+id/userNameEnd" />
 
     <TextView
         android:id="@+id/recordEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="149dp"
+        android:layout_marginEnd="255dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/permanent_marker"
         android:text="@string/record"
         android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficultyEnd" />
 
@@ -72,10 +130,12 @@
         android:id="@+id/errorsEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="309dp"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/permanent_marker"
         android:text="@string/errors"
         android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.181"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,44 +145,15 @@
         android:id="@+id/difficultyEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="229dp"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/permanent_marker"
         android:text="@string/difficulty"
         android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.196"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/errorsEnd" />
-
-    <ImageView
-        android:id="@+id/btnBackJ2"
-        android:layout_width="43dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="24dp"
-        android:contentDescription="@string/card"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back_button" />
-
-    <ImageView
-        android:id="@+id/checkRecordOn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toEndOf="@+id/recordEnd"
-        app:layout_constraintTop_toBottomOf="@+id/difficultyEnd"
-        app:srcCompat="@android:drawable/checkbox_on_background" />
-
-    <ImageView
-        android:id="@+id/checkRecordOff"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toEndOf="@+id/recordEnd"
-        app:layout_constraintTop_toBottomOf="@+id/difficultyEnd"
-        app:srcCompat="@android:drawable/checkbox_off_background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
