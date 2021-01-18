@@ -21,8 +21,8 @@ public class FinJuego extends AppCompatActivity {
     private ImageView recOn, recOff;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db, dbr;
-    ArrayList<Drawable> imgWin;
-    ArrayList<Drawable> imgLose;
+    ArrayList<Integer> imgWin;
+    ArrayList<Integer> imgLose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +30,16 @@ public class FinJuego extends AppCompatActivity {
         setContentView(R.layout.activity_fin_juego);
         conectarBD();
 
+        imgWin = new ArrayList<Integer>();
+        imgWin.add(R.drawable.bartwin);
+        imgWin.add(R.drawable.homerwin);
+        imgWin.add(R.drawable.homerwin2);
 
-;
+        imgLose = new ArrayList<Integer>();
+        imgLose.add(R.drawable.lisaloser);
+        imgLose.add(R.drawable.homerloser);
+        imgLose.add(R.drawable.nelsonloser);
+
         user = getIntent().getStringExtra("user");
         points = getIntent().getIntExtra("points", 0);
         isRecord = getIntent().getBooleanExtra("record", false);
@@ -68,10 +76,14 @@ public class FinJuego extends AppCompatActivity {
             ((TextView) findViewById(R.id.timeEnd)).setText("Tiempo: 00:" + time);
 
         ((TextView) findViewById(R.id.userNameEnd)).setText(user);
+        int random = (int)(Math.random()*3);
         if (isRecord) {
+
+            ((ImageView)findViewById(R.id.imgResult)).setImageResource(imgWin.get(random));
             ((ImageView) findViewById(R.id.checkRecordOn)).setVisibility(View.VISIBLE);
             ((ImageView) findViewById(R.id.checkRecordOff)).setVisibility(View.INVISIBLE);
         } else {
+            ((ImageView)findViewById(R.id.imgResult)).setImageResource(imgLose.get(random));
             ((ImageView) findViewById(R.id.checkRecordOn)).setVisibility(View.INVISIBLE);
             ((ImageView) findViewById(R.id.checkRecordOff)).setVisibility(View.VISIBLE);
         }

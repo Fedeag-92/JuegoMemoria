@@ -23,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    MediaPlayer mediaPlayer;
     EditText user, pass;
     TextView tittle;
     ImageView imgMain, imgIntro;
@@ -40,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        mediaPlayer = new MediaPlayer();
-        playMP();
+        //mediaPlayer = new MediaPlayer();
+        //playMP();
 
         loading = (GifImageView) findViewById(R.id.imgLoading);
         verif = (GifImageView) findViewById(R.id.logVerif);
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return (c.moveToFirst());
     }
 
-    public void playMP() {
+/*    public void playMP() {
         Thread playThread = new Thread() {
             public void run() {
                 mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song);
@@ -145,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
-    }
+    }*/
 
     public void conectarBD(){
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);

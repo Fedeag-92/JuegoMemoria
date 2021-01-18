@@ -53,7 +53,7 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if(choice!=0)
+        if(choice==0)
             imgBart.setVisibility(View.VISIBLE);
         ConstraintLayout.LayoutParams params;
         switch (v.getId()) {

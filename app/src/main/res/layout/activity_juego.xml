@@ -504,48 +504,42 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_delete"
-            app:tint="#B2FF59" />
+            android:src="@drawable/homerlife" />
 
         <ImageView
             android:id="@+id/error2"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_delete"
-            app:tint="#B2FF59" />
+            android:src="@drawable/homerlife" />
 
         <ImageView
             android:id="@+id/error3"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_delete"
-            app:tint="#B2FF59" />
+            android:src="@drawable/homerlife" />
 
         <ImageView
             android:id="@+id/error4"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_delete"
-            app:tint="#B2FF59" />
+            android:src="@drawable/homerlife" />
 
         <ImageView
             android:id="@+id/error5"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_delete"
-            app:tint="#B2FF59" />
+            android:src="@drawable/homerlife" />
 
         <ImageView
             android:id="@+id/error6"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_delete"
-            app:tint="#B2FF59" />
+            android:src="@drawable/homerlife" />
 
     </LinearLayout>
 
