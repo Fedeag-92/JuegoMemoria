@@ -1,7 +1,7 @@
 package com.example.juegomemoria.utilidades;
 
 public class Player {
-    private static MusicManager refrence = null;
+    /*private static MusicManager refrence = null;
 
     public static MusicManager getInstance(){
         if(refrence == null){
@@ -24,5 +24,5 @@ public class Player {
 
     public void stopPlaying(){
         bkgrdmsc.stop();
-    }
+    }*/
 }

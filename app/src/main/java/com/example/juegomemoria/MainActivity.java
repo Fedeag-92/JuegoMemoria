@@ -6,6 +6,7 @@ import pl.droidsonroids.gif.GifImageView;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -62,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgIntro.setAnimation(animation);
 
         tittle = (TextView) findViewById(R.id.tittleMain);
+        tittle.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/simpson.ttf"));
+        tittle.setTextSize(65);
+
         user = (EditText) findViewById(R.id.userNameMain);
         pass = (EditText) findViewById(R.id.passwordMain);
         btnLogin = (Button) findViewById(R.id.btnLogin);
