@@ -44,31 +44,32 @@ public class Ranking extends AppCompatActivity {
     public void cargarRanking() {
 
         Cursor c = dbr.rawQuery("SELECT * FROM RANKING ORDER BY PUNTAJE DESC", null);
-        c.moveToFirst();
 
-        for (int i = 0; i < c.getCount(); i++) {
-            TableRow row = new TableRow(getBaseContext());
-            TextView textView;
+        if (c.moveToFirst()) {
+            for (int i = 0; i < c.getCount(); i++) {
+                TableRow row = new TableRow(getBaseContext());
+                TextView textView;
 
-            //Seteo de margen la fila.
-            TableLayout.LayoutParams tableRowParams =
-                    new TableLayout.LayoutParams
-                            (TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
+                //Seteo de margen la fila.
+                TableLayout.LayoutParams tableRowParams =
+                        new TableLayout.LayoutParams
+                                (TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
-            tableRowParams.setMargins(0, 3, 0, 3);
-            row.setLayoutParams(tableRowParams);
+                tableRowParams.setMargins(0, 3, 0, 3);
+                row.setLayoutParams(tableRowParams);
 
-            for (int j = 0; j < 3; j++) {
-                textView = new TextView(getBaseContext());
-                textView.setText(c.getString(j + 1));
-                textView.setGravity(Gravity.CENTER_VERTICAL);
-                textView.setPadding(15, 15, 15, 15);
-                textView.setBackgroundColor(Color.parseColor("#E1FF6E40"));
-                textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                row.addView(textView);
+                for (int j = 0; j < 3; j++) {
+                    textView = new TextView(getBaseContext());
+                    textView.setText(c.getString(j + 1));
+                    textView.setGravity(Gravity.CENTER_VERTICAL);
+                    textView.setPadding(15, 15, 15, 15);
+                    textView.setBackgroundColor(Color.parseColor("#E1FF6E40"));
+                    textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    row.addView(textView);
+                }
+                tablaRanking.addView(row);
+                c.moveToNext();
             }
-            tablaRanking.addView(row);
-            c.moveToNext();
         }
     }
 

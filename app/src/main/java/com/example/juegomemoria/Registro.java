@@ -48,6 +48,7 @@ public class Registro extends AppCompatActivity {
                 Toast.makeText(this, "ERROR. Username ya existe.", Toast.LENGTH_LONG).show();
             } else {
                 dbHelper.insertar("INSERT INTO USUARIO VALUES('" + username + "','" + nombre + "','" + apellido + "','" + password + "')", db);
+
                 onBackPressed();
                 Toast.makeText(this, "Registro con éxito", Toast.LENGTH_LONG).show();
             }
@@ -57,6 +58,8 @@ public class Registro extends AppCompatActivity {
     public boolean verificarUsuario(String username) {
         Cursor c = db.rawQuery("SELECT username FROM usuario WHERE username = '" + username + "'", null);
         return (c.moveToFirst());
+
+
     }
 
     public void clickRegresar(View view) {
