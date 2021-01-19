@@ -15,7 +15,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class Dificultad extends AppCompatActivity implements View.OnClickListener {
-
     Button btnEasy;
     Button btnNormal;
     Button btnHard;
@@ -24,8 +23,6 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
     Button btnRanking;
     ImageView btnBack, imgBart;
     int choice = 0;
-    AudioManager amanager;
-    SharedPreferences preferences;
     ConstraintLayout.LayoutParams params;
 
     @Override
@@ -34,7 +31,6 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_dificultad);
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        amanager = (AudioManager) getSystemService(AUDIO_SERVICE);
 
         btnEasy = (Button) findViewById(R.id.btnFacil);
         btnNormal = (Button) findViewById(R.id.btnNormal);
@@ -117,5 +113,10 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
             case R.id.btnBackD:
                 onBackPressed();
         }
+    }
+
+    public void OnResume(){
+        super.onResume();
+        btnSound.setChecked(MainActivity.getMediaPlayer().isPlaying());
     }
 }

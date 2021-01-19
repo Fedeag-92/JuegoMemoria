@@ -80,7 +80,7 @@
         android:id="@+id/bartDif"
         android:layout_width="26dp"
         android:layout_height="52dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/btnNormal"
         app:layout_constraintEnd_toStartOf="@+id/btnNormal"
         app:layout_constraintTop_toTopOf="@+id/btnNormal"
