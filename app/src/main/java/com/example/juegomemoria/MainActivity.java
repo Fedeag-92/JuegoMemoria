@@ -3,6 +3,7 @@ package com.example.juegomemoria;
 import androidx.appcompat.app.AppCompatActivity;
 import pl.droidsonroids.gif.GifImageView;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,6 +17,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -86,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
 
+
+
         handler.postDelayed(new Runnable() {
             public void run() {
                 imgIntro.setVisibility(View.GONE);
@@ -141,6 +145,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
                 break;
         }
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); //Este metodo quita el teclado al hacer click en ingresar
+        imm.hideSoftInputFromWindow(btnLogin.getWindowToken(), 0);
     }
 
     public boolean verificarPassword(String username, String pass) {
