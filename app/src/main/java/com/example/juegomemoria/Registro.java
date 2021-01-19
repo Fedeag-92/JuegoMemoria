@@ -10,27 +10,30 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 public class Registro extends AppCompatActivity {
 
-    private EditText txt_nombre, txt_apellido, txt_username, txt_password;
+   // private EditText txt_nombre, txt_apellido, txt_username, txt_password;
     private ImageView buttonBack;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
     private static final String TAG = "MyActivity";
+
+    private TextInputEditText txt_nombre, txt_apellido, txt_username, txt_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        txt_nombre = (EditText) findViewById(R.id.nombre);
-        txt_apellido = (EditText) findViewById(R.id.apellido);
-        txt_username = (EditText) findViewById(R.id.username);
-        txt_password = (EditText) findViewById(R.id.passwordReg);
+        txt_nombre = (TextInputEditText) findViewById(R.id.nombre);
+        txt_apellido = (TextInputEditText) findViewById(R.id.apellido);
+        txt_username = (TextInputEditText) findViewById(R.id.username);
+        txt_password = (TextInputEditText) findViewById(R.id.passwordReg);
         buttonBack = (ImageView)  findViewById(R.id.btnAtrasR);
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
         db = dbHelper.getWritableDatabase();
-
     }
 
     public void clickRegistro(View view) {

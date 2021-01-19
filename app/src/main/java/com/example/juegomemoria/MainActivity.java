@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,30 +22,43 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    EditText user, pass;
+    TextInputEditText user, pass;
     TextView tittle;
     ImageView imgMain, imgIntro;
     GifImageView loading, verif;
     Button btnLogin, btnRegister;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
+    TextInputLayout box_user, box_pass;
     boolean isRegistering = false;
     final Handler handler = new Handler();
+    public static MediaPlayer mediaPlayer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        //mediaPlayer = new MediaPlayer();
-        //playMP();
+        mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
 
         loading = (GifImageView) findViewById(R.id.imgLoading);
         verif = (GifImageView) findViewById(R.id.logVerif);
         imgMain = (ImageView) findViewById(R.id.imgMain);
         imgIntro = (ImageView) findViewById(R.id.imgIntro);
+        box_user = (TextInputLayout)findViewById(R.id.box_username);
+        box_pass = (TextInputLayout)findViewById(R.id.box_password);
+
 
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
@@ -63,13 +75,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgIntro.setAnimation(animation);
 
         tittle = (TextView) findViewById(R.id.tittleMain);
-        tittle.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/simpson.ttf"));
-        tittle.setTextSize(65);
-
-        user = (EditText) findViewById(R.id.userNameMain);
-        pass = (EditText) findViewById(R.id.passwordMain);
+        user = (TextInputEditText) findViewById(R.id.userNameMain);
+        pass = (TextInputEditText) findViewById(R.id.passwordMain);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegister = (Button) findViewById(R.id.btnRegisterM);
+
+        tittle.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/simpson.ttf"));
+        tittle.setTextSize(65);
 
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
@@ -82,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tittle.setVisibility(View.VISIBLE);
                 user.setVisibility(View.VISIBLE);
                 pass.setVisibility(View.VISIBLE);
+                box_pass.setVisibility(View.VISIBLE);
+                box_user.setVisibility(View.VISIBLE);
                 btnLogin.setVisibility(View.VISIBLE);
                 btnRegister.setVisibility(View.VISIBLE);
             }
@@ -99,20 +113,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btnLogin:
                 if (username.length() != 0 && password.length() != 0) {
-                    if (verificarPassword(username, password)) {
-                        verif.setVisibility(View.VISIBLE);
-                        long random = (long) (Math.random() * 3000 + 3000);
-                        handler.postDelayed(new Runnable() {
-                            public void run() {
+                    verif.setVisibility(View.VISIBLE);
+                    long random = (long) (Math.random() * 3000 + 2000);
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            if (verificarPassword(username, password)) {
                                 verif.setVisibility(View.INVISIBLE);
                                 Intent i = new Intent(MainActivity.this, Dificultad.class);
                                 i.putExtra("user", user.getText().toString());
                                 startActivity(i);
                             }
-                        }, random);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
-                    }
+                            else{
+                                Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
+                                verif.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    }, random);
                 } else {
                     Toast.makeText(getApplicationContext(), "Campos incompletos", Toast.LENGTH_LONG).show();
                 }
@@ -132,23 +148,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return (c.moveToFirst());
     }
 
-/*    public void playMP() {
-        Thread playThread = new Thread() {
-            public void run() {
-                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song);
-                mediaPlayer.start();
-            }
-        };
-        playThread.start();
-    }
-
-    public void stopMP() {
-        mediaPlayer.stop();
-    }
-
-    public MediaPlayer getMediaPlayer() {
+    public static MediaPlayer getMediaPlayer() {
         return mediaPlayer;
-    }*/
+    }
 
     public void conectarBD(){
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
