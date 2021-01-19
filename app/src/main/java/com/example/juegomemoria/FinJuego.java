@@ -77,7 +77,6 @@ public class FinJuego extends AppCompatActivity {
         ((TextView) findViewById(R.id.userNameEnd)).setText(user);
         int random = (int)(Math.random()*3);
         if (isRecord) {
-
             ((ImageView)findViewById(R.id.imgResult)).setImageResource(imgWin.get(random));
             ((ImageView) findViewById(R.id.checkRecordOn)).setVisibility(View.VISIBLE);
             ((ImageView) findViewById(R.id.checkRecordOff)).setVisibility(View.INVISIBLE);

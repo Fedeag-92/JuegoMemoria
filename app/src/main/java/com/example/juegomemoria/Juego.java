@@ -6,10 +6,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -21,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -28,10 +32,9 @@ import java.util.Random;
 public class Juego extends AppCompatActivity implements View.OnClickListener {
     private int points, finalPoints, record, difficulty, hits, errors, errorsMax, turns, elapsed;
     private boolean gameOver, runningTime;
-    private TextView user, pointsState, errorsState, time;
+    private TextView user, pointsState, errorsState;
     private ImageView buttonBack;
-    //private ToggleButton buttonSound;
-    private AudioManager amanager;
+    private ToggleButton buttonSound;
     private final Random random = new Random();
     private ArrayList<ImageView> cells;
     ArrayList<Integer> images = new ArrayList<>();
@@ -43,18 +46,26 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     private Bitmap secondImage;
     private Chronometer chronometer;
     private long pauseOffset;
+    private MediaPlayer mp;
+    ArrayList<Integer> sounds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
 
+        sounds = new ArrayList<>();
+        sounds.add(R.raw.doh1);
+        sounds.add(R.raw.doh2);
+        sounds.add(R.raw.doh3);
+        sounds.add(R.raw.aycaramba);
+        mp = new MediaPlayer();
+
         chronometer = findViewById(R.id.chronometer);
         chronometer.setFormat("%s");
         chronometer.setBase(SystemClock.elapsedRealtime());
         runningTime = false;
         pauseOffset = 0;
-        time = (TextView) findViewById(R.id.timeJ);
         user = (TextView) findViewById(R.id.userNameJ);
         gameOver = false;
         pointsState = (TextView) findViewById(R.id.pointsJ);
@@ -62,10 +73,11 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         buttonBack = (ImageView) findViewById(R.id.btnBackJ);
         buttonBack.setOnClickListener(this);
 
-        //buttonSound = (ToggleButton) findViewById(R.id.btnSoundJ);
-        //buttonSound.setOnClickListener(this);
+        buttonSound = (ToggleButton) findViewById(R.id.btnSoundJ);
+        buttonSound.setOnClickListener(this);
 
-        amanager = (AudioManager) getSystemService(AUDIO_SERVICE);
+        if (!MainActivity.getMediaPlayer().isPlaying())
+            buttonSound.setChecked(false);
 
         user.setText(getIntent().getStringExtra("user"));
         this.hits = 0;
@@ -102,7 +114,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                 for (int i = 4; i < 6; i++) {
                     ((ImageView) (findViewById(getResources().getIdentifier("error" + (i + 1), "id", getPackageName())))).setVisibility(View.INVISIBLE);
                 }
-                turns = 14;
+                turns = 12;
                 errorsMax = 5;
                 cells = new ArrayList<ImageView>(turns * 2);
                 paintCells(turns * 2);
@@ -113,7 +125,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void paintCells(int cantCells) {
-        for (int j = 0; j < 28; j++) {
+        for (int j = 0; j < 24; j++) {
             if (j < cantCells)
                 addCell(j);
             else
@@ -209,10 +221,13 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == buttonBack.getId())
             onBackPressed();
-            // else if (v.getId() == buttonSound.getId()) {
-            //     amanager.setStreamMute(AudioManager.STREAM_MUSIC, !buttonSound.isChecked());
-            // }
-        else {
+        else if (v.getId() == buttonSound.getId()) {
+            if (!buttonSound.isChecked()) {
+                MainActivity.getMediaPlayer().pause();
+            } else {
+                MainActivity.getMediaPlayer().start();
+            }
+        } else {
             if (!gameOver) {
                 if (difficulty == 1)
                     repaintEasy(v);
@@ -246,6 +261,15 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                 firstCard.setVisibility(View.INVISIBLE);
                                 secondCard.setVisibility(View.INVISIBLE);
                             } else {
+                                AssetFileDescriptor afd = getResources().openRawResourceFd(sounds.get((int)(Math.random()*4)));
+                                try {
+                                    mp.reset();
+                                    mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
+                                    mp.prepare();
+                                    mp.start();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 errors++;
                                 if (errors >= errorsMax) {
                                     gameOver = true;
@@ -298,6 +322,11 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
 
     public void calculateFinalPoints(int seconds) {
         finalPoints = ((hits * 100) / (errors + elapsed)) * 10;
+    }
+
+    public int randomSound(){
+        int rSound = (int)(Math.random()*3);
+        return (sounds.get(rSound));
     }
 
     public void repaintEasy(View v) {
@@ -480,23 +509,11 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
             case R.id.cell24:
                 cells.get(23).setImageDrawable(drawableLocation.get(23));
                 break;
-            case R.id.cell25:
-                cells.get(24).setImageDrawable(drawableLocation.get(24));
-                break;
-            case R.id.cell26:
-                cells.get(25).setImageDrawable(drawableLocation.get(25));
-                break;
-            case R.id.cell27:
-                cells.get(26).setImageDrawable(drawableLocation.get(26));
-                break;
-            case R.id.cell28:
-                cells.get(27).setImageDrawable(drawableLocation.get(27));
-                break;
         }
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(Juego.this);
         builder.setMessage("Si sales se perderá el progreso.");
         builder.setCancelable(true);

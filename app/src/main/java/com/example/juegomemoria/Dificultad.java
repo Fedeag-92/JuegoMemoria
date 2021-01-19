@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +15,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class Dificultad extends AppCompatActivity implements View.OnClickListener {
-
     Button btnEasy;
     Button btnNormal;
     Button btnHard;
@@ -23,14 +23,14 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
     Button btnRanking;
     ImageView btnBack, imgBart;
     int choice = 0;
-    AudioManager amanager;
+    ConstraintLayout.LayoutParams params;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dificultad);
 
-        amanager = (AudioManager)getSystemService(AUDIO_SERVICE);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         btnEasy = (Button) findViewById(R.id.btnFacil);
         btnNormal = (Button) findViewById(R.id.btnNormal);
@@ -38,27 +38,29 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         btnPlay = (Button) findViewById(R.id.btnJugar);
         btnSound = (ToggleButton) findViewById(R.id.btnSonido);
         btnRanking = (Button) findViewById(R.id.btnRanking);
-        btnBack = (ImageView) findViewById(R.id.btnAtras);
-        btnSound.setChecked(true);
-        imgBart = (ImageView) findViewById(R.id.bartDif) ;
+        btnBack = (ImageView) findViewById(R.id.btnBackD);
+        imgBart = (ImageView) findViewById(R.id.bartDif);
+
+        if(!MainActivity.getMediaPlayer().isPlaying())
+            btnSound.setChecked(false);
 
         btnEasy.setOnClickListener(this);
         btnNormal.setOnClickListener(this);
         btnHard.setOnClickListener(this);
         btnPlay.setOnClickListener(this);
-        btnSound.setOnClickListener(this);
         btnRanking.setOnClickListener(this);
         btnBack.setOnClickListener(this);
+        btnSound.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if(choice==0)
+        if(v.getId() == R.id.btnFacil || v.getId() == R.id.btnNormal || v.getId() == R.id.btnDificil){
             imgBart.setVisibility(View.VISIBLE);
-        ConstraintLayout.LayoutParams params;
+            params = (ConstraintLayout.LayoutParams) imgBart.getLayoutParams();
+        }
         switch (v.getId()) {
             case R.id.btnFacil:
-                params = (ConstraintLayout.LayoutParams) imgBart.getLayoutParams();
                 params.topToTop = R.id.btnFacil;
                 params.bottomToBottom = R.id.btnFacil;
                 imgBart.requestLayout();
@@ -68,7 +70,6 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
                 btnHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 break;
             case R.id.btnNormal:
-                params = (ConstraintLayout.LayoutParams) imgBart.getLayoutParams();
                 params.topToTop = R.id.btnNormal;
                 params.bottomToBottom = R.id.btnNormal;
                 imgBart.requestLayout();
@@ -99,15 +100,23 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
 
                 break;
             case R.id.btnSonido:
-                amanager.setStreamMute(AudioManager.STREAM_MUSIC, !btnSound.isChecked());
+                if (!btnSound.isChecked()) {
+                    MainActivity.getMediaPlayer().pause();
+                } else {
+                    MainActivity.getMediaPlayer().start();
+                }
                 break;
             case R.id.btnRanking:
                 Intent i = new Intent(Dificultad.this, Ranking.class);
                 startActivity(i);
                 break;
-            case R.id.btnAtras:
+            case R.id.btnBackD:
                 onBackPressed();
-                break;
         }
+    }
+
+    public void OnResume(){
+        super.onResume();
+        btnSound.setChecked(MainActivity.getMediaPlayer().isPlaying());
     }
 }

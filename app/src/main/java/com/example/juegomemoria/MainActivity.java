@@ -42,10 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final Handler handler = new Handler();
     public static MediaPlayer mediaPlayer;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -82,13 +80,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegister = (Button) findViewById(R.id.btnRegisterM);
 
-        tittle.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/simpson.ttf"));
-        tittle.setTextSize(65);
-
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
-
-
 
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -118,21 +111,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnLogin:
                 if (username.length() != 0 && password.length() != 0) {
                     verif.setVisibility(View.VISIBLE);
-                    long random = (long) (Math.random() * 3000 + 2000);
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            if (verificarPassword(username, password)) {
-                                verif.setVisibility(View.INVISIBLE);
-                                Intent i = new Intent(MainActivity.this, Dificultad.class);
-                                i.putExtra("user", user.getText().toString());
-                                startActivity(i);
+                        long random = (long) (Math.random() * 3000 + 2000);
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                if (verificarPassword(username, password)) {
+                                    verif.setVisibility(View.INVISIBLE);
+                                    Intent i = new Intent(MainActivity.this, Dificultad.class);
+                                    i.putExtra("user", user.getText().toString());
+                                    startActivity(i);
+                                }
+                                else{
+                                    Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
+                                    verif.setVisibility(View.INVISIBLE);
+                                }
                             }
-                            else{
-                                Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
-                                verif.setVisibility(View.INVISIBLE);
-                            }
-                        }
-                    }, random);
+                        }, random);
                 } else {
                     Toast.makeText(getApplicationContext(), "Campos incompletos", Toast.LENGTH_LONG).show();
                 }
