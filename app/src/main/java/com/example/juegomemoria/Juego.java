@@ -59,6 +59,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         sounds.add(R.raw.doh2);
         sounds.add(R.raw.doh3);
         mp = new MediaPlayer();
+        int nada;
 
         chronometer = findViewById(R.id.chronometer);
         chronometer.setFormat("%s");
