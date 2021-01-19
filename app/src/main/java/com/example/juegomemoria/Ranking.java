@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -23,11 +24,21 @@ public class Ranking extends AppCompatActivity {
     TableLayout tablaRanking;
     ArrayList<PuntajeRanking> listaRanking;
     private static final String TAG = "MyActivity";
+    private TextView tittle, tittle_ranking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
+
+        tittle = (TextView)findViewById(R.id.tittleGameRanking);
+        tittle_ranking = (TextView)findViewById(R.id.tittleRanking);
+
+        tittle.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/simpson.ttf"));
+        tittle.setTextSize(60);
+
+        tittle_ranking.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/simpson.ttf"));
+        tittle_ranking.setTextSize(60);
 
         tablaRanking = (TableLayout) findViewById(R.id.listaRanking);
 
@@ -63,7 +74,7 @@ public class Ranking extends AppCompatActivity {
                 textView.setText(c.getString(j + 1));
                 textView.setGravity(Gravity.CENTER_VERTICAL);
                 textView.setPadding(15, 15, 15, 15);
-                textView.setBackgroundColor(Color.parseColor("#E1FF6E40"));
+                textView.setBackgroundColor(Color.parseColor("#80ACA1A1"));
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 row.addView(textView);
             }

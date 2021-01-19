@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recordEnd"
-        app:layout_constraintTop_toBottomOf="@+id/difficultyEnd"
+        app:layout_constraintTop_toBottomOf="@+id/difficultyRanking"
         app:srcCompat="@android:drawable/checkbox_on_background" />
 
     <ImageView
@@ -47,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recordEnd"
-        app:layout_constraintTop_toBottomOf="@+id/difficultyEnd"
+        app:layout_constraintTop_toBottomOf="@+id/difficultyRanking"
         app:srcCompat="@android:drawable/checkbox_off_background" />
 
     <TextView
@@ -129,7 +129,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/difficultyEnd" />
+        app:layout_constraintTop_toBottomOf="@+id/difficultyRanking" />
 
     <TextView
         android:id="@+id/errorsEnd"
@@ -148,7 +148,7 @@
         app:layout_constraintTop_toBottomOf="@+id/timeEnd" />
 
     <TextView
-        android:id="@+id/difficultyEnd"
+        android:id="@+id/difficultyRanking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="229dp"

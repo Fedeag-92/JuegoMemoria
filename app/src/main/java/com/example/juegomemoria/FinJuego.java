@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -67,7 +66,7 @@ public class FinJuego extends AppCompatActivity {
             isRecord = true;
         }
 
-        ((TextView) findViewById(R.id.difficultyEnd)).setText("Dificultad: " + dif);
+        ((TextView) findViewById(R.id.difficultyRanking)).setText("Dificultad: " + dif);
         String timeString = "";
         if (time > 60) {
             timeString = timeString + time / 60 + ":" + time % 60;
