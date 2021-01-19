@@ -8,6 +8,19 @@
     android:hapticFeedbackEnabled="false"
     tools:context=".MainActivity">
 
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/logVerif"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="212dp"
+        android:src="@drawable/loginverif"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="invisible" />
+
     <Button
         android:id="@+id/btnRegisterM"
         android:layout_width="wrap_content"
@@ -36,19 +49,19 @@
         app:layout_constraintTop_toBottomOf="@+id/box_password"
         tools:visibility="visible" />
 
+
     <ImageView
         android:id="@+id/imgMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRegisterM"
         app:srcCompat="@drawable/main"
         tools:visibility="invisible" />
-
 
     <ImageView
         android:id="@+id/imgIntro"
@@ -131,19 +144,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="invisible" />
-
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/logVerif"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="212dp"
-        android:src="@drawable/loginverif"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="invisible" />
 
 
