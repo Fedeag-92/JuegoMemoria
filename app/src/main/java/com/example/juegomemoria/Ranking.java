@@ -14,15 +14,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.juegomemoria.entidades.PuntajeRanking;
-
-import java.util.ArrayList;
-
 public class Ranking extends AppCompatActivity {
     private ConexionSQLiteHelper dbHelper;
-    private SQLiteDatabase db, dbr;
+    private SQLiteDatabase dbr;
     TableLayout tablaRanking;
-    ArrayList<PuntajeRanking> listaRanking;
     TextView tittle, tittle_ranking;
 
     @Override
@@ -85,8 +80,6 @@ public class Ranking extends AppCompatActivity {
 
     public void conectarBD() {
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
-        //db es para insertar los datos estaticos en la BD. Pruebas.
-        //db = dbHelper.getWritableDatabase();
         dbr = dbHelper.getReadableDatabase();
     }
 
