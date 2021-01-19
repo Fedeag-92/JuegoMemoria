@@ -1,4 +1,4 @@
-package com.example.juegomemoria.utlidades;
+package com.example.juegomemoria.utilidades;
 
 public class Utilidades {
     //VARIABLES TABLA USUARIO

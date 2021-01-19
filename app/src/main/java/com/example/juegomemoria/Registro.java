@@ -7,11 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class Registro extends AppCompatActivity {
 
     private EditText txt_nombre, txt_apellido, txt_username, txt_password;
+    private ImageView buttonBack;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
     private static final String TAG = "MyActivity";
@@ -24,7 +26,8 @@ public class Registro extends AppCompatActivity {
         txt_nombre = (EditText) findViewById(R.id.nombre);
         txt_apellido = (EditText) findViewById(R.id.apellido);
         txt_username = (EditText) findViewById(R.id.username);
-        txt_password = (EditText) findViewById(R.id.password);
+        txt_password = (EditText) findViewById(R.id.passwordReg);
+        buttonBack = (ImageView)  findViewById(R.id.btnAtrasR);
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
         db = dbHelper.getWritableDatabase();
 

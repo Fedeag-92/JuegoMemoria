@@ -4,158 +4,209 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#536DFE"
+    android:background="@drawable/back"
     tools:context=".Dificultad">
 
-    <Button
-        android:id="@+id/btnDificil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:background="#FFAB40"
-        android:text="@string/dificultadDificil"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNormal" />
 
     <Button
-        android:id="@+id/btnNormal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:background="#FFAB40"
-        android:text="@string/dificultadNormal"
-        android:textColor="#000000"
+        android:id="@+id/btnJugar"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#FF4081"
+        android:text="@string/jugar"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFacil" />
+        app:layout_constraintTop_toBottomOf="@+id/btnDificil"></Button>
 
     <Button
         android:id="@+id/btnFacil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:background="#FFAB40"
         android:text="@string/dificultadFacil"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textEleccionDif" />
 
     <Button
-        android:id="@+id/btnJugar"
+        android:id="@+id/btnNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="#FF4081"
-        android:text="@string/jugar"
+        android:layout_marginTop="24dp"
+        android:background="#FFAB40"
+        android:text="@string/dificultadNormal"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDificil" />
+        app:layout_constraintTop_toBottomOf="@+id/btnFacil" />
 
     <Button
-        android:id="@+id/btnRanking"
+        android:id="@+id/btnDificil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:backgroundTint="#69F0AE"
-        android:text="@string/Ranking"
+        android:layout_marginTop="24dp"
+        android:background="#FFAB40"
+        android:text="@string/dificultadDificil"
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnSonido"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnNormal" />
+
 
     <ImageView
-        android:id="@+id/btnAtras"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="@string/back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.042"
+        android:id="@+id/marge"
+        android:layout_width="88dp"
+        android:layout_height="186dp"
+        android:layout_marginBottom="238dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tituloDificultad"
+        app:layout_constraintTop_toTopOf="@+id/btnFacil"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/marge" />
+
+    <ImageView
+        android:id="@+id/bartDif"
+        android:layout_width="26dp"
+        android:layout_height="52dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/btnNormal"
+        app:layout_constraintEnd_toStartOf="@+id/btnNormal"
+        app:layout_constraintTop_toTopOf="@+id/btnNormal"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/bartdif" />
+
+    <ImageView
+        android:id="@+id/kidssimpsons"
+        android:layout_width="83dp"
+        android:layout_height="181dp"
+        android:layout_marginBottom="269dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnFacil"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/simpsonskids" />
+
+    <ImageView
+        android:id="@+id/btnBackD"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="345dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/back_button" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="53dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="52dp"
-        android:contentDescription="@string/Ranking"
-        app:layout_constraintStart_toEndOf="@+id/SonidoDificultad"
-        app:layout_constraintTop_toBottomOf="@+id/divider2"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
-
-    <TextView
-        android:id="@+id/textEleccionDif"
+    <LinearLayout
+        android:id="@+id/errorsLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:fontFamily="@font/permanent_marker"
-        android:text="@string/eleccionDif"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAtras" />
+        app:layout_constraintTop_toBottomOf="@+id/btnJugar">
+        <ImageView
+            android:id="@+id/starRank1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/Ranking"
+            app:srcCompat="@android:drawable/btn_star_big_on"
+            tools:layout_editor_absoluteX="118dp"
+            tools:layout_editor_absoluteY="622dp" />
+        <Button
+            android:id="@+id/btnRanking"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:backgroundTint="#69F0AE"
+            android:text="@string/Ranking"
+            android:textColor="#000000"
+            tools:layout_editor_absoluteX="171dp"
+            tools:layout_editor_absoluteY="622dp" />
+
+
+
+        <ImageView
+            android:id="@+id/starRank2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/Ranking"
+            app:srcCompat="@android:drawable/btn_star_big_on"
+            tools:layout_editor_absoluteX="259dp"
+            tools:layout_editor_absoluteY="622dp" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/tituloDificultad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="80dp"
         android:fontFamily="@font/permanent_marker"
         android:text="@string/app_name"
-        android:textColor="#FFFFFF"
+        android:textColor="#FFD740"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/SonidoDificultad"
+        android:id="@+id/textEleccionDif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="52dp"
-        android:text="@string/sonido"
-        android:textColor="#FFFFFF"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/permanent_marker"
+        android:text="@string/eleccionDif"
+        android:textColor="#FFD740"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+        app:layout_constraintTop_toBottomOf="@+id/tituloDificultad" />
 
     <ToggleButton
         android:id="@+id/btnSonido"
-        android:layout_width="76dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="64dp"
-        android:background="#69F0AE"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="593dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="335dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/ic_toggle"
+        android:checked="true"
         android:rotation="0"
         android:rotationX="0"
         android:rotationY="0"
         android:text="@string/sonido"
+        android:textOff=""
+        android:textOn=""
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SonidoDificultad"
-        app:layout_constraintVertical_bias="0.079" />
-
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="28dp"
-        android:background="@color/teal_200"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnJugar" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
