@@ -23,8 +23,7 @@ public class Ranking extends AppCompatActivity {
     private SQLiteDatabase db, dbr;
     TableLayout tablaRanking;
     ArrayList<PuntajeRanking> listaRanking;
-    private static final String TAG = "MyActivity";
-    private TextView tittle, tittle_ranking;
+    TextView tittle, tittle_ranking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +67,14 @@ public class Ranking extends AppCompatActivity {
 
             tableRowParams.setMargins(0, 3, 0, 3);
             row.setLayoutParams(tableRowParams);
+            row.setBackgroundColor(Color.parseColor("#80ACA1A1"));
 
             for (int j = 0; j < 3; j++) {
                 textView = new TextView(getBaseContext());
                 textView.setText(c.getString(j + 1));
                 textView.setGravity(Gravity.CENTER_VERTICAL);
                 textView.setPadding(15, 15, 15, 15);
-                textView.setBackgroundColor(Color.parseColor("#80ACA1A1"));
+                textView.setTextColor(Color.parseColor("#000000"));
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 row.addView(textView);
             }

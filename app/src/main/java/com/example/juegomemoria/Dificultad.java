@@ -4,13 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -24,13 +29,21 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
     ImageView btnBack, imgBart;
     int choice = 0;
     ConstraintLayout.LayoutParams params;
+    TextView tittleGame, tittleChoice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dificultad);
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        tittleGame = (TextView) findViewById(R.id.tittleDificultad);
+        tittleChoice = (TextView) findViewById(R.id.textChoiceDifficulty);
+
+        tittleGame.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
+        tittleGame.setTextSize(60);
+
+        tittleChoice.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
+        tittleChoice.setTextSize(60);
 
         btnEasy = (Button) findViewById(R.id.btnFacil);
         btnNormal = (Button) findViewById(R.id.btnNormal);
@@ -41,7 +54,7 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         btnBack = (ImageView) findViewById(R.id.btnBackD);
         imgBart = (ImageView) findViewById(R.id.bartDif);
 
-        if(!MainActivity.getMediaPlayer().isPlaying())
+        if (!MainActivity.getMediaPlayer().isPlaying())
             btnSound.setChecked(false);
 
         btnEasy.setOnClickListener(this);
@@ -55,7 +68,7 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.btnFacil || v.getId() == R.id.btnNormal || v.getId() == R.id.btnDificil){
+        if (v.getId() == R.id.btnFacil || v.getId() == R.id.btnNormal || v.getId() == R.id.btnDificil) {
             imgBart.setVisibility(View.VISIBLE);
             params = (ConstraintLayout.LayoutParams) imgBart.getLayoutParams();
         }
@@ -115,8 +128,33 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void OnResume(){
+    public void OnResume() {
         super.onResume();
         btnSound.setChecked(MainActivity.getMediaPlayer().isPlaying());
+    }
+
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(Dificultad.this);
+        builder.setMessage("¿Deseas salir de la aplicación o cerrar sesión?");
+        builder.setCancelable(true);
+
+        builder.setNegativeButton("Cerrar sesión", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Dificultad.super.onBackPressed();
+                dialogInterface.cancel();
+            }
+        });
+        builder.setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finishAffinity();
+                System.exit(0);
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

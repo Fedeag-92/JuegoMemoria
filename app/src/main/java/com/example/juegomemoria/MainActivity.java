@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song);
+        mediaPlayer = MediaPlayer.create(this, R.raw.song);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
 
@@ -79,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pass = (TextInputEditText) findViewById(R.id.passwordMain);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegister = (Button) findViewById(R.id.btnRegisterM);
+
+        tittle.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/simpson.ttf"));
+        tittle.setTextSize(60);
 
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
@@ -161,5 +164,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         user.setText("");
         pass.setText("");
     }
-
 }

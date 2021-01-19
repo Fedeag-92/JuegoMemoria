@@ -13,14 +13,10 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class Registro extends AppCompatActivity {
-
-   // private EditText txt_nombre, txt_apellido, txt_username, txt_password;
-    private ImageView buttonBack;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
-    private static final String TAG = "MyActivity";
-
     private TextInputEditText txt_nombre, txt_apellido, txt_username, txt_password;
+    ImageView buttonBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +27,7 @@ public class Registro extends AppCompatActivity {
         txt_apellido = (TextInputEditText) findViewById(R.id.apellido);
         txt_username = (TextInputEditText) findViewById(R.id.username);
         txt_password = (TextInputEditText) findViewById(R.id.passwordReg);
-        buttonBack = (ImageView)  findViewById(R.id.btnAtrasR);
+        buttonBack = (ImageView) findViewById(R.id.btnAtrasR);
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
         db = dbHelper.getWritableDatabase();
     }
@@ -61,8 +57,6 @@ public class Registro extends AppCompatActivity {
     public boolean verificarUsuario(String username) {
         Cursor c = db.rawQuery("SELECT username FROM usuario WHERE username = '" + username + "'", null);
         return (c.moveToFirst());
-
-
     }
 
     public void clickRegresar(View view) {
