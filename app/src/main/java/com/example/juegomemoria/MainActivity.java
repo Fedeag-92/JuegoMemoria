@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,15 +31,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SQLiteDatabase db;
     boolean isRegistering = false;
     final Handler handler = new Handler();
+    public static MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        //mediaPlayer = new MediaPlayer();
-        //playMP();
+        mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
 
         loading = (GifImageView) findViewById(R.id.imgLoading);
         verif = (GifImageView) findViewById(R.id.logVerif);
@@ -95,20 +97,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btnLogin:
                 if (username.length() != 0 && password.length() != 0) {
-                    if (verificarPassword(username, password)) {
-                        verif.setVisibility(View.VISIBLE);
-                        long random = (long) (Math.random() * 3000 + 3000);
+                    verif.setVisibility(View.VISIBLE);
+                        long random = (long) (Math.random() * 3000 + 2000);
                         handler.postDelayed(new Runnable() {
                             public void run() {
-                                verif.setVisibility(View.INVISIBLE);
-                                Intent i = new Intent(MainActivity.this, Dificultad.class);
-                                i.putExtra("user", user.getText().toString());
-                                startActivity(i);
+                                if (verificarPassword(username, password)) {
+                                    verif.setVisibility(View.INVISIBLE);
+                                    Intent i = new Intent(MainActivity.this, Dificultad.class);
+                                    i.putExtra("user", user.getText().toString());
+                                    startActivity(i);
+                                }
+                                else{
+                                    Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
+                                    verif.setVisibility(View.INVISIBLE);
+                                }
                             }
                         }, random);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
-                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "Campos incompletos", Toast.LENGTH_LONG).show();
                 }
@@ -128,23 +132,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return (c.moveToFirst());
     }
 
-/*    public void playMP() {
-        Thread playThread = new Thread() {
-            public void run() {
-                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song);
-                mediaPlayer.start();
-            }
-        };
-        playThread.start();
-    }
-
-    public void stopMP() {
-        mediaPlayer.stop();
-    }
-
-    public MediaPlayer getMediaPlayer() {
+    public static MediaPlayer getMediaPlayer() {
         return mediaPlayer;
-    }*/
+    }
 
     public void conectarBD(){
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
