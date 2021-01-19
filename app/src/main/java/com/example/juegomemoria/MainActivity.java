@@ -3,9 +3,11 @@ package com.example.juegomemoria;
 import androidx.appcompat.app.AppCompatActivity;
 import pl.droidsonroids.gif.GifImageView;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -15,27 +17,33 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    EditText user, pass;
+    TextInputEditText user, pass;
     TextView tittle;
     ImageView imgMain, imgIntro;
     GifImageView loading, verif;
     Button btnLogin, btnRegister;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
+    TextInputLayout box_user, box_pass;
     boolean isRegistering = false;
     final Handler handler = new Handler();
     public static MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -48,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         verif = (GifImageView) findViewById(R.id.logVerif);
         imgMain = (ImageView) findViewById(R.id.imgMain);
         imgIntro = (ImageView) findViewById(R.id.imgIntro);
+        box_user = (TextInputLayout)findViewById(R.id.box_username);
+        box_pass = (TextInputLayout)findViewById(R.id.box_password);
+
 
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
@@ -64,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgIntro.setAnimation(animation);
 
         tittle = (TextView) findViewById(R.id.tittleMain);
-        user = (EditText) findViewById(R.id.userNameMain);
-        pass = (EditText) findViewById(R.id.passwordMain);
+        user = (TextInputEditText) findViewById(R.id.userNameMain);
+        pass = (TextInputEditText) findViewById(R.id.passwordMain);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegister = (Button) findViewById(R.id.btnRegisterM);
 
@@ -80,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tittle.setVisibility(View.VISIBLE);
                 user.setVisibility(View.VISIBLE);
                 pass.setVisibility(View.VISIBLE);
+                box_pass.setVisibility(View.VISIBLE);
+                box_user.setVisibility(View.VISIBLE);
                 btnLogin.setVisibility(View.VISIBLE);
                 btnRegister.setVisibility(View.VISIBLE);
             }
@@ -125,6 +138,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
                 break;
         }
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); //Este metodo quita el teclado al hacer click en ingresar
+        imm.hideSoftInputFromWindow(btnLogin.getWindowToken(), 0);
     }
 
     public boolean verificarPassword(String username, String pass) {
