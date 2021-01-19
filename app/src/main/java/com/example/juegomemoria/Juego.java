@@ -3,20 +3,17 @@ package com.example.juegomemoria;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
+import android.graphics.drawable.StateListDrawable;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageView;
@@ -30,7 +27,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Juego extends AppCompatActivity implements View.OnClickListener {
-    private int points, finalPoints, record, difficulty, hits, errors, errorsMax, turns, elapsed;
+    private int points, finalPoints, difficulty, hits, errors, errorsMax, turns, elapsed;
     private boolean gameOver, runningTime;
     private TextView user, pointsState, errorsState;
     private ImageView buttonBack;
@@ -47,19 +44,32 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     private Chronometer chronometer;
     private long pauseOffset;
     private MediaPlayer mp;
-    ArrayList<Integer> sounds;
+    ArrayList<Integer> errorSounds;
+    ArrayList<Integer> hitSounds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
 
-        sounds = new ArrayList<>();
-        sounds.add(R.raw.doh1);
-        sounds.add(R.raw.doh2);
-        sounds.add(R.raw.doh3);
+        StateListDrawable d = new StateListDrawable();
+
+        int[] sEnable = { android.R.attr.state_enabled };
+        Drawable dEnable = getDrawable(R.drawable.card1);
+        d.addState(sEnable, dEnable);
+
+        findViewById(R.id.cell1).setBackground(d);
+
+        errorSounds = new ArrayList<>();
+        hitSounds = new ArrayList<>();
+
+        errorSounds.add(R.raw.doh1);
+        errorSounds.add(R.raw.doh2);
+        errorSounds.add(R.raw.doh3);
+        hitSounds.add(R.raw.matanga);
+        hitSounds.add(R.raw.yajuhomero2);
+
         mp = new MediaPlayer();
-        int nada;
 
         chronometer = findViewById(R.id.chronometer);
         chronometer.setFormat("%s");
@@ -103,7 +113,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
 
                 break;
             case 2:
-                turns = 10;
+                turns = 8;
                 errorsMax = 7;
                 cells = new ArrayList<ImageView>(turns * 2);
                 paintCells(turns * 2);
@@ -114,7 +124,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                 for (int i = 4; i < 6; i++) {
                     ((ImageView) (findViewById(getResources().getIdentifier("error" + (i + 1), "id", getPackageName())))).setVisibility(View.INVISIBLE);
                 }
-                turns = 12;
+                turns = 10;
                 errorsMax = 5;
                 cells = new ArrayList<ImageView>(turns * 2);
                 paintCells(turns * 2);
@@ -125,7 +135,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void paintCells(int cantCells) {
-        for (int j = 0; j < 24; j++) {
+        for (int j = 0; j < 20; j++) {
             if (j < cantCells)
                 addCell(j);
             else
@@ -252,6 +262,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                     handler.postDelayed(new Runnable() {
                         public void run() {
                             if (firstImage.sameAs(secondImage)) {
+                                playSound(hitSounds);
                                 turns--;
                                 hits++;
                                 if (turns <= 0) {
@@ -261,25 +272,15 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                 firstCard.setVisibility(View.INVISIBLE);
                                 secondCard.setVisibility(View.INVISIBLE);
                             } else {
-                                AssetFileDescriptor afd = getResources().openRawResourceFd(sounds.get((int)(Math.random()*4)));
-                                try {
-                                    mp.reset();
-                                    mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
-                                    mp.prepare();
-                                    mp.start();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
+                                playSound(errorSounds);
                                 errors++;
                                 if (errors >= errorsMax) {
                                     gameOver = true;
                                     endGame();
                                 }
-                                Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_LONG).show();
                                 if (difficulty == 2 || difficulty == 3) {
                                     ImageView errorImg;
                                     ((ImageView) (findViewById(getResources().getIdentifier("error" + (errors - 1), "id", getPackageName())))).setColorFilter(R.color.errorEnable);
-                                    Toast.makeText(getApplicationContext(), (errorsMax - errors) + " errores mas y pierdes", Toast.LENGTH_LONG).show();
                                 }
                                 firstCard.setImageResource(R.drawable.dona);
                                 secondCard.setImageResource(R.drawable.dona);
@@ -296,20 +297,31 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                             secondImage = null;
                         }
 
-                    }, 1000);
+                    }, 700);
                 }
-            } else
-                Toast.makeText(getApplicationContext(), "Juego terminado, empiece uno nuevo yendo hacia atras", Toast.LENGTH_LONG).show();
+            }
 
         }
 
+    }
+
+    public void playSound(ArrayList<Integer> sounds) {
+        AssetFileDescriptor afd = getResources().openRawResourceFd(sounds.get((int) (Math.random() * (sounds.size()))));
+        try {
+            mp.reset();
+            mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
+            mp.prepare();
+            mp.start();
+            afd.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void endGame() {
         pauseChronometer();
         elapsed = (int) (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
         calculateFinalPoints(elapsed);
-        Toast.makeText(getApplicationContext(), "Tiempo: " + elapsed + " segundos.", Toast.LENGTH_LONG).show();
         Intent i = new Intent(Juego.this, FinJuego.class);
         i.putExtra("user", this.user.getText());
         i.putExtra("points", this.finalPoints);
@@ -324,9 +336,9 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         finalPoints = ((hits * 100) / (errors + elapsed)) * 10;
     }
 
-    public int randomSound(){
-        int rSound = (int)(Math.random()*3);
-        return (sounds.get(rSound));
+    public int randomSound() {
+        int rSound = (int) (Math.random() * 3);
+        return (errorSounds.get(rSound));
     }
 
     public void repaintEasy(View v) {
@@ -496,18 +508,6 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.cell20:
                 cells.get(19).setImageDrawable(drawableLocation.get(19));
-                break;
-            case R.id.cell21:
-                cells.get(20).setImageDrawable(drawableLocation.get(20));
-                break;
-            case R.id.cell22:
-                cells.get(21).setImageDrawable(drawableLocation.get(21));
-                break;
-            case R.id.cell23:
-                cells.get(22).setImageDrawable(drawableLocation.get(22));
-                break;
-            case R.id.cell24:
-                cells.get(23).setImageDrawable(drawableLocation.get(23));
                 break;
         }
     }

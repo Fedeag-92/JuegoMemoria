@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
         mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
@@ -58,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgIntro = (ImageView) findViewById(R.id.imgIntro);
         box_user = (TextInputLayout)findViewById(R.id.box_username);
         box_pass = (TextInputLayout)findViewById(R.id.box_password);
-
 
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
@@ -79,6 +77,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pass = (TextInputEditText) findViewById(R.id.passwordMain);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegister = (Button) findViewById(R.id.btnRegisterM);
+
+        tittle.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/simpson.ttf"));
+        tittle.setTextSize(60);
 
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
@@ -111,21 +112,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnLogin:
                 if (username.length() != 0 && password.length() != 0) {
                     verif.setVisibility(View.VISIBLE);
-                        long random = (long) (Math.random() * 3000 + 2000);
-                        handler.postDelayed(new Runnable() {
-                            public void run() {
-                                if (verificarPassword(username, password)) {
-                                    verif.setVisibility(View.INVISIBLE);
-                                    Intent i = new Intent(MainActivity.this, Dificultad.class);
-                                    i.putExtra("user", user.getText().toString());
-                                    startActivity(i);
-                                }
-                                else{
-                                    Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
-                                    verif.setVisibility(View.INVISIBLE);
-                                }
+                    long random = (long) (Math.random() * 3000 + 2000);
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            if (verificarPassword(username, password)) {
+                                verif.setVisibility(View.INVISIBLE);
+                                Intent i = new Intent(MainActivity.this, Dificultad.class);
+                                i.putExtra("user", user.getText().toString());
+                                startActivity(i);
                             }
-                        }, random);
+                            else{
+                                Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
+                                verif.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    }, random);
                 } else {
                     Toast.makeText(getApplicationContext(), "Campos incompletos", Toast.LENGTH_LONG).show();
                 }

@@ -30,8 +30,6 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dificultad);
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-
         btnEasy = (Button) findViewById(R.id.btnFacil);
         btnNormal = (Button) findViewById(R.id.btnNormal);
         btnHard = (Button) findViewById(R.id.btnDificil);
@@ -55,12 +53,9 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.btnFacil || v.getId() == R.id.btnNormal || v.getId() == R.id.btnDificil){
-            imgBart.setVisibility(View.VISIBLE);
-            params = (ConstraintLayout.LayoutParams) imgBart.getLayoutParams();
-        }
         switch (v.getId()) {
             case R.id.btnFacil:
+                params = getParams();
                 params.topToTop = R.id.btnFacil;
                 params.bottomToBottom = R.id.btnFacil;
                 imgBart.requestLayout();
@@ -70,6 +65,7 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
                 btnHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 break;
             case R.id.btnNormal:
+                params = getParams();
                 params.topToTop = R.id.btnNormal;
                 params.bottomToBottom = R.id.btnNormal;
                 imgBart.requestLayout();
@@ -79,7 +75,7 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
                 btnHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 break;
             case R.id.btnDificil:
-                params = (ConstraintLayout.LayoutParams) imgBart.getLayoutParams();
+                params = getParams();
                 params.topToTop = R.id.btnDificil;
                 params.bottomToBottom = R.id.btnDificil;
                 imgBart.requestLayout();
@@ -113,6 +109,12 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
             case R.id.btnBackD:
                 onBackPressed();
         }
+    }
+
+    public ConstraintLayout.LayoutParams getParams(){
+        if(imgBart.getVisibility() == View.INVISIBLE)
+            imgBart.setVisibility(View.VISIBLE);
+        return (ConstraintLayout.LayoutParams) imgBart.getLayoutParams();
     }
 
     public void OnResume(){
