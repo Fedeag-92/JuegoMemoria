@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEleccionDif" />
+        app:layout_constraintTop_toBottomOf="@+id/textChoiceDifficulty" />
 
     <Button
         android:id="@+id/btnNormal"
@@ -158,11 +158,10 @@
 
 
     <TextView
-        android:id="@+id/tituloDificultad"
+        android:id="@+id/tittleDificultad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:fontFamily="@font/permanent_marker"
         android:text="@string/app_name"
         android:textColor="#FFD740"
         android:textSize="24sp"
@@ -172,18 +171,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textEleccionDif"
+        android:id="@+id/textChoiceDifficulty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:fontFamily="@font/permanent_marker"
         android:text="@string/eleccionDif"
         android:textColor="#FFD740"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tituloDificultad" />
+        app:layout_constraintTop_toBottomOf="@+id/tittleDificultad" />
 
     <TextView
         android:id="@+id/difficultyInfo"
