@@ -79,11 +79,11 @@ public class FinJuego extends AppCompatActivity {
         if (isRecord) {
             ((ImageView)findViewById(R.id.imgResult)).setImageResource(imgWin.get(random));
             ((TextView) findViewById(R.id.recordEnd)).setVisibility(View.VISIBLE);
-            ((TextView) findViewById(R.id.recordEnd2)).setVisibility(View.INVISIBLE);
+            ((TextView) findViewById(R.id.norecordEnd)).setVisibility(View.INVISIBLE);
         } else {
             ((ImageView)findViewById(R.id.imgResult)).setImageResource(imgLose.get(random));
             ((TextView) findViewById(R.id.recordEnd)).setVisibility(View.INVISIBLE);
-            ((TextView) findViewById(R.id.recordEnd2)).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.norecordEnd)).setVisibility(View.VISIBLE);
         }
     }
 
@@ -91,5 +91,9 @@ public class FinJuego extends AppCompatActivity {
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
         db = dbHelper.getWritableDatabase();
         dbr = dbHelper.getReadableDatabase();
+    }
+
+    public void clickRegresar(View view) {
+        onBackPressed();
     }
 }
