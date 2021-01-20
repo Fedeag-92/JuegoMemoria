@@ -1,6 +1,7 @@
 package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import pl.droidsonroids.gif.GifImageView;
 
 import android.content.Context;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextInputEditText user, pass;
     TextView tittle;
     ImageView imgMain, imgIntro;
-    GifImageView loading, verif;
+    GifImageView loading;
     Button btnLogin, btnRegister;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
@@ -48,11 +49,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song);
+        mediaPlayer.setVolume(0.07f,0.07f);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
 
         loading = (GifImageView) findViewById(R.id.imgLoading);
-        verif = (GifImageView) findViewById(R.id.logVerif);
         imgMain = (ImageView) findViewById(R.id.imgMain);
         imgIntro = (ImageView) findViewById(R.id.imgIntro);
         box_user = (TextInputLayout)findViewById(R.id.box_username);
@@ -111,19 +112,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btnLogin:
                 if (username.length() != 0 && password.length() != 0) {
-                    verif.setVisibility(View.VISIBLE);
-                    long random = (long) (Math.random() * 3000 + 2000);
+                    ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) loading.getLayoutParams();
+                    layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.UNSET;
+                    layoutParams.topToTop = R.id.box_username;
+                    layoutParams.topMargin = 0;
+                    loading.setLayoutParams(layoutParams);
+                    loading.setVisibility(View.VISIBLE);
+
+                    long random = (long) (Math.random() * 2000 + 1000);
                     handler.postDelayed(new Runnable() {
                         public void run() {
                             if (verificarPassword(username, password)) {
-                                verif.setVisibility(View.INVISIBLE);
+                                loading.setVisibility(View.INVISIBLE);
                                 Intent i = new Intent(MainActivity.this, Dificultad.class);
                                 i.putExtra("user", user.getText().toString());
                                 startActivity(i);
                             }
                             else{
                                 Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
-                                verif.setVisibility(View.INVISIBLE);
+                                loading.setVisibility(View.INVISIBLE);
                             }
                         }
                     }, random);

@@ -8,9 +8,9 @@
     tools:context=".FinJuego">
 
     <ImageView
-        android:id="@+id/viewPager22"
-        android:layout_width="457dp"
-        android:layout_height="392dp"
+        android:id="@+id/whiteTransparentBack"
+        android:layout_width="0dp"
+        android:layout_height="385dp"
         android:background="#80FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,19 +21,18 @@
         android:layout_width="190dp"
         android:layout_height="184dp"
         android:layout_marginEnd="52dp"
-        app:layout_constraintBottom_toBottomOf="@+id/viewPager22"
+        app:layout_constraintBottom_toBottomOf="@+id/whiteTransparentBack"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/viewPager22"
+        app:layout_constraintTop_toTopOf="@+id/whiteTransparentBack"
         app:layout_constraintVertical_bias="0.125" />
 
     <ImageView
-        android:id="@+id/btnBackJ2"
+        android:id="@+id/btnBackEndGame"
         android:layout_width="50dp"
-        android:layout_height="42dp"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/card"
-        android:onClick="clickRegresar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back_button" />
@@ -42,12 +41,12 @@
         android:id="@+id/checkRecordOn"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="194dp"
         android:layout_marginBottom="149dp"
+        android:layout_marginEnd="194dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recordEnd"
+        app:layout_constraintStart_toEndOf="@+id/recordText"
         app:layout_constraintTop_toBottomOf="@+id/difficultyRanking"
         app:srcCompat="@android:drawable/checkbox_on_background" />
 
@@ -55,12 +54,12 @@
         android:id="@+id/checkRecordOff"
         android:layout_width="45dp"
         android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="194dp"
         android:layout_marginBottom="149dp"
+        android:layout_marginEnd="194dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recordEnd"
+        app:layout_constraintStart_toEndOf="@+id/recordText"
         app:layout_constraintTop_toBottomOf="@+id/difficultyRanking"
         app:srcCompat="@android:drawable/checkbox_off_background" />
 
@@ -68,17 +67,14 @@
         android:id="@+id/timeEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/permanent_marker"
-        android:paddingTop="2px"
-        android:paddingBottom="2px"
         android:text="@string/timeGame"
         android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.165"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/pointsEnd" />
 
     <TextView
@@ -91,6 +87,7 @@
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/endGameText" />
 
@@ -98,18 +95,15 @@
         android:id="@+id/pointsEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/permanent_marker"
-        android:paddingTop="2px"
-        android:paddingBottom="2px"
         android:text="@string/points"
         android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.171"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/viewPager22" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/whiteTransparentBack" />
 
     <TextView
         android:id="@+id/endGameText"
@@ -121,70 +115,57 @@
         android:textColor="#FFD740"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/recordEnd"
-        android:layout_width="316dp"
-        android:layout_height="58dp"
-        android:layout_marginBottom="180dp"
+        android:id="@+id/recordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/permanent_marker"
-        android:text="¡Superaste tu Record!"
         android:textColor="#000000"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/norecordEnd"
-        android:layout_width="386dp"
-        android:layout_height="59dp"
-        android:layout_marginBottom="180dp"
-        android:fontFamily="@font/permanent_marker"
-        android:text="¡No superaste tu Record!"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/whiteTransparentBack" />
 
     <TextView
         android:id="@+id/errorsEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/permanent_marker"
-        android:paddingTop="2px"
-        android:paddingBottom="2px"
         android:text="@string/errors"
         android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.17"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/timeEnd" />
 
     <TextView
         android:id="@+id/difficultyRanking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/permanent_marker"
-        android:paddingTop="2px"
-        android:paddingBottom="2px"
         android:text="@string/difficulty"
         android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.18"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/errorsEnd" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="55dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

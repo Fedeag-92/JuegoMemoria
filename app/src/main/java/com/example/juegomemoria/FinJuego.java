@@ -20,8 +20,6 @@ public class FinJuego extends AppCompatActivity {
     private boolean isRecord;
     private String user;
     private static final String TAG = "MyActivity";
-    private TextView pointsV, errorsV, difficultyV;
-    private ImageView recOn, recOff;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db, dbr;
     ArrayList<Integer> imgWin;
@@ -56,15 +54,12 @@ public class FinJuego extends AppCompatActivity {
         loseSounds.add(R.raw.idiota);
         loseSounds.add(R.raw.chan);
         loseSounds.add(R.raw.nelsonaha);
-
         user = getIntent().getStringExtra("user");
         points = getIntent().getIntExtra("points", 0);
         isRecord = getIntent().getBooleanExtra("record", false);
         difficulty = getIntent().getIntExtra("difficulty", 0);
         errors = getIntent().getIntExtra("errors", 0);
         time = getIntent().getIntExtra("time", 0);
-        ((TextView) findViewById(R.id.pointsEnd)).setText("Puntaje: " + points);
-        ((TextView) findViewById(R.id.errorsEnd)).setText("Errores: " + errors);
         String dif;
         if (difficulty == 1) {
             dif = "Facil";
@@ -73,6 +68,18 @@ public class FinJuego extends AppCompatActivity {
         } else {
             dif = "Dificil";
         }
+        ((TextView) findViewById(R.id.pointsEnd)).setText("Puntaje: " + points);
+        ((TextView) findViewById(R.id.errorsEnd)).setText("Errores: " + errors);
+        ((TextView) findViewById(R.id.difficultyRanking)).setText("Dificultad: " + dif);
+        String timeString = "";
+        if (time > 60) {
+            timeString = timeString + time / 60 + ":" + time % 60;
+            ((TextView) findViewById(R.id.timeEnd)).setText("Tiempo: " + timeString);
+        } else
+            ((TextView) findViewById(R.id.timeEnd)).setText("Tiempo: 00:" + time);
+
+        ((TextView) findViewById(R.id.userNameEnd)).setText(user);
+
         Cursor c = dbr.rawQuery("SELECT * FROM RANKING WHERE username= '" + user + "'", null);
         if (!c.moveToFirst()){
             dbHelper.insertar("INSERT INTO RANKING(USERNAME,PUNTAJE,DIFICULTAD) VALUES('" + user + "','" + points + "','" + dif + "')", db);
@@ -84,17 +91,9 @@ public class FinJuego extends AppCompatActivity {
             isRecord = true;
         }
 
-        ((TextView) findViewById(R.id.difficultyRanking)).setText("Dificultad: " + dif);
-        String timeString = "";
-        if (time > 60) {
-            timeString = timeString + time / 60 + ":" + time % 60;
-            ((TextView) findViewById(R.id.timeEnd)).setText("Tiempo: " + timeString);
-        } else
-            ((TextView) findViewById(R.id.timeEnd)).setText("Tiempo: 00:" + time);
-
-        ((TextView) findViewById(R.id.userNameEnd)).setText(user);
         int random = (int)(Math.random()*3);
         if (isRecord) {
+            ((TextView) findViewById(R.id.recordText)).setText(R.string.record);
             MainActivity.getMediaPlayer().pause();
             playSound(winSounds.get((int)(Math.random()*winSounds.size())));
 
@@ -102,6 +101,7 @@ public class FinJuego extends AppCompatActivity {
             ((ImageView) findViewById(R.id.checkRecordOn)).setVisibility(View.VISIBLE);
             ((ImageView) findViewById(R.id.checkRecordOff)).setVisibility(View.INVISIBLE);
         } else {
+            ((TextView) findViewById(R.id.recordText)).setText(R.string.norecord);
             MainActivity.getMediaPlayer().pause();
             playSound(loseSounds.get((int)(Math.random()*loseSounds.size())));
 
