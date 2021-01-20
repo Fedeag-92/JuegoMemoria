@@ -8,6 +8,27 @@
     android:background="@drawable/back"
     tools:context=".Ranking">
 
+    <ToggleButton
+        android:id="@+id/btnSoundR"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="593dp"
+        android:background="@drawable/ic_toggle"
+        android:checked="true"
+        android:rotation="0"
+        android:rotationX="0"
+        android:rotationY="0"
+        android:text="@string/sonido"
+        android:textOff=""
+        android:textOn=""
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <ImageView
         android:id="@+id/btnAtras"
         android:layout_width="50dp"
@@ -44,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="2dp"
-                android:background="#804E4C4C"
+                android:background="#CC4E4C4C"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp">
 
