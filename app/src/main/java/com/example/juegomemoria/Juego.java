@@ -35,30 +35,23 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     private final Random random = new Random();
     private ArrayList<ImageView> cells;
     ArrayList<Integer> images = new ArrayList<>();
-    ArrayList<Drawable> drawableLocation;
     final Handler handler = new Handler();
     private ImageView firstCard;
     private ImageView secondCard;
-    private Bitmap firstImage;
-    private Bitmap secondImage;
+    private int firstImage;
+    private int secondImage;
     private Chronometer chronometer;
     private long pauseOffset;
     private MediaPlayer mp;
     ArrayList<Integer> errorSounds;
     ArrayList<Integer> hitSounds;
+    StateListDrawable d;
+    Bitmap bitmap1, bitmap2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
-
-        StateListDrawable d = new StateListDrawable();
-
-        int[] sEnable = { android.R.attr.state_enabled };
-        Drawable dEnable = getDrawable(R.drawable.card1);
-        d.addState(sEnable, dEnable);
-
-        findViewById(R.id.cell1).setBackground(d);
 
         errorSounds = new ArrayList<>();
         hitSounds = new ArrayList<>();
@@ -175,6 +168,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         card.setOnClickListener(this);
         card.setVisibility(View.VISIBLE);
         card.setEnabled(false);
+        card.setSelected(true);
         cells.add(card);
 
     }
@@ -202,7 +196,19 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
             posImage = random.nextInt(images.size());
             while (j < 2) {
                 posCell = elements.get(random.nextInt(elements.size()));
-                cells.get(posCell).setImageResource(images.get(posImage));
+
+                d = new StateListDrawable();
+
+                int[] notShow = {android.R.attr.state_enabled, -android.R.attr.state_selected};
+                int[] notShowToo = {-android.R.attr.state_enabled, -android.R.attr.state_selected};
+                int[] show = {-android.R.attr.state_enabled, android.R.attr.state_selected};
+                Drawable drawNotShow = getDrawable(R.drawable.dona);
+                Drawable drawShow = getDrawable(images.get(posImage));
+                d.addState(notShowToo, drawNotShow);
+                d.addState(show, drawShow);
+                d.addState(notShow, drawNotShow);
+                cells.get(posCell).setImageDrawable(d);
+                cells.get(posCell).setTag(images.get(posImage));
                 elements.remove(Integer.valueOf(posCell));
                 j++;
             }
@@ -210,16 +216,11 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
             cantImages--;
         }
 
-        drawableLocation = new ArrayList<>();
-        for (int i = 0; i < cells.size(); i++) {
-            drawableLocation.add(cells.get(i).getDrawable());
-        }
-
         handler.postDelayed(new Runnable() {
             public void run() {
                 for (int i = 0; i < cells.size(); i++) {
-                    cells.get(i).setImageResource(R.drawable.dona);
                     cells.get(i).setEnabled(true);
+                    cells.get(i).setSelected(false);
                     startChronometer();
                 }
             }
@@ -239,20 +240,16 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
             }
         } else {
             if (!gameOver) {
-                if (difficulty == 1)
-                    repaintEasy(v);
-                else if (difficulty == 2)
-                    repaintNormal(v);
-                else
-                    repaintHard(v);
-
                 if (firstCard == null) {
                     firstCard = (ImageView) findViewById(v.getId());
-                    firstImage = ((BitmapDrawable) (firstCard).getDrawable()).getBitmap();
+                    firstImage = (int) firstCard.getTag();
                     firstCard.setEnabled(false);
+                    firstCard.setSelected(true);
                 } else {
                     secondCard = (ImageView) findViewById(v.getId());
-                    secondImage = ((BitmapDrawable) (secondCard).getDrawable()).getBitmap();
+                    secondImage = (int) secondCard.getTag();
+                    secondCard.setEnabled(false);
+                    secondCard.setSelected(true);
                 }
                 if (firstCard != null && secondCard != null) {
                     for (int i = 0; i < cells.size(); i++) {
@@ -261,7 +258,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                     }
                     handler.postDelayed(new Runnable() {
                         public void run() {
-                            if (firstImage.sameAs(secondImage)) {
+                            if (firstImage == secondImage) {
                                 playSound(hitSounds);
                                 turns--;
                                 hits++;
@@ -282,19 +279,21 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                     ImageView errorImg;
                                     ((ImageView) (findViewById(getResources().getIdentifier("error" + (errors - 1), "id", getPackageName())))).setColorFilter(R.color.errorEnable);
                                 }
-                                firstCard.setImageResource(R.drawable.dona);
-                                secondCard.setImageResource(R.drawable.dona);
                             }
                             points = (hits * 100) / (errors);
                             pointsState.setText("Puntaje: " + points);
                             for (int i = 0; i < cells.size(); i++) {
-                                if (cells.get(i).getVisibility() == View.VISIBLE)
+                                if (cells.get(i).getVisibility() == View.VISIBLE){
                                     cells.get(i).setEnabled(true);
+                                    cells.get(i).setSelected(false);
+                                }
+
+
                             }
                             firstCard = null;
                             secondCard = null;
-                            firstImage = null;
-                            secondImage = null;
+                            firstImage = 0;
+                            secondImage = 0;
                         }
 
                     }, 700);
@@ -304,6 +303,8 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         }
 
     }
+
+
 
     public void playSound(ArrayList<Integer> sounds) {
         AssetFileDescriptor afd = getResources().openRawResourceFd(sounds.get((int) (Math.random() * (sounds.size()))));
@@ -339,177 +340,6 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     public int randomSound() {
         int rSound = (int) (Math.random() * 3);
         return (errorSounds.get(rSound));
-    }
-
-    public void repaintEasy(View v) {
-        switch (v.getId()) {
-            case R.id.cell1:
-                cells.get(0).setImageDrawable(drawableLocation.get(0));
-                break;
-            case R.id.cell2:
-                cells.get(1).setImageDrawable(drawableLocation.get(1));
-                break;
-            case R.id.cell3:
-                cells.get(2).setImageDrawable(drawableLocation.get(2));
-                break;
-            case R.id.cell4:
-                cells.get(3).setImageDrawable(drawableLocation.get(3));
-                break;
-            case R.id.cell5:
-                cells.get(4).setImageDrawable(drawableLocation.get(4));
-                break;
-            case R.id.cell6:
-                cells.get(5).setImageDrawable(drawableLocation.get(5));
-                break;
-            case R.id.cell7:
-                cells.get(6).setImageDrawable(drawableLocation.get(6));
-                break;
-            case R.id.cell8:
-                cells.get(7).setImageDrawable(drawableLocation.get(7));
-                break;
-            case R.id.cell9:
-                cells.get(8).setImageDrawable(drawableLocation.get(8));
-                break;
-            case R.id.cell10:
-                cells.get(9).setImageDrawable(drawableLocation.get(9));
-                break;
-            case R.id.cell11:
-                cells.get(10).setImageDrawable(drawableLocation.get(10));
-                break;
-            case R.id.cell12:
-                cells.get(11).setImageDrawable(drawableLocation.get(11));
-                break;
-        }
-    }
-
-    public void repaintNormal(View v) {
-        switch (v.getId()) {
-            case R.id.cell1:
-                cells.get(0).setImageDrawable(drawableLocation.get(0));
-                break;
-            case R.id.cell2:
-                cells.get(1).setImageDrawable(drawableLocation.get(1));
-                break;
-            case R.id.cell3:
-                cells.get(2).setImageDrawable(drawableLocation.get(2));
-                break;
-            case R.id.cell4:
-                cells.get(3).setImageDrawable(drawableLocation.get(3));
-                break;
-            case R.id.cell5:
-                cells.get(4).setImageDrawable(drawableLocation.get(4));
-                break;
-            case R.id.cell6:
-                cells.get(5).setImageDrawable(drawableLocation.get(5));
-                break;
-            case R.id.cell7:
-                cells.get(6).setImageDrawable(drawableLocation.get(6));
-                break;
-            case R.id.cell8:
-                cells.get(7).setImageDrawable(drawableLocation.get(7));
-                break;
-            case R.id.cell9:
-                cells.get(8).setImageDrawable(drawableLocation.get(8));
-                break;
-            case R.id.cell10:
-                cells.get(9).setImageDrawable(drawableLocation.get(9));
-                break;
-            case R.id.cell11:
-                cells.get(10).setImageDrawable(drawableLocation.get(10));
-                break;
-            case R.id.cell12:
-                cells.get(11).setImageDrawable(drawableLocation.get(11));
-                break;
-            case R.id.cell13:
-                cells.get(12).setImageDrawable(drawableLocation.get(12));
-                break;
-            case R.id.cell14:
-                cells.get(13).setImageDrawable(drawableLocation.get(13));
-                break;
-            case R.id.cell15:
-                cells.get(14).setImageDrawable(drawableLocation.get(14));
-                break;
-            case R.id.cell16:
-                cells.get(15).setImageDrawable(drawableLocation.get(15));
-                break;
-            case R.id.cell17:
-                cells.get(16).setImageDrawable(drawableLocation.get(16));
-                break;
-            case R.id.cell18:
-                cells.get(17).setImageDrawable(drawableLocation.get(17));
-                break;
-            case R.id.cell19:
-                cells.get(18).setImageDrawable(drawableLocation.get(18));
-                break;
-            case R.id.cell20:
-                cells.get(19).setImageDrawable(drawableLocation.get(19));
-                break;
-        }
-    }
-
-    public void repaintHard(View v) {
-        switch (v.getId()) {
-            case R.id.cell1:
-                cells.get(0).setImageDrawable(drawableLocation.get(0));
-                break;
-            case R.id.cell2:
-                cells.get(1).setImageDrawable(drawableLocation.get(1));
-                break;
-            case R.id.cell3:
-                cells.get(2).setImageDrawable(drawableLocation.get(2));
-                break;
-            case R.id.cell4:
-                cells.get(3).setImageDrawable(drawableLocation.get(3));
-                break;
-            case R.id.cell5:
-                cells.get(4).setImageDrawable(drawableLocation.get(4));
-                break;
-            case R.id.cell6:
-                cells.get(5).setImageDrawable(drawableLocation.get(5));
-                break;
-            case R.id.cell7:
-                cells.get(6).setImageDrawable(drawableLocation.get(6));
-                break;
-            case R.id.cell8:
-                cells.get(7).setImageDrawable(drawableLocation.get(7));
-                break;
-            case R.id.cell9:
-                cells.get(8).setImageDrawable(drawableLocation.get(8));
-                break;
-            case R.id.cell10:
-                cells.get(9).setImageDrawable(drawableLocation.get(9));
-                break;
-            case R.id.cell11:
-                cells.get(10).setImageDrawable(drawableLocation.get(10));
-                break;
-            case R.id.cell12:
-                cells.get(11).setImageDrawable(drawableLocation.get(11));
-                break;
-            case R.id.cell13:
-                cells.get(12).setImageDrawable(drawableLocation.get(12));
-                break;
-            case R.id.cell14:
-                cells.get(13).setImageDrawable(drawableLocation.get(13));
-                break;
-            case R.id.cell15:
-                cells.get(14).setImageDrawable(drawableLocation.get(14));
-                break;
-            case R.id.cell16:
-                cells.get(15).setImageDrawable(drawableLocation.get(15));
-                break;
-            case R.id.cell17:
-                cells.get(16).setImageDrawable(drawableLocation.get(16));
-                break;
-            case R.id.cell18:
-                cells.get(17).setImageDrawable(drawableLocation.get(17));
-                break;
-            case R.id.cell19:
-                cells.get(18).setImageDrawable(drawableLocation.get(18));
-                break;
-            case R.id.cell20:
-                cells.get(19).setImageDrawable(drawableLocation.get(19));
-                break;
-        }
     }
 
     @Override
