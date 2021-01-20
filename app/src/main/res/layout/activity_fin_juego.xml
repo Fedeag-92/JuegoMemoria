@@ -9,20 +9,24 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager22"
-        android:layout_width="413dp"
-        android:layout_height="580dp"
+        android:layout_width="469dp"
+        android:layout_height="474dp"
         android:background="#80FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/recordEnd"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userNameEnd" />
+        app:layout_constraintTop_toBottomOf="@+id/userNameEnd"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imgResult"
-        android:layout_width="205dp"
-        android:layout_height="206dp"
+        android:layout_width="190dp"
+        android:layout_height="184dp"
         android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/viewPager22"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userNameEnd" />
+        app:layout_constraintTop_toTopOf="@+id/viewPager22" />
 
     <ImageView
         android:id="@+id/btnBackJ2"
@@ -67,6 +71,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="389dp"
         android:fontFamily="@font/permanent_marker"
+        android:paddingTop="2px"
+        android:paddingBottom="2px"
         android:text="@string/timeGame"
         android:textColor="#000000"
         android:textSize="30sp"
@@ -95,6 +101,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="469dp"
         android:fontFamily="@font/permanent_marker"
+        android:paddingTop="2px"
+        android:paddingBottom="2px"
         android:text="@string/points"
         android:textColor="#000000"
         android:textSize="30sp"
@@ -120,19 +128,31 @@
 
     <TextView
         android:id="@+id/recordEnd"
-        android:layout_width="138dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="255dp"
-        android:layout_marginBottom="149dp"
+        android:layout_width="316dp"
+        android:layout_height="58dp"
+        android:layout_marginBottom="108dp"
         android:fontFamily="@font/permanent_marker"
-        android:text="@string/record"
+        android:text="¡Superaste tu Record!"
         android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/difficultyRanking" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/recordEnd2"
+        android:layout_width="386dp"
+        android:layout_height="59dp"
+        android:layout_marginBottom="108dp"
+        android:fontFamily="@font/permanent_marker"
+        android:text="¡No superaste tu Record!"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/errorsEnd"
@@ -140,6 +160,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="309dp"
         android:fontFamily="@font/permanent_marker"
+        android:paddingTop="2px"
+        android:paddingBottom="2px"
         android:text="@string/errors"
         android:textColor="#000000"
         android:textSize="30sp"
@@ -155,6 +177,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="229dp"
         android:fontFamily="@font/permanent_marker"
+        android:paddingTop="2px"
+        android:paddingBottom="2px"
         android:text="@string/difficulty"
         android:textColor="#000000"
         android:textSize="30sp"
