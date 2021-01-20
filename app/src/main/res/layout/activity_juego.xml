@@ -172,7 +172,7 @@
         app:layout_constraintEnd_toStartOf="@+id/cell4"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/cell2"
-        app:layout_constraintTop_toBottomOf="@+id/errorsLayout1"
+        app:layout_constraintTop_toBottomOf="@+id/rankingBar"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <ImageView
@@ -185,7 +185,7 @@
         app:layout_constraintEnd_toStartOf="@+id/cell2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/errorsLayout1"
+        app:layout_constraintTop_toBottomOf="@+id/rankingBar"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <ImageView
@@ -198,7 +198,7 @@
         app:layout_constraintEnd_toStartOf="@+id/cell3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/cell1"
-        app:layout_constraintTop_toBottomOf="@+id/errorsLayout1"
+        app:layout_constraintTop_toBottomOf="@+id/rankingBar"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <ImageView
@@ -211,7 +211,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/cell3"
-        app:layout_constraintTop_toBottomOf="@+id/errorsLayout1"
+        app:layout_constraintTop_toBottomOf="@+id/rankingBar"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <ImageView
@@ -294,7 +294,7 @@
         app:srcCompat="@drawable/back_button" />
 
     <LinearLayout
-        android:id="@+id/errorsLayout1"
+        android:id="@+id/rankingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

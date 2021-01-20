@@ -95,20 +95,34 @@ public class FinJuego extends AppCompatActivity {
         ((TextView) findViewById(R.id.userNameEnd)).setText(user);
         int random = (int)(Math.random()*3);
         if (isRecord) {
-            playSound(winSounds);
+            MainActivity.getMediaPlayer().pause();
+            playSound(winSounds.get((int)(Math.random()*winSounds.size())));
+
             ((ImageView)findViewById(R.id.imgResult)).setImageResource(imgWin.get(random));
             ((ImageView) findViewById(R.id.checkRecordOn)).setVisibility(View.VISIBLE);
             ((ImageView) findViewById(R.id.checkRecordOff)).setVisibility(View.INVISIBLE);
         } else {
-            playSound(loseSounds);
+            MainActivity.getMediaPlayer().pause();
+            playSound(loseSounds.get((int)(Math.random()*loseSounds.size())));
+
             ((ImageView)findViewById(R.id.imgResult)).setImageResource(imgLose.get(random));
             ((ImageView) findViewById(R.id.checkRecordOn)).setVisibility(View.INVISIBLE);
             ((ImageView) findViewById(R.id.checkRecordOff)).setVisibility(View.VISIBLE);
         }
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                playSound(R.raw.ending);
+            }
+
+        });
+
     }
 
-    public void playSound(ArrayList<Integer> sounds) {
-        AssetFileDescriptor afd = getResources().openRawResourceFd(sounds.get((int) (Math.random() * (sounds.size()))));
+
+    public void playSound(int song) {
+        AssetFileDescriptor afd = getResources().openRawResourceFd(song);
         try {
             mp.reset();
             mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
@@ -124,5 +138,13 @@ public class FinJuego extends AppCompatActivity {
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
         db = dbHelper.getWritableDatabase();
         dbr = dbHelper.getReadableDatabase();
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        mp.stop();
+        MainActivity.getMediaPlayer().seekTo(0);
+        MainActivity.getMediaPlayer().start();
     }
 }
