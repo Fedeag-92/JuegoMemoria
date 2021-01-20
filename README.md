@@ -1,6 +1,6 @@
 # Juego de la Memoria
 
-_Esta es una aplicación destinada a todas las edades, para aquellas personas que quieran divertirse y poner a prueba su memoria con diferentes dificultades.
+_Esta es una aplicación destinada a todas las edades, para aquellas personas que quieran divertirse y poner a prueba su memoria con diferentes dificultades._
 
 ## Construido con 🛠️
 
