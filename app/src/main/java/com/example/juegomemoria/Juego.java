@@ -296,7 +296,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                             secondImage = null;
                         }
 
-                    }, 1000);
+                    }, 600);
                 }
             } else
                 Toast.makeText(getApplicationContext(), "Juego terminado, empiece uno nuevo yendo hacia atras", Toast.LENGTH_LONG).show();
