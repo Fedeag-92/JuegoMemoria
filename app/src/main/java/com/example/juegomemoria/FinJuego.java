@@ -2,14 +2,18 @@ package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class FinJuego extends AppCompatActivity {
     private int points, difficulty, errors, time;
@@ -21,13 +25,18 @@ public class FinJuego extends AppCompatActivity {
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db, dbr;
     ArrayList<Integer> imgWin;
+    ArrayList<Integer> winSounds;
     ArrayList<Integer> imgLose;
+    ArrayList<Integer> loseSounds;
+    private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fin_juego);
         conectarBD();
+
+        mp = new MediaPlayer();
 
         imgWin = new ArrayList<Integer>();
         imgWin.add(R.drawable.bartwin);
@@ -38,6 +47,15 @@ public class FinJuego extends AppCompatActivity {
         imgLose.add(R.drawable.lisaloser);
         imgLose.add(R.drawable.homerloser);
         imgLose.add(R.drawable.nelsonloser);
+
+        winSounds = new ArrayList<Integer>();
+        loseSounds = new ArrayList<Integer>();
+        winSounds.add(R.raw.yajuhomero);
+        winSounds.add(R.raw.neerd);
+        winSounds.add(R.raw.volverchango);
+        loseSounds.add(R.raw.idiota);
+        loseSounds.add(R.raw.chan);
+        loseSounds.add(R.raw.nelsonaha);
 
         user = getIntent().getStringExtra("user");
         points = getIntent().getIntExtra("points", 0);
@@ -77,13 +95,42 @@ public class FinJuego extends AppCompatActivity {
         ((TextView) findViewById(R.id.userNameEnd)).setText(user);
         int random = (int)(Math.random()*3);
         if (isRecord) {
+            MainActivity.getMediaPlayer().pause();
+            playSound(winSounds.get((int)(Math.random()*winSounds.size())));
+
             ((ImageView)findViewById(R.id.imgResult)).setImageResource(imgWin.get(random));
             ((ImageView) findViewById(R.id.checkRecordOn)).setVisibility(View.VISIBLE);
             ((ImageView) findViewById(R.id.checkRecordOff)).setVisibility(View.INVISIBLE);
         } else {
+            MainActivity.getMediaPlayer().pause();
+            playSound(loseSounds.get((int)(Math.random()*loseSounds.size())));
+
             ((ImageView)findViewById(R.id.imgResult)).setImageResource(imgLose.get(random));
             ((ImageView) findViewById(R.id.checkRecordOn)).setVisibility(View.INVISIBLE);
             ((ImageView) findViewById(R.id.checkRecordOff)).setVisibility(View.VISIBLE);
+        }
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                playSound(R.raw.ending);
+            }
+
+        });
+
+    }
+
+
+    public void playSound(int song) {
+        AssetFileDescriptor afd = getResources().openRawResourceFd(song);
+        try {
+            mp.reset();
+            mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
+            mp.prepare();
+            mp.start();
+            afd.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -91,5 +138,13 @@ public class FinJuego extends AppCompatActivity {
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
         db = dbHelper.getWritableDatabase();
         dbr = dbHelper.getReadableDatabase();
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        mp.stop();
+        MainActivity.getMediaPlayer().seekTo(0);
+        MainActivity.getMediaPlayer().start();
     }
 }

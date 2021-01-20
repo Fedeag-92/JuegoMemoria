@@ -47,8 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        mediaPlayer = MediaPlayer.create(this, R.raw.song);
+        mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
 
@@ -92,8 +91,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 loading.setVisibility(View.GONE);
                 imgMain.setVisibility(View.VISIBLE);
                 tittle.setVisibility(View.VISIBLE);
-                //user.setVisibility(View.VISIBLE);
-                //pass.setVisibility(View.VISIBLE);
                 box_pass.setVisibility(View.VISIBLE);
                 box_user.setVisibility(View.VISIBLE);
                 btnLogin.setVisibility(View.VISIBLE);
@@ -164,4 +161,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         user.setText("");
         pass.setText("");
     }
+
 }

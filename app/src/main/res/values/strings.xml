@@ -26,4 +26,7 @@
     <string name="timeGame">Tiempo: </string>
     <string name="dificultad">Dificultad</string>
     <string name="puntaje">Puntaje</string>
+    <string name="descripcionFacil">Tablero: 4 x 3\nVidas: ∞</string>
+    <string name="descripcionNormal">Tablero: 4 x 5\nVidas: 6</string>
+    <string name="descripcionDificil">Tablero: 4 x 6\nVidas: 4</string>
 </resources>

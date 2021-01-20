@@ -24,18 +24,22 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
     Button btnNormal;
     Button btnHard;
     Button btnPlay;
+    TextView description;
     ToggleButton btnSound;
     Button btnRanking;
     ImageView btnBack, imgBart;
     int choice = 0;
-    ConstraintLayout.LayoutParams params;
     TextView tittleGame, tittleChoice;
+    ConstraintLayout.LayoutParams paramsBart, paramsDescription;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dificultad);
 
+
+        description = (TextView) findViewById(R.id.difficultyInfo);
         tittleGame = (TextView) findViewById(R.id.tittleDificultad);
         tittleChoice = (TextView) findViewById(R.id.textChoiceDifficulty);
 
@@ -54,7 +58,8 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         btnBack = (ImageView) findViewById(R.id.btnBackD);
         imgBart = (ImageView) findViewById(R.id.bartDif);
 
-        if (!MainActivity.getMediaPlayer().isPlaying())
+        mp = MediaPlayer.create(Dificultad.this, R.raw.feo);
+        if(!MainActivity.getMediaPlayer().isPlaying())
             btnSound.setChecked(false);
 
         btnEasy.setOnClickListener(this);
@@ -68,14 +73,15 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btnFacil || v.getId() == R.id.btnNormal || v.getId() == R.id.btnDificil) {
-            imgBart.setVisibility(View.VISIBLE);
-            params = (ConstraintLayout.LayoutParams) imgBart.getLayoutParams();
-        }
         switch (v.getId()) {
             case R.id.btnFacil:
-                params.topToTop = R.id.btnFacil;
-                params.bottomToBottom = R.id.btnFacil;
+                description.setText(R.string.descripcionFacil);
+                paramsDescription = getParamsDescription();
+                paramsDescription.topToTop = R.id.btnFacil;
+                paramsDescription.bottomToBottom = R.id.btnFacil;
+                paramsBart = getParamsBart();
+                paramsBart.topToTop = R.id.btnFacil;
+                paramsBart.bottomToBottom = R.id.btnFacil;
                 imgBart.requestLayout();
                 choice = 1;
                 btnEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifActivado));
@@ -83,8 +89,13 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
                 btnHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 break;
             case R.id.btnNormal:
-                params.topToTop = R.id.btnNormal;
-                params.bottomToBottom = R.id.btnNormal;
+                description.setText(R.string.descripcionNormal);
+                paramsDescription = getParamsDescription();
+                paramsDescription.topToTop = R.id.btnNormal;
+                paramsDescription.bottomToBottom = R.id.btnNormal;
+                paramsBart = getParamsBart();
+                paramsBart.topToTop = R.id.btnNormal;
+                paramsBart.bottomToBottom = R.id.btnNormal;
                 imgBart.requestLayout();
                 choice = 2;
                 btnEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
@@ -92,9 +103,13 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
                 btnHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 break;
             case R.id.btnDificil:
-                params = (ConstraintLayout.LayoutParams) imgBart.getLayoutParams();
-                params.topToTop = R.id.btnDificil;
-                params.bottomToBottom = R.id.btnDificil;
+                description.setText(R.string.descripcionDificil);
+                paramsDescription = getParamsDescription();
+                paramsDescription.topToTop = R.id.btnDificil;
+                paramsDescription.bottomToBottom = R.id.btnDificil;
+                paramsBart = getParamsBart();
+                paramsBart.topToTop = R.id.btnDificil;
+                paramsBart.bottomToBottom = R.id.btnDificil;
                 imgBart.requestLayout();
                 choice = 3;
                 btnEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
@@ -103,6 +118,7 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.btnJugar:
                 if (choice != 0) {
+                    mp.start();
                     Intent i = new Intent(Dificultad.this, Juego.class);
                     i.putExtra("user", getIntent().getExtras().getString("user"));
                     i.putExtra("choice", this.choice);
@@ -128,7 +144,19 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void OnResume() {
+    public ConstraintLayout.LayoutParams getParamsBart(){
+        if(imgBart.getVisibility() == View.INVISIBLE)
+            imgBart.setVisibility(View.VISIBLE);
+        return (ConstraintLayout.LayoutParams) imgBart.getLayoutParams();
+    }
+
+    public ConstraintLayout.LayoutParams getParamsDescription(){
+        if(description.getVisibility() == View.INVISIBLE)
+            description.setVisibility(View.VISIBLE);
+        return (ConstraintLayout.LayoutParams) description.getLayoutParams();
+    }
+
+    public void OnResume(){
         super.onResume();
         btnSound.setChecked(MainActivity.getMediaPlayer().isPlaying());
     }
