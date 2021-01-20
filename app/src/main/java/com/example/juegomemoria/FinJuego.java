@@ -19,7 +19,6 @@ public class FinJuego extends AppCompatActivity {
     private int points, difficulty, errors, time;
     private boolean isRecord;
     private String user;
-    private static final String TAG = "MyActivity";
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db, dbr;
     ArrayList<Integer> imgWin;
@@ -81,38 +80,33 @@ public class FinJuego extends AppCompatActivity {
         ((TextView) findViewById(R.id.userNameEnd)).setText(user);
 
         Cursor c = dbr.rawQuery("SELECT * FROM RANKING WHERE username= '" + user + "'", null);
-        if (!c.moveToFirst()){
+        if (!c.moveToFirst()) {
             dbHelper.insertar("INSERT INTO RANKING(USERNAME,PUNTAJE,DIFICULTAD) VALUES('" + user + "','" + points + "','" + dif + "')", db);
             isRecord = true;
-        }
-
-        else if (Integer.parseInt(c.getString(2)) < points){
-            db.execSQL("UPDATE RANKING SET PUNTAJE='" + points + "', DIFICULTAD='"+dif+"' WHERE USERNAME='" + user + "'");
+        } else if (Integer.parseInt(c.getString(2)) < points) {
+            db.execSQL("UPDATE RANKING SET PUNTAJE='" + points + "', DIFICULTAD='" + dif + "' WHERE USERNAME='" + user + "'");
             isRecord = true;
         }
 
-        int random = (int)(Math.random()*3);
+        int random = (int) (Math.random() * 3);
         if (isRecord) {
             ((TextView) findViewById(R.id.recordText)).setText(R.string.record);
             MainActivity.getMediaPlayer().pause();
-            playSound(winSounds.get((int)(Math.random()*winSounds.size())));
+            playSound(winSounds.get((int) (Math.random() * winSounds.size())));
 
-            ((ImageView)findViewById(R.id.imgResult)).setImageResource(imgWin.get(random));
-            ((ImageView) findViewById(R.id.checkRecordOn)).setVisibility(View.VISIBLE);
-            ((ImageView) findViewById(R.id.checkRecordOff)).setVisibility(View.INVISIBLE);
+            ((ImageView) findViewById(R.id.imgResult)).setImageResource(imgWin.get(random));
         } else {
             ((TextView) findViewById(R.id.recordText)).setText(R.string.norecord);
             MainActivity.getMediaPlayer().pause();
-            playSound(loseSounds.get((int)(Math.random()*loseSounds.size())));
+            playSound(loseSounds.get((int) (Math.random() * loseSounds.size())));
 
-            ((ImageView)findViewById(R.id.imgResult)).setImageResource(imgLose.get(random));
-            ((ImageView) findViewById(R.id.checkRecordOn)).setVisibility(View.INVISIBLE);
-            ((ImageView) findViewById(R.id.checkRecordOff)).setVisibility(View.VISIBLE);
+            ((ImageView) findViewById(R.id.imgResult)).setImageResource(imgLose.get(random));
         }
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
             @Override
             public void onCompletion(MediaPlayer mp) {
+                mp.setVolume(0.07f, 0.07f);
                 playSound(R.raw.ending);
             }
 
@@ -141,10 +135,14 @@ public class FinJuego extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         super.onBackPressed();
         mp.stop();
         MainActivity.getMediaPlayer().seekTo(0);
         MainActivity.getMediaPlayer().start();
+    }
+
+    public void clickRegresar(View v) {
+        this.onBackPressed();
     }
 }

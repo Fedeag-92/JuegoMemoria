@@ -157,7 +157,8 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         return (ConstraintLayout.LayoutParams) description.getLayoutParams();
     }
 
-    public void OnResume(){
+    @Override
+    public void onResume(){
         super.onResume();
         btnSound.setChecked(MainActivity.getMediaPlayer().isPlaying());
     }
