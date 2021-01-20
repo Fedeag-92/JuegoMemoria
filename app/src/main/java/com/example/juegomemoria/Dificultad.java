@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import android.media.MediaPlayer;
 
 public class Dificultad extends AppCompatActivity implements View.OnClickListener {
     Button btnEasy;
