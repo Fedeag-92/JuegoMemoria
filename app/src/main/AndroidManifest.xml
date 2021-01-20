@@ -6,8 +6,8 @@
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
-        android:label=""
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="Juego de la Memoria"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".FinJuego" />
@@ -25,6 +25,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
+            android:label="Juego de la Memoria"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -91,8 +91,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 loading.setVisibility(View.GONE);
                 imgMain.setVisibility(View.VISIBLE);
                 tittle.setVisibility(View.VISIBLE);
-                user.setVisibility(View.VISIBLE);
-                pass.setVisibility(View.VISIBLE);
                 box_pass.setVisibility(View.VISIBLE);
                 box_user.setVisibility(View.VISIBLE);
                 btnLogin.setVisibility(View.VISIBLE);

@@ -13,32 +13,37 @@ import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
-import com.example.juegomemoria.entidades.PuntajeRanking;
-
-import java.util.ArrayList;
-
-public class Ranking extends AppCompatActivity {
+public class Ranking extends AppCompatActivity implements View.OnClickListener {
     private ConexionSQLiteHelper dbHelper;
-    private SQLiteDatabase db, dbr;
+    private SQLiteDatabase dbr;
     TableLayout tablaRanking;
-    ArrayList<PuntajeRanking> listaRanking;
-    private static final String TAG = "MyActivity";
-    private TextView tittle, tittle_ranking;
+    TextView tittle, tittle_ranking;
+    ToggleButton btnSoundR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
 
-        tittle = (TextView)findViewById(R.id.tittleGameRanking);
-        tittle_ranking = (TextView)findViewById(R.id.tittleRanking);
+        tittle = (TextView) findViewById(R.id.tittleGameRanking);
+        tittle_ranking = (TextView) findViewById(R.id.tittleRanking);
 
-        tittle.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/simpson.ttf"));
+        tittle.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
         tittle.setTextSize(60);
 
-        tittle_ranking.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/simpson.ttf"));
+        tittle_ranking.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
         tittle_ranking.setTextSize(60);
+
+        btnSoundR = (ToggleButton) findViewById(R.id.btnSoundR);
+
+        if (!MainActivity.getMediaPlayer().isPlaying())
+            btnSoundR.setChecked(false);
+        else
+            btnSoundR.setChecked(true);
+
+        btnSoundR.setOnClickListener(this);
 
         tablaRanking = (TableLayout) findViewById(R.id.listaRanking);
 
@@ -50,6 +55,7 @@ public class Ranking extends AppCompatActivity {
     public void clickRegresar(View view) {
         onBackPressed();
     }
+
 
     @SuppressLint("ResourceType")
     public void cargarRanking() {
@@ -68,13 +74,14 @@ public class Ranking extends AppCompatActivity {
 
             tableRowParams.setMargins(0, 3, 0, 3);
             row.setLayoutParams(tableRowParams);
+            row.setBackgroundColor(Color.parseColor("#CCACA1A1"));
 
             for (int j = 0; j < 3; j++) {
                 textView = new TextView(getBaseContext());
                 textView.setText(c.getString(j + 1));
                 textView.setGravity(Gravity.CENTER_VERTICAL);
                 textView.setPadding(15, 15, 15, 15);
-                textView.setBackgroundColor(Color.parseColor("#80ACA1A1"));
+                textView.setTextColor(Color.parseColor("#000000"));
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 row.addView(textView);
             }
@@ -85,8 +92,6 @@ public class Ranking extends AppCompatActivity {
 
     public void conectarBD() {
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
-        //db es para insertar los datos estaticos en la BD. Pruebas.
-        //db = dbHelper.getWritableDatabase();
         dbr = dbHelper.getReadableDatabase();
     }
 
@@ -94,4 +99,12 @@ public class Ranking extends AppCompatActivity {
         dbHelper.close();
     }
 
+    @Override
+    public void onClick(View view) {
+        if (!btnSoundR.isChecked()) {
+            MainActivity.getMediaPlayer().pause();
+        } else {
+            MainActivity.getMediaPlayer().start();
+        }
+    }
 }

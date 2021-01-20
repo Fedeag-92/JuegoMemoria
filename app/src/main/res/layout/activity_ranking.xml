@@ -8,13 +8,38 @@
     android:background="@drawable/back"
     tools:context=".Ranking">
 
+    <ToggleButton
+        android:id="@+id/btnSoundR"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="593dp"
+        android:background="@drawable/ic_toggle"
+        android:checked="true"
+        android:rotation="0"
+        android:rotationX="0"
+        android:rotationY="0"
+        android:text="@string/sonido"
+        android:textOff=""
+        android:textOn=""
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <ImageView
         android:id="@+id/btnAtras"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="345dp"
+        android:layout_marginBottom="135dp"
         android:onClick="clickRegresar"
+        app:layout_constraintBottom_toTopOf="@+id/container"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back_button" />
@@ -22,7 +47,7 @@
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="350dp"
-        android:layout_height="490dp"
+        android:layout_height="450dp"
         android:layout_marginTop="32dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="2dp"
-                android:background="#804E4C4C"
+                android:background="#CC4E4C4C"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp">
 
@@ -49,21 +74,24 @@
                     android:layout_width="170dp"
                     android:layout_height="match_parent"
                     android:text="@string/txt_usuario"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="#000000" />
 
                 <TextView
                     android:id="@+id/pointRaking"
                     android:layout_width="90dp"
                     android:layout_height="match_parent"
                     android:text="@string/puntaje"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="#000000" />
 
                 <TextView
                     android:id="@+id/difficultyRanking"
                     android:layout_width="90dp"
                     android:layout_height="match_parent"
                     android:text="@string/dificultad"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="#000000" />
 
             </TableRow>
 
@@ -75,7 +103,7 @@
         android:id="@+id/tittleGameRanking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="80dp"
         android:text="@string/app_name"
         android:textColor="#FFD740"
         android:textSize="24sp"
