@@ -168,9 +168,9 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         builder.setNegativeButton("Cerrar sesión", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                Dificultad.super.onBackPressed();
                 mp = MediaPlayer.create(Dificultad.this, R.raw.vuelva);
                 mp.start();
-                Dificultad.super.onBackPressed();
                 dialogInterface.cancel();
             }
         });

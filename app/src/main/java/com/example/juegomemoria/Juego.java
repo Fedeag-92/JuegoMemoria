@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.media.MediaPlayer;
@@ -15,10 +14,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.io.IOException;
@@ -38,6 +40,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     final Handler handler = new Handler();
     private ImageView firstCard;
     private ImageView secondCard;
+    private ImageView showVerif;
     private int firstImage;
     private int secondImage;
     private Chronometer chronometer;
@@ -47,6 +50,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     ArrayList<Integer> hitSounds;
     StateListDrawable d;
     Bitmap bitmap1, bitmap2;
+    AnimationSet animation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +79,19 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         errorsState = (TextView) findViewById(R.id.errorsJ);
         buttonBack = (ImageView) findViewById(R.id.btnBackJ);
         buttonBack.setOnClickListener(this);
+        showVerif = (ImageView) findViewById(R.id.errorOrHit);
+
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
+        fadeIn.setDuration(200);
+
+        Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setStartOffset(200);
+        fadeOut.setDuration(200);
+
+        animation = new AnimationSet(false); //change to false
+        animation.addAnimation(fadeOut);
+        animation.addAnimation(fadeIn);
 
         buttonSound = (ToggleButton) findViewById(R.id.btnSoundJ);
         buttonSound.setOnClickListener(this);
@@ -256,6 +273,21 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                         if (cells.get(i).getVisibility() == View.VISIBLE)
                             cells.get(i).setEnabled(false);
                     }
+                    if (firstImage != secondImage){
+                        showVerif.setImageResource(R.drawable.error);
+                    }
+                    else{
+                        showVerif.setImageResource(R.drawable.correct);
+                    }
+                    showVerif.setAnimation(animation);
+                    showVerif.setVisibility(View.VISIBLE);
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            showVerif.setVisibility(View.INVISIBLE);
+                        }
+                    }, 400);
+
                     handler.postDelayed(new Runnable() {
                         public void run() {
                             if (firstImage == secondImage) {
@@ -269,6 +301,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                 firstCard.setVisibility(View.INVISIBLE);
                                 secondCard.setVisibility(View.INVISIBLE);
                             } else {
+                                showVerif.setVisibility(View.INVISIBLE);
                                 playSound(errorSounds);
                                 errors++;
                                 if (errors >= errorsMax) {
