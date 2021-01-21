@@ -9,8 +9,9 @@
 
     <ImageView
         android:id="@+id/whiteTransparentBack"
-        android:layout_width="380dp"
-        android:layout_height="385dp"
+        android:layout_width="396dp"
+        android:layout_height="274dp"
+        android:layout_marginTop="24dp"
         android:background="#80FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,11 +21,66 @@
         android:id="@+id/imgResult"
         android:layout_width="190dp"
         android:layout_height="184dp"
-        android:layout_marginEnd="52dp"
         app:layout_constraintBottom_toBottomOf="@+id/whiteTransparentBack"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/whiteTransparentBack"
         app:layout_constraintTop_toTopOf="@+id/whiteTransparentBack"
-        app:layout_constraintVertical_bias="0.125" />
+        app:layout_constraintVertical_bias="0.343" />
+
+    <TextView
+        android:id="@+id/difficultyRanking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/permanent_marker"
+        android:text="@string/difficulty"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/errorsEnd" />
+
+    <TextView
+        android:id="@+id/pointsEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/permanent_marker"
+        android:text="@string/points"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/whiteTransparentBack" />
+
+    <TextView
+        android:id="@+id/errorsEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/permanent_marker"
+        android:text="@string/errors"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/timeEnd" />
+
+    <TextView
+        android:id="@+id/timeEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/permanent_marker"
+        android:text="@string/timeGame"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/pointsEnd" />
 
     <ImageView
         android:id="@+id/btnBackEndGame"
@@ -39,20 +95,6 @@
         app:srcCompat="@drawable/back_button" />
 
     <TextView
-        android:id="@+id/timeEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/permanent_marker"
-        android:text="@string/timeGame"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/pointsEnd" />
-
-    <TextView
         android:id="@+id/userNameEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,35 +102,24 @@
         android:fontFamily="@font/permanent_marker"
         android:text="@string/txt_usuario"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/endGameText" />
 
     <TextView
-        android:id="@+id/pointsEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/permanent_marker"
-        android:text="@string/points"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/whiteTransparentBack" />
-
-    <TextView
         android:id="@+id/endGameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/permanent_marker"
+        android:layout_width="350dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="60dp"
+        android:autoSizeMinTextSize="35sp"
+        android:autoSizeStepGranularity="20sp"
+        android:autoSizeTextType="uniform"
         android:text="@string/end"
+        android:textAlignment="center"
         android:textColor="#FFD740"
-        android:textSize="36sp"
+        android:textSize="60sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,46 +132,18 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/permanent_marker"
         android:textColor="#000000"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/whiteTransparentBack" />
 
-    <TextView
-        android:id="@+id/errorsEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/permanent_marker"
-        android:text="@string/errors"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/timeEnd" />
-
-    <TextView
-        android:id="@+id/difficultyRanking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/permanent_marker"
-        android:text="@string/difficulty"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/errorsEnd" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="55dp" />
+        app:layout_constraintGuide_begin="42dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

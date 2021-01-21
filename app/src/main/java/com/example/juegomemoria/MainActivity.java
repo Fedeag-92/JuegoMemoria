@@ -13,6 +13,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song);
         mediaPlayer.setVolume(0.07f,0.07f);
         mediaPlayer.setLooping(true);
@@ -80,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnRegister = (Button) findViewById(R.id.btnRegisterM);
 
         tittle.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/simpson.ttf"));
-        tittle.setTextSize(60);
 
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);

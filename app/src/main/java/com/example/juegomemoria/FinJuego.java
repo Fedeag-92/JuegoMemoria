@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -26,12 +27,16 @@ public class FinJuego extends AppCompatActivity {
     ArrayList<Integer> imgLose;
     ArrayList<Integer> loseSounds;
     private MediaPlayer mp;
+    private TextView tittleEndGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fin_juego);
         conectarBD();
+
+        tittleEndGame = (TextView) findViewById(R.id.endGameText);
+        tittleEndGame.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
 
         mp = new MediaPlayer();
 

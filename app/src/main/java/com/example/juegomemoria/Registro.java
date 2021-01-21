@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -16,12 +18,19 @@ public class Registro extends AppCompatActivity {
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
     private TextInputEditText txt_nombre, txt_apellido, txt_username, txt_password;
+    private TextView tittleAppRegistro, tittleRegistro;
     ImageView buttonBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
+
+        tittleAppRegistro = (TextView)findViewById(R.id.tittleR);
+        tittleRegistro = (TextView)findViewById(R.id.subtittleR);
+
+        tittleAppRegistro.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
+        tittleRegistro.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
 
         txt_nombre = (TextInputEditText) findViewById(R.id.nombre);
         txt_apellido = (TextInputEditText) findViewById(R.id.apellido);
