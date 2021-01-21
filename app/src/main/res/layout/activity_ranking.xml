@@ -12,9 +12,8 @@
         android:id="@+id/btnSoundR"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="593dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/ic_toggle"
         android:checked="true"
         android:rotation="0"
@@ -24,10 +23,8 @@
         android:textOff=""
         android:textOn=""
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/btnAtras"
@@ -35,19 +32,15 @@
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="345dp"
-        android:layout_marginBottom="135dp"
         android:onClick="clickRegresar"
-        app:layout_constraintBottom_toTopOf="@+id/container"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back_button" />
 
     <LinearLayout
         android:id="@+id/container"
-        android:layout_width="350dp"
-        android:layout_height="450dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +51,7 @@
         <TableLayout
             android:id="@+id/listaRanking"
             android:layout_width="match_parent"
-            android:layout_height="470dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TableRow
@@ -66,8 +59,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="2dp"
                 android:background="#CC4E4C4C"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp">
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp">
 
                 <TextView
                     android:id="@+id/userRaking"
@@ -101,12 +94,16 @@
 
     <TextView
         android:id="@+id/tittleGameRanking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_width="350dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="60dp"
+        android:autoSizeMinTextSize="35sp"
+        android:autoSizeStepGranularity="20sp"
+        android:autoSizeTextType="uniform"
         android:text="@string/app_name"
+        android:textAlignment="center"
         android:textColor="#FFD740"
-        android:textSize="24sp"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,12 +111,16 @@
 
     <TextView
         android:id="@+id/tittleRanking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:autoSizeMinTextSize="35sp"
+        android:autoSizeStepGranularity="15sp"
+        android:autoSizeTextType="uniform"
         android:text="@string/Ranking"
+        android:textAlignment="center"
         android:textColor="#FFD740"
-        android:textSize="24sp"
+        android:textSize="45sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

@@ -11,22 +11,24 @@
     <string name="eleccionDif">Elegir dificultad</string>
     <string name="dificultadFacil">Fácil</string>
     <string name="dificultadNormal">Normal</string>
-    <string name="dificultadDificil">Dificil</string>
+    <string name="dificultadDificil">Difícil</string>
     <string name="jugar">Jugar</string>
     <string name="sonido">Sonido</string>
     <string name="sonidooff">Sonido Off</string>
     <string name="sonidoon">Sonido On</string>
     <string name="card"> </string>
     <string name="back">Atras</string>
-    <string name="end">Fin Juego</string>
+    <string name="end">Fin del Juego</string>
     <string name="points">Puntaje: </string>
     <string name="difficulty">Dificultad: </string>
     <string name="errors">Errores: </string>
-    <string name="record">Record: </string>
     <string name="timeGame">Tiempo: </string>
     <string name="dificultad">Dificultad</string>
     <string name="puntaje">Puntaje</string>
+    <string name="norecord">¡No superaste tu Record!</string>
+    <string name="record">¡Superaste tu Record!</string>
     <string name="descripcionFacil">Tablero: 4 x 3\nVidas: ∞</string>
     <string name="descripcionNormal">Tablero: 4 x 5\nVidas: 6</string>
     <string name="descripcionDificil">Tablero: 4 x 6\nVidas: 4</string>
+    <string name="gameOver">¡GAME OVER!</string>
 </resources>

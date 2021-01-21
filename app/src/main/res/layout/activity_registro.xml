@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back"
+    android:visibility="visible"
     tools:context=".Registro">
 
     <Button
@@ -36,13 +37,16 @@
 
     <TextView
         android:id="@+id/subtittleR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/permanent_marker"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:autoSizeMinTextSize="35sp"
+        android:autoSizeStepGranularity="15sp"
+        android:autoSizeTextType="uniform"
         android:text="@string/Registro"
+        android:textAlignment="center"
         android:textColor="#FFD740"
-        android:textSize="24sp"
+        android:textSize="45sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnAtrasR"
@@ -51,13 +55,16 @@
 
     <TextView
         android:id="@+id/tittleR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/permanent_marker"
+        android:layout_width="350dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="60dp"
+        android:autoSizeMinTextSize="35sp"
+        android:autoSizeStepGranularity="20sp"
+        android:autoSizeTextType="uniform"
         android:text="@string/app_name"
+        android:textAlignment="center"
         android:textColor="#FFD740"
-        android:textSize="24sp"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnAtrasR"
@@ -145,9 +152,11 @@
         android:layout_height="130dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/registrando"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegistro" />
+        app:layout_constraintTop_toBottomOf="@+id/btnRegistro"
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

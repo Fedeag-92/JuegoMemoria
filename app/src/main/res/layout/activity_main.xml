@@ -8,24 +8,12 @@
     android:hapticFeedbackEnabled="false"
     tools:context=".MainActivity">
 
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/logVerif"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="212dp"
-        android:src="@drawable/loginverif"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="invisible" />
 
     <Button
         android:id="@+id/btnRegisterM"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="#FF6E40"
         android:text="@string/btn_registro"
         android:visibility="invisible"
@@ -39,7 +27,7 @@
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="#FF6E40"
         android:text="@string/btn_ingresar"
         android:visibility="invisible"
@@ -54,65 +42,56 @@
         android:id="@+id/imgMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegisterM"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
         app:srcCompat="@drawable/main"
-        tools:visibility="invisible" />
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/imgIntro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/intro"
-        tools:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/tittleMain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="@string/app_name"
-        android:textAlignment="center"
-        android:textColor="#FFD740"
-        android:textSize="30sp"
-        android:textStyle="bold|italic"
-        android:visibility="invisible"
+        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        app:srcCompat="@drawable/intro"
+        tools:visibility="gone" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/box_username"
-        android:layout_width="210dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="28dp"
-        android:background="#80FFFFFF"
+    <ImageView
+        android:id="@+id/btnExit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:rotationX="0"
+        android:rotationY="180"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/exit" />
+
+    <TextView
+        android:id="@+id/tittleMain"
+        android:layout_width="350dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="60dp"
+        android:autoSizeMinTextSize="35sp"
+        android:autoSizeStepGranularity="20sp"
+        android:autoSizeTextType="uniform"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor="#FFD740"
+        android:textSize="40sp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tittleMain"
-        tools:visibility="visible">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/userNameMain"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="#000000"
-            android:hint="@string/txt_usuario"
-            android:inputType="textPersonName" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/box_password"
@@ -136,17 +115,40 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/box_username"
+        android:layout_width="210dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="24dp"
+        android:background="#80FFFFFF"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tittleMain"
+        tools:visibility="visible">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userNameMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#000000"
+            android:hint="@string/txt_usuario"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/imgLoading"
         android:layout_width="195dp"
         android:layout_height="206dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/loading"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@+id/imgIntro"
+        tools:visibility="gone" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

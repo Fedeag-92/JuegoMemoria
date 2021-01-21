@@ -39,16 +39,12 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dificultad);
 
-
         description = (TextView) findViewById(R.id.difficultyInfo);
         tittleGame = (TextView) findViewById(R.id.tittleDificultad);
         tittleChoice = (TextView) findViewById(R.id.textChoiceDifficulty);
 
         tittleGame.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
-        tittleGame.setTextSize(60);
-
         tittleChoice.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
-        tittleChoice.setTextSize(60);
 
         btnEasy = (Button) findViewById(R.id.btnFacil);
         btnNormal = (Button) findViewById(R.id.btnNormal);
@@ -59,7 +55,6 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         btnBack = (ImageView) findViewById(R.id.btnBackD);
         imgBart = (ImageView) findViewById(R.id.bartDif);
 
-        mp = MediaPlayer.create(Dificultad.this, R.raw.feo);
         if(!MainActivity.getMediaPlayer().isPlaying())
             btnSound.setChecked(false);
 
@@ -119,6 +114,7 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.btnJugar:
                 if (choice != 0) {
+                    mp = MediaPlayer.create(Dificultad.this, R.raw.feo);
                     mp.start();
                     Intent i = new Intent(Dificultad.this, Juego.class);
                     i.putExtra("user", getIntent().getExtras().getString("user"));
@@ -157,7 +153,8 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         return (ConstraintLayout.LayoutParams) description.getLayoutParams();
     }
 
-    public void OnResume(){
+    @Override
+    public void onResume(){
         super.onResume();
         btnSound.setChecked(MainActivity.getMediaPlayer().isPlaying());
     }
@@ -172,6 +169,8 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Dificultad.super.onBackPressed();
+                mp = MediaPlayer.create(Dificultad.this, R.raw.vuelva);
+                mp.start();
                 dialogInterface.cancel();
             }
         });
