@@ -2,9 +2,12 @@ package com.example.juegomemoria;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
 import pl.droidsonroids.gif.GifImageView;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
 import android.database.Cursor;
@@ -44,24 +47,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean isRegistering = false;
     final Handler handler = new Handler();
     public static MediaPlayer mediaPlayer;
+    ImageView btnExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        btnExit = (ImageView) findViewById(R.id.btnExit);
+        btnExit.setOnClickListener(this);
 
         mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song);
-        mediaPlayer.setVolume(0.07f,0.07f);
+        mediaPlayer.setVolume(0.07f, 0.07f);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
 
         loading = (GifImageView) findViewById(R.id.imgLoading);
         imgMain = (ImageView) findViewById(R.id.imgMain);
         imgIntro = (ImageView) findViewById(R.id.imgIntro);
-        box_user = (TextInputLayout)findViewById(R.id.box_username);
-        box_pass = (TextInputLayout)findViewById(R.id.box_password);
+        box_user = (TextInputLayout) findViewById(R.id.box_username);
+        box_pass = (TextInputLayout) findViewById(R.id.box_password);
 
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegister = (Button) findViewById(R.id.btnRegisterM);
 
-        tittle.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/simpson.ttf"));
+        tittle.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
 
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
@@ -98,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 box_user.setVisibility(View.VISIBLE);
                 btnLogin.setVisibility(View.VISIBLE);
                 btnRegister.setVisibility(View.VISIBLE);
+                btnExit.setVisibility(View.VISIBLE);
             }
         }, 4250);   //5 seconds
 
@@ -128,8 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 Intent i = new Intent(MainActivity.this, Dificultad.class);
                                 i.putExtra("user", user.getText().toString());
                                 startActivity(i);
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
                                 loading.setVisibility(View.INVISIBLE);
                             }
@@ -146,6 +151,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent i = new Intent(MainActivity.this, Registro.class);
                 startActivity(i);
                 break;
+
+            case R.id.btnExit:
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("¿Deseas salir de la aplicación?");
+                builder.setCancelable(true);
+
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                builder.setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finishAffinity();
+                        System.exit(0);
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+                break;
         }
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); //Este metodo quita el teclado al hacer click en ingresar
         imm.hideSoftInputFromWindow(btnLogin.getWindowToken(), 0);
@@ -160,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return mediaPlayer;
     }
 
-    public void conectarBD(){
+    public void conectarBD() {
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
         db = dbHelper.getWritableDatabase();
     }

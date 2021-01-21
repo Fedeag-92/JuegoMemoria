@@ -28,7 +28,7 @@ import java.util.Random;
 
 public class Juego extends AppCompatActivity implements View.OnClickListener {
     private int points, finalPoints, difficulty, hits, errors, errorsMax, turns, elapsed;
-    private boolean gameOver, runningTime;
+    private boolean gameOver, runningTime,perdida;
     private TextView user, pointsState, errorsState;
     private ImageView buttonBack;
     private ToggleButton buttonSound;
@@ -46,7 +46,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     ArrayList<Integer> errorSounds;
     ArrayList<Integer> hitSounds;
     StateListDrawable d;
-    Bitmap bitmap1, bitmap2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +71,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         pauseOffset = 0;
         user = (TextView) findViewById(R.id.userNameJ);
         gameOver = false;
+        perdida=false;
         pointsState = (TextView) findViewById(R.id.pointsJ);
         errorsState = (TextView) findViewById(R.id.errorsJ);
         buttonBack = (ImageView) findViewById(R.id.btnBackJ);
@@ -273,6 +274,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                 errors++;
                                 if (errors >= errorsMax) {
                                     gameOver = true;
+                                    perdida=true;
                                     endGame();
                                 }
                                 if (difficulty == 2 || difficulty == 3) {
@@ -287,8 +289,6 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                     cells.get(i).setEnabled(true);
                                     cells.get(i).setSelected(false);
                                 }
-
-
                             }
                             firstCard = null;
                             secondCard = null;
@@ -329,6 +329,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         i.putExtra("difficulty", this.difficulty);
         i.putExtra("errors", this.errors);
         i.putExtra("time", elapsed);
+        i.putExtra("perdida", this.perdida);
         finish();
         startActivity(i);
     }

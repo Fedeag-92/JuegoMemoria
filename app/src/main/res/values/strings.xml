@@ -11,7 +11,7 @@
     <string name="eleccionDif">Elegir dificultad</string>
     <string name="dificultadFacil">Fácil</string>
     <string name="dificultadNormal">Normal</string>
-    <string name="dificultadDificil">Dificil</string>
+    <string name="dificultadDificil">Difícil</string>
     <string name="jugar">Jugar</string>
     <string name="sonido">Sonido</string>
     <string name="sonidooff">Sonido Off</string>
@@ -30,4 +30,5 @@
     <string name="descripcionFacil">Tablero: 4 x 3\nVidas: ∞</string>
     <string name="descripcionNormal">Tablero: 4 x 5\nVidas: 6</string>
     <string name="descripcionDificil">Tablero: 4 x 6\nVidas: 4</string>
+    <string name="gameOver">¡GAME OVER!</string>
 </resources>
