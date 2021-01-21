@@ -1,9 +1,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_checked="false"
-        android:drawable="@drawable/sound_off" />
+        android:drawable="@drawable/soundoff2" />
 
     <item android:state_checked="true"
-        android:drawable="@drawable/sound_on" />
+        android:drawable="@drawable/soundon2" />
 
 </selector>

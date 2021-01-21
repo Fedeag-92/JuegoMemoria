@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".FinJuego" />
+        <activity android:name=".FinJuego"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Juego"
             android:screenOrientation="portrait" />

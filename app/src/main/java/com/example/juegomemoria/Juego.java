@@ -15,6 +15,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,6 +42,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     final Handler handler = new Handler();
     private ImageView firstCard;
     private ImageView secondCard;
+    private ImageView showVerif;
     private int firstImage;
     private int secondImage;
     private Chronometer chronometer;
@@ -46,7 +51,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     ArrayList<Integer> errorSounds;
     ArrayList<Integer> hitSounds;
     StateListDrawable d;
-
+    AnimationSet animation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,8 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         errorSounds.add(R.raw.doh1);
         errorSounds.add(R.raw.doh2);
         errorSounds.add(R.raw.doh3);
+        errorSounds.add(R.raw.idiota);
+        errorSounds.add(R.raw.nelsonaha);
         hitSounds.add(R.raw.matanga);
         hitSounds.add(R.raw.yajuhomero2);
 
@@ -71,11 +78,23 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         pauseOffset = 0;
         user = (TextView) findViewById(R.id.userNameJ);
         gameOver = false;
-        perdida=false;
         pointsState = (TextView) findViewById(R.id.pointsJ);
         errorsState = (TextView) findViewById(R.id.errorsJ);
         buttonBack = (ImageView) findViewById(R.id.btnBackJ);
         buttonBack.setOnClickListener(this);
+        showVerif = (ImageView) findViewById(R.id.errorOrHit);
+
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
+        fadeIn.setDuration(200);
+
+        Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setStartOffset(200);
+        fadeOut.setDuration(200);
+
+        animation = new AnimationSet(false); //change to false
+        animation.addAnimation(fadeOut);
+        animation.addAnimation(fadeIn);
 
         buttonSound = (ToggleButton) findViewById(R.id.btnSoundJ);
         buttonSound.setOnClickListener(this);
@@ -257,6 +276,21 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                         if (cells.get(i).getVisibility() == View.VISIBLE)
                             cells.get(i).setEnabled(false);
                     }
+                    if (firstImage != secondImage){
+                        showVerif.setImageResource(R.drawable.error);
+                    }
+                    else{
+                        showVerif.setImageResource(R.drawable.correct);
+                    }
+                    showVerif.setAnimation(animation);
+                    showVerif.setVisibility(View.VISIBLE);
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            showVerif.setVisibility(View.INVISIBLE);
+                        }
+                    }, 400);
+
                     handler.postDelayed(new Runnable() {
                         public void run() {
                             if (firstImage == secondImage) {
@@ -270,6 +304,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                 firstCard.setVisibility(View.INVISIBLE);
                                 secondCard.setVisibility(View.INVISIBLE);
                             } else {
+                                showVerif.setVisibility(View.INVISIBLE);
                                 playSound(errorSounds);
                                 errors++;
                                 if (errors >= errorsMax) {
@@ -289,6 +324,8 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                     cells.get(i).setEnabled(true);
                                     cells.get(i).setSelected(false);
                                 }
+
+
                             }
                             firstCard = null;
                             secondCard = null;

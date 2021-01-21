@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (username.length() != 0 && password.length() != 0) {
                     ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) loading.getLayoutParams();
                     layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.UNSET;
-                    layoutParams.topToTop = R.id.box_username;
+                    layoutParams.topToTop = R.id.tittleMain;
                     layoutParams.topMargin = 0;
                     loading.setLayoutParams(layoutParams);
                     loading.setVisibility(View.VISIBLE);
