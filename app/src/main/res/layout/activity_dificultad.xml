@@ -111,6 +111,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back_button" />
 
+
+    <ImageView
+        android:id="@+id/maggieImg"
+        android:layout_width="77dp"
+        android:layout_height="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnFacil"
+        app:layout_constraintEnd_toEndOf="@+id/btnFacil"
+        app:layout_constraintStart_toStartOf="@+id/btnFacil"
+        app:srcCompat="@drawable/maggie" />
+
     <LinearLayout
         android:id="@+id/rankingBar"
         android:layout_width="wrap_content"
@@ -150,7 +160,6 @@
             tools:layout_editor_absoluteX="259dp"
             tools:layout_editor_absoluteY="622dp" />
     </LinearLayout>
-
 
     <TextView
         android:id="@+id/tittleDificultad"
@@ -219,16 +228,5 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/maggieImg"
-        android:layout_width="88dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="40dp"
-        app:layout_constraintBottom_toBottomOf="@+id/marge"
-        app:layout_constraintStart_toStartOf="@+id/marge"
-        app:layout_constraintTop_toTopOf="@+id/marge"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/maggie" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

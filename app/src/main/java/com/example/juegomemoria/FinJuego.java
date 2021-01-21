@@ -25,7 +25,6 @@ public class FinJuego extends AppCompatActivity {
     ArrayList<Integer> imgWin;
     ArrayList<Integer> winSounds;
     ArrayList<Integer> imgLose;
-    ArrayList<Integer> loseSounds;
     ArrayList<Integer> imagesGameOver;
     boolean gameOver;
     private MediaPlayer mp;
@@ -45,11 +44,6 @@ public class FinJuego extends AppCompatActivity {
         gameOver = getIntent().getBooleanExtra("perdida",false);
         user = getIntent().getStringExtra("user");
         ((TextView) findViewById(R.id.userNameEnd)).setText(user);
-
-        loseSounds = new ArrayList<Integer>();
-        loseSounds.add(R.raw.idiota);
-        loseSounds.add(R.raw.chan);
-        loseSounds.add(R.raw.nelsonaha);
 
         if(!gameOver) {
             showResult();
@@ -122,7 +116,7 @@ public class FinJuego extends AppCompatActivity {
         }
         else{
             int random = (int) (Math.random() * 5);
-            playSound(loseSounds.get((int) (Math.random() * loseSounds.size())));
+            playSound(R.raw.chan);
             imagesGameOver = new ArrayList<Integer>();
             imagesGameOver.add(R.drawable.gameover1);
             imagesGameOver.add(R.drawable.gameover2);

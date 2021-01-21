@@ -64,6 +64,8 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         errorSounds.add(R.raw.doh1);
         errorSounds.add(R.raw.doh2);
         errorSounds.add(R.raw.doh3);
+        errorSounds.add(R.raw.idiota);
+        errorSounds.add(R.raw.nelsonaha);
         hitSounds.add(R.raw.matanga);
         hitSounds.add(R.raw.yajuhomero2);
 
