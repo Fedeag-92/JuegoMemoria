@@ -8,6 +8,7 @@
     android:hapticFeedbackEnabled="false"
     tools:context=".MainActivity">
 
+
     <Button
         android:id="@+id/btnRegisterM"
         android:layout_width="wrap_content"
@@ -47,7 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin"
         app:srcCompat="@drawable/main"
-        tools:visibility="gone" />
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/imgIntro"
@@ -60,6 +61,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/intro"
         tools:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/btnExit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:rotationX="0"
+        android:rotationY="180"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/exit" />
 
     <TextView
         android:id="@+id/tittleMain"
@@ -78,28 +92,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/box_username"
-        android:layout_width="210dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="24dp"
-        android:background="#80FFFFFF"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tittleMain"
-        tools:visibility="visible">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/userNameMain"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="#000000"
-            android:hint="@string/txt_usuario"
-            android:inputType="textPersonName" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/box_password"
@@ -121,6 +113,28 @@
             android:backgroundTint="#000000"
             android:hint="@string/txt_password"
             android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/box_username"
+        android:layout_width="210dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="24dp"
+        android:background="#80FFFFFF"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tittleMain"
+        tools:visibility="visible">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userNameMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#000000"
+            android:hint="@string/txt_usuario"
+            android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <pl.droidsonroids.gif.GifImageView

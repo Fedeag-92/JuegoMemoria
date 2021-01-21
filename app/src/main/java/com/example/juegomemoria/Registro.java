@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.w3c.dom.Text;
+
 public class Registro extends AppCompatActivity {
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;

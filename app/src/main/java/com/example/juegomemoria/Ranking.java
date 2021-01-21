@@ -29,7 +29,6 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener {
 
         tittle = (TextView) findViewById(R.id.tittleGameRanking);
         tittle_ranking = (TextView) findViewById(R.id.tittleRanking);
-
         tittle.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
         tittle_ranking.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
 

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.media.MediaPlayer;
@@ -21,6 +22,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.io.IOException;
@@ -30,7 +32,7 @@ import java.util.Random;
 
 public class Juego extends AppCompatActivity implements View.OnClickListener {
     private int points, finalPoints, difficulty, hits, errors, errorsMax, turns, elapsed;
-    private boolean gameOver, runningTime;
+    private boolean gameOver, runningTime,perdida;
     private TextView user, pointsState, errorsState;
     private ImageView buttonBack;
     private ToggleButton buttonSound;
@@ -49,7 +51,6 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     ArrayList<Integer> errorSounds;
     ArrayList<Integer> hitSounds;
     StateListDrawable d;
-    Bitmap bitmap1, bitmap2;
     AnimationSet animation;
 
     @Override
@@ -306,6 +307,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                 errors++;
                                 if (errors >= errorsMax) {
                                     gameOver = true;
+                                    perdida=true;
                                     endGame();
                                 }
                                 if (difficulty == 2 || difficulty == 3) {
@@ -362,6 +364,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         i.putExtra("difficulty", this.difficulty);
         i.putExtra("errors", this.errors);
         i.putExtra("time", elapsed);
+        i.putExtra("perdida", this.perdida);
         finish();
         startActivity(i);
     }
