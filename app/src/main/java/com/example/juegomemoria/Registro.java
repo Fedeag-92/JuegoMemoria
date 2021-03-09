@@ -7,21 +7,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.w3c.dom.Text;
-
 public class Registro extends AppCompatActivity {
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
     private TextInputEditText txt_nombre, txt_apellido, txt_username, txt_password;
     private TextView tittleAppRegistro, tittleRegistro;
-    ImageView buttonBack;
+    private ImageView buttonBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

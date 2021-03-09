@@ -12,12 +12,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -25,7 +22,6 @@ import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,21 +29,18 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.w3c.dom.Text;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    TextInputEditText user, pass;
-    TextView tittle;
-    ImageView imgMain, imgIntro;
-    GifImageView loading;
-    Button btnLogin, btnRegister;
+    private TextInputEditText user, pass;
+    private TextView tittle;
+    private ImageView imgMain, imgIntro;
+    private GifImageView loading;
+    private Button btnLogin, btnRegister;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
-    TextInputLayout box_user, box_pass;
-    boolean isRegistering = false;
-    final Handler handler = new Handler();
+    private TextInputLayout box_user, box_pass;
+    private final Handler handler = new Handler();
+    private ImageView btnExit;
     public static MediaPlayer mediaPlayer;
-    ImageView btnExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,13 +104,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        String username = user.getText().toString();
-        String password = pass.getText().toString();
-
         this.conectarBD();
 
         switch (v.getId()) {
             case R.id.btnLogin:
+                String username = user.getText().toString();
+                String password = pass.getText().toString();
                 if (username.length() != 0 && password.length() != 0) {
                     ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) loading.getLayoutParams();
                     layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.UNSET;
@@ -145,9 +137,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnRegisterM:
-                user.setText("");
-                pass.setText("");
-                isRegistering = true;
                 Intent i = new Intent(MainActivity.this, Registro.class);
                 startActivity(i);
                 break;

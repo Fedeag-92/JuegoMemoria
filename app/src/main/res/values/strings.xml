@@ -14,8 +14,6 @@
     <string name="dificultadDificil">Difícil</string>
     <string name="jugar">Jugar</string>
     <string name="sonido">Sonido</string>
-    <string name="sonidooff">Sonido Off</string>
-    <string name="sonidoon">Sonido On</string>
     <string name="card"> </string>
     <string name="back">Atras</string>
     <string name="end">Fin del Juego</string>

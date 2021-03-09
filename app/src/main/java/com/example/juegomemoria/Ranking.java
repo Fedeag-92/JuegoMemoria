@@ -18,9 +18,9 @@ import android.widget.ToggleButton;
 public class Ranking extends AppCompatActivity implements View.OnClickListener {
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase dbr;
-    TableLayout tablaRanking;
-    TextView tittle, tittle_ranking;
-    ToggleButton btnSoundR;
+    private TableLayout tablaRanking;
+    private TextView tittle, tittle_ranking;
+    private ToggleButton btnSoundR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

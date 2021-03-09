@@ -65,7 +65,6 @@
 
 
     <ImageView
-        android:id="@+id/marge"
         android:layout_width="88dp"
         android:layout_height="186dp"
         android:layout_marginBottom="238dp"
@@ -88,7 +87,6 @@
         app:srcCompat="@drawable/bartdif" />
 
     <ImageView
-        android:id="@+id/kidssimpsons"
         android:layout_width="83dp"
         android:layout_height="181dp"
         android:layout_marginBottom="269dp"
@@ -113,7 +111,6 @@
 
 
     <ImageView
-        android:id="@+id/maggieImg"
         android:layout_width="77dp"
         android:layout_height="24dp"
         app:layout_constraintBottom_toTopOf="@+id/btnFacil"
@@ -122,7 +119,7 @@
         app:srcCompat="@drawable/maggie" />
 
     <LinearLayout
-        android:id="@+id/rankingBar"
+        android:id="@+id/errorBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -133,7 +130,6 @@
         app:layout_constraintTop_toBottomOf="@+id/btnJugar">
 
         <ImageView
-            android:id="@+id/starRank1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:contentDescription="@string/Ranking"
@@ -152,7 +148,6 @@
             tools:layout_editor_absoluteY="622dp" />
 
         <ImageView
-            android:id="@+id/starRank2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:contentDescription="@string/Ranking"

@@ -14,21 +14,16 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class FinJuego extends AppCompatActivity {
-    private int points, difficulty, errors, time;
-    private boolean isRecord;
-    private String user;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db, dbr;
-    ArrayList<Integer> imgWin;
-    ArrayList<Integer> winSounds;
-    ArrayList<Integer> imgLose;
-    ArrayList<Integer> imagesGameOver;
-    boolean gameOver;
+    private ArrayList<Integer> imgWin;
+    private ArrayList<Integer> winSounds;
+    private ArrayList<Integer> imgLose;
+    private ArrayList<Integer> imagesGameOver;
+    private boolean lostGame;
     private MediaPlayer mp;
-    private TextView tittleEndGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +31,16 @@ public class FinJuego extends AppCompatActivity {
         setContentView(R.layout.activity_fin_juego);
         conectarBD();
 
-        tittleEndGame = (TextView) findViewById(R.id.endGameText);
+        TextView tittleEndGame = (TextView) findViewById(R.id.endGameText);
         tittleEndGame.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
 
         mp = new MediaPlayer();
 
-        gameOver = getIntent().getBooleanExtra("perdida",false);
-        user = getIntent().getStringExtra("user");
+        lostGame = getIntent().getBooleanExtra("lostGame",false);
+        String user = getIntent().getStringExtra("user");
         ((TextView) findViewById(R.id.userNameEnd)).setText(user);
 
-        if(!gameOver) {
+        if(!lostGame) {
             showResult();
             imgWin = new ArrayList<Integer>();
             imgWin.add(R.drawable.bartwin);
@@ -63,13 +58,13 @@ public class FinJuego extends AppCompatActivity {
             winSounds.add(R.raw.neerd);
             winSounds.add(R.raw.volverchango);
 
-
-            points = getIntent().getIntExtra("points", 0);
-            isRecord = getIntent().getBooleanExtra("record", false);
-            difficulty = getIntent().getIntExtra("difficulty", 0);
-            errors = getIntent().getIntExtra("errors", 0);
-            time = getIntent().getIntExtra("time", 0);
+            int points = getIntent().getIntExtra("points", 0);
+            boolean isRecord = getIntent().getBooleanExtra("record", false);
+            int difficulty = getIntent().getIntExtra("difficulty", 0);
+            int errors = getIntent().getIntExtra("errors", 0);
+            int time = getIntent().getIntExtra("time", 0);
             String dif;
+
             if (difficulty == 1) {
                 dif = "Facil";
             } else if (difficulty == 2) {
@@ -78,7 +73,7 @@ public class FinJuego extends AppCompatActivity {
                 dif = "Dificil";
             }
             ((TextView) findViewById(R.id.pointsEnd)).setText("Puntaje: " + points);
-            ((TextView) findViewById(R.id.errorsEnd)).setText("Errores: " + errors);
+            ((TextView) findViewById(R.id.errorsEnd)).setText("Errores: " + (errors -1));
             ((TextView) findViewById(R.id.difficultyRanking)).setText("Dificultad: " + dif);
             String timeString = "";
             if (time > 60) {
@@ -86,8 +81,6 @@ public class FinJuego extends AppCompatActivity {
                 ((TextView) findViewById(R.id.timeEnd)).setText("Tiempo: " + timeString);
             } else
                 ((TextView) findViewById(R.id.timeEnd)).setText("Tiempo: 00:" + time);
-
-
 
             Cursor c = dbr.rawQuery("SELECT * FROM RANKING WHERE username= '" + user + "'", null);
             if (!c.moveToFirst()) {
@@ -107,25 +100,14 @@ public class FinJuego extends AppCompatActivity {
                 ((ImageView) findViewById(R.id.imgResult)).setImageResource(imgWin.get(random));
             } else {
                 ((TextView) findViewById(R.id.recordText)).setText(R.string.norecord);
-                //MainActivity.getMediaPlayer().pause();
-               // playSound(loseSounds.get((int) (Math.random() * loseSounds.size())));
-
                 ((ImageView) findViewById(R.id.imgResult)).setImageResource(imgLose.get(random));
             }
-
         }
         else{
             int random = (int) (Math.random() * 5);
             playSound(R.raw.chan);
-            imagesGameOver = new ArrayList<Integer>();
-            imagesGameOver.add(R.drawable.gameover1);
-            imagesGameOver.add(R.drawable.gameover2);
-            imagesGameOver.add(R.drawable.gameover3);
-            imagesGameOver.add(R.drawable.gameover4);
-            imagesGameOver.add(R.drawable.gameover5);
-            ((ImageView) findViewById(R.id.gameOverImage)).setImageResource(imagesGameOver.get(random));
+            mostrarImgError(random);
         }
-
 
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
@@ -134,9 +116,17 @@ public class FinJuego extends AppCompatActivity {
                 mp.setVolume(0.07f, 0.07f);
                 playSound(R.raw.ending);
             }
-
         });
+    }
 
+    public void mostrarImgError(int random){
+        imagesGameOver = new ArrayList<Integer>();
+        imagesGameOver.add(R.drawable.gameover1);
+        imagesGameOver.add(R.drawable.gameover2);
+        imagesGameOver.add(R.drawable.gameover3);
+        imagesGameOver.add(R.drawable.gameover4);
+        imagesGameOver.add(R.drawable.gameover5);
+        ((ImageView) findViewById(R.id.gameOverImage)).setImageResource(imagesGameOver.get(random));
     }
 
     public void playSound(int song) {
@@ -152,6 +142,12 @@ public class FinJuego extends AppCompatActivity {
         }
     }
 
+    public void stopSound(){
+        mp.stop();
+        mp.release();
+        mp = null;
+    }
+
     public void conectarBD() {
         dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
         db = dbHelper.getWritableDatabase();
@@ -160,8 +156,8 @@ public class FinJuego extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        this.stopSound();
         super.onBackPressed();
-        mp.stop();
         MainActivity.getMediaPlayer().seekTo(0);
         MainActivity.getMediaPlayer().start();
     }
@@ -171,7 +167,6 @@ public class FinJuego extends AppCompatActivity {
     }
 
     public void showResult(){
-
         findViewById(R.id.pointsEnd).setVisibility(View.VISIBLE);
         findViewById(R.id.errorsEnd).setVisibility(View.VISIBLE);
         findViewById(R.id.difficultyRanking).setVisibility(View.VISIBLE);
@@ -180,8 +175,6 @@ public class FinJuego extends AppCompatActivity {
         findViewById(R.id.imgResult).setVisibility(View.VISIBLE);
         findViewById(R.id.recordText).setVisibility(View.VISIBLE);
         findViewById(R.id.gameOverImage).setVisibility(View.GONE);
-        //findViewById(R.id.gameOverImage).setVisibility(View.INVISIBLE);
         findViewById(R.id.txtGameOver).setVisibility(View.INVISIBLE);
-
     }
 }
