@@ -30,7 +30,6 @@
         tools:visibility="invisible" />
 
     <ImageView
-        android:id="@+id/btnBackEndGame"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"

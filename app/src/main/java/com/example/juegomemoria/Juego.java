@@ -6,8 +6,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.media.MediaPlayer;
@@ -22,7 +20,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.io.IOException;
@@ -32,14 +29,15 @@ import java.util.Random;
 
 public class Juego extends AppCompatActivity implements View.OnClickListener {
     private int points, finalPoints, difficulty, hits, errors, errorsMax, turns, elapsed;
-    private boolean gameOver, runningTime,perdida;
-    private TextView user, pointsState, errorsState;
+    private boolean gameFinish, runningTime,lostGame;
+    private TextView user;
+    private TextView pointsState;
     private ImageView buttonBack;
     private ToggleButton buttonSound;
     private final Random random = new Random();
     private ArrayList<ImageView> cells;
-    ArrayList<Integer> images = new ArrayList<>();
-    final Handler handler = new Handler();
+    private ArrayList<Integer> images = new ArrayList<>();
+    private final Handler handler = new Handler();
     private ImageView firstCard;
     private ImageView secondCard;
     private ImageView showVerif;
@@ -48,10 +46,10 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     private Chronometer chronometer;
     private long pauseOffset;
     private MediaPlayer mp;
-    ArrayList<Integer> errorSounds;
-    ArrayList<Integer> hitSounds;
-    StateListDrawable d;
-    AnimationSet animation;
+    private ArrayList<Integer> errorSounds;
+    private ArrayList<Integer> hitSounds;
+    private StateListDrawable d;
+    private AnimationSet animation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +75,9 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         runningTime = false;
         pauseOffset = 0;
         user = (TextView) findViewById(R.id.userNameJ);
-        gameOver = false;
+        gameFinish = false;
         pointsState = (TextView) findViewById(R.id.pointsJ);
-        errorsState = (TextView) findViewById(R.id.errorsJ);
+        TextView errorsState = (TextView) findViewById(R.id.errorsJ);
         buttonBack = (ImageView) findViewById(R.id.btnBackJ);
         buttonBack.setOnClickListener(this);
         showVerif = (ImageView) findViewById(R.id.errorOrHit);
@@ -118,20 +116,10 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                 errorsState.setText("Errores: SIN LIMITES");
                 turns = 6;
                 errorsMax = Integer.MAX_VALUE;
-                cells = new ArrayList<ImageView>(turns * 2);
-
-                paintCells(turns * 2);
-
-                play(turns);
-
                 break;
             case 2:
                 turns = 8;
                 errorsMax = 7;
-                cells = new ArrayList<ImageView>(turns * 2);
-                paintCells(turns * 2);
-
-                play(turns);
                 break;
             case 3:
                 for (int i = 4; i < 6; i++) {
@@ -139,12 +127,11 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                 }
                 turns = 10;
                 errorsMax = 5;
-                cells = new ArrayList<ImageView>(turns * 2);
-                paintCells(turns * 2);
-
-                play(turns);
                 break;
         }
+        cells = new ArrayList<ImageView>(turns * 2);
+        paintCells(turns * 2);
+        play(turns);
     }
 
     public void paintCells(int cantCells) {
@@ -170,11 +157,6 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             runningTime = false;
         }
-    }
-
-    public void resetChronometer() {
-        chronometer.setBase(SystemClock.elapsedRealtime());
-        pauseOffset = 0;
     }
 
     public void quitCell(int j) {
@@ -259,7 +241,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                 MainActivity.getMediaPlayer().start();
             }
         } else {
-            if (!gameOver) {
+            if (!gameFinish) {
                 if (firstCard == null) {
                     firstCard = (ImageView) findViewById(v.getId());
                     firstImage = (int) firstCard.getTag();
@@ -298,7 +280,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                 turns--;
                                 hits++;
                                 if (turns <= 0) {
-                                    gameOver = true;
+                                    gameFinish = true;
                                     endGame();
                                 }
                                 firstCard.setVisibility(View.INVISIBLE);
@@ -308,8 +290,8 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                 playSound(errorSounds);
                                 errors++;
                                 if (errors >= errorsMax) {
-                                    gameOver = true;
-                                    perdida=true;
+                                    gameFinish = true;
+                                    lostGame=true;
                                     endGame();
                                 }
                                 if (difficulty == 2 || difficulty == 3) {
@@ -324,24 +306,18 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                     cells.get(i).setEnabled(true);
                                     cells.get(i).setSelected(false);
                                 }
-
-
                             }
                             firstCard = null;
                             secondCard = null;
                             firstImage = 0;
                             secondImage = 0;
                         }
-
                     }, 700);
                 }
             }
 
         }
-
     }
-
-
 
     public void playSound(ArrayList<Integer> sounds) {
         AssetFileDescriptor afd = getResources().openRawResourceFd(sounds.get((int) (Math.random() * (sounds.size()))));
@@ -359,25 +335,20 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     public void endGame() {
         pauseChronometer();
         elapsed = (int) (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
-        calculateFinalPoints(elapsed);
+        calculateFinalPoints();
         Intent i = new Intent(Juego.this, FinJuego.class);
         i.putExtra("user", this.user.getText());
         i.putExtra("points", this.finalPoints);
         i.putExtra("difficulty", this.difficulty);
         i.putExtra("errors", this.errors);
         i.putExtra("time", elapsed);
-        i.putExtra("perdida", this.perdida);
+        i.putExtra("lostGame", this.lostGame);
         finish();
         startActivity(i);
     }
 
-    public void calculateFinalPoints(int seconds) {
-        finalPoints = ((hits * 100) / (errors + elapsed)) * 10;
-    }
-
-    public int randomSound() {
-        int rSound = (int) (Math.random() * 3);
-        return (errorSounds.get(rSound));
+    public void calculateFinalPoints() {
+        finalPoints = ((hits * 100) / ((errors-1) + elapsed)) * 10;
     }
 
     @Override

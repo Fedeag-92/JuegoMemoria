@@ -27,7 +27,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/btnAtras"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -63,7 +62,6 @@
                 android:paddingTop="4dp">
 
                 <TextView
-                    android:id="@+id/userRaking"
                     android:layout_width="170dp"
                     android:layout_height="match_parent"
                     android:text="@string/txt_usuario"
@@ -71,7 +69,6 @@
                     android:textColor="#000000" />
 
                 <TextView
-                    android:id="@+id/pointRaking"
                     android:layout_width="90dp"
                     android:layout_height="match_parent"
                     android:text="@string/puntaje"

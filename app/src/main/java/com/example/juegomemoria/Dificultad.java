@@ -7,13 +7,10 @@ import androidx.core.content.ContextCompat;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,18 +18,18 @@ import android.widget.ToggleButton;
 import android.media.MediaPlayer;
 
 public class Dificultad extends AppCompatActivity implements View.OnClickListener {
-    Button btnEasy;
-    Button btnNormal;
-    Button btnHard;
-    Button btnPlay;
-    TextView description;
-    ToggleButton btnSound;
-    Button btnRanking;
-    ImageView btnBack, imgBart;
-    int choice = 0;
-    TextView tittleGame, tittleChoice;
-    ConstraintLayout.LayoutParams paramsBart, paramsDescription;
-    MediaPlayer mp;
+    private Button btnEasy;
+    private Button btnNormal;
+    private Button btnHard;
+    private Button btnPlay;
+    private TextView description;
+    private ToggleButton btnSound;
+    private Button btnRanking;
+    private ImageView btnBack, imgBart;
+    private int choice = 0;
+    private TextView tittleGame, tittleChoice;
+    private ConstraintLayout.LayoutParams paramsBart, paramsDescription;
+    private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
