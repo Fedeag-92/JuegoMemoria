@@ -36,13 +36,10 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dificultad);
 
+        //Vinculacion de variables con objetos graficos
         description = (TextView) findViewById(R.id.difficultyInfo);
         tittleGame = (TextView) findViewById(R.id.tittleDificultad);
         tittleChoice = (TextView) findViewById(R.id.textChoiceDifficulty);
-
-        tittleGame.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
-        tittleChoice.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
-
         btnEasy = (Button) findViewById(R.id.btnFacil);
         btnNormal = (Button) findViewById(R.id.btnNormal);
         btnHard = (Button) findViewById(R.id.btnDificil);
@@ -51,6 +48,10 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
         btnRanking = (Button) findViewById(R.id.btnRanking);
         btnBack = (ImageView) findViewById(R.id.btnBackD);
         imgBart = (ImageView) findViewById(R.id.bartDif);
+
+        //Seteo de fuente de titulos
+        tittleGame.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
+        tittleChoice.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
 
         if(!MainActivity.getMediaPlayer().isPlaying())
             btnSound.setChecked(false);
@@ -68,42 +69,21 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnFacil:
-                description.setText(R.string.descripcionFacil);
-                paramsDescription = getParamsDescription();
-                paramsDescription.topToTop = R.id.btnFacil;
-                paramsDescription.bottomToBottom = R.id.btnFacil;
-                paramsBart = getParamsBart();
-                paramsBart.topToTop = R.id.btnFacil;
-                paramsBart.bottomToBottom = R.id.btnFacil;
-                imgBart.requestLayout();
+                moverSeleccion(R.string.descripcionFacil,R.id.btnFacil);
                 choice = 1;
                 btnEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifActivado));
                 btnNormal.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 btnHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 break;
             case R.id.btnNormal:
-                description.setText(R.string.descripcionNormal);
-                paramsDescription = getParamsDescription();
-                paramsDescription.topToTop = R.id.btnNormal;
-                paramsDescription.bottomToBottom = R.id.btnNormal;
-                paramsBart = getParamsBart();
-                paramsBart.topToTop = R.id.btnNormal;
-                paramsBart.bottomToBottom = R.id.btnNormal;
-                imgBart.requestLayout();
+                moverSeleccion(R.string.descripcionNormal,R.id.btnNormal);
                 choice = 2;
                 btnEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 btnNormal.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifActivado));
                 btnHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 break;
             case R.id.btnDificil:
-                description.setText(R.string.descripcionDificil);
-                paramsDescription = getParamsDescription();
-                paramsDescription.topToTop = R.id.btnDificil;
-                paramsDescription.bottomToBottom = R.id.btnDificil;
-                paramsBart = getParamsBart();
-                paramsBart.topToTop = R.id.btnDificil;
-                paramsBart.bottomToBottom = R.id.btnDificil;
-                imgBart.requestLayout();
+                moverSeleccion(R.string.descripcionDificil,R.id.btnDificil);
                 choice = 3;
                 btnEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
                 btnNormal.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.btnDifDesactivado));
@@ -181,5 +161,16 @@ public class Dificultad extends AppCompatActivity implements View.OnClickListene
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    public void moverSeleccion(int info, int idButton){
+        description.setText(info);
+        paramsDescription = getParamsDescription();
+        paramsDescription.topToTop = idButton;
+        paramsDescription.bottomToBottom = idButton;
+        paramsBart = getParamsBart();
+        paramsBart.topToTop = idButton;
+        paramsBart.bottomToBottom = idButton;
+        imgBart.requestLayout();
     }
 }

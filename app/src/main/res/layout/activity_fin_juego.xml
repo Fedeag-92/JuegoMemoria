@@ -23,6 +23,7 @@
         android:id="@+id/imgResult"
         android:layout_width="190dp"
         android:layout_height="184dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/whiteTransparentBack"
         app:layout_constraintEnd_toEndOf="@+id/whiteTransparentBack"
         app:layout_constraintTop_toTopOf="@+id/whiteTransparentBack"
@@ -56,6 +57,7 @@
         android:id="@+id/pointsEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="72dp"
         android:fontFamily="@font/permanent_marker"
         android:text="@string/points"
@@ -63,9 +65,7 @@
         android:textColor="#000000"
         android:textSize="24sp"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/whiteTransparentBack"
         app:layout_constraintTop_toBottomOf="@+id/gameOverImage"
         tools:visibility="visible" />
 
@@ -73,6 +73,7 @@
         android:id="@+id/errorsEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/permanent_marker"
         android:text="@string/errors"
@@ -80,9 +81,7 @@
         android:textColor="#000000"
         android:textSize="24sp"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/whiteTransparentBack"
         app:layout_constraintTop_toBottomOf="@+id/timeEnd"
         tools:visibility="visible" />
 
@@ -90,6 +89,7 @@
         android:id="@+id/timeEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/permanent_marker"
         android:text="@string/timeGame"
@@ -97,9 +97,7 @@
         android:textColor="#000000"
         android:textSize="24sp"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/whiteTransparentBack"
         app:layout_constraintTop_toBottomOf="@+id/pointsEnd"
         tools:visibility="visible" />
 
@@ -107,6 +105,7 @@
         android:id="@+id/difficultyRanking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/permanent_marker"
         android:text="@string/difficulty"
@@ -114,9 +113,7 @@
         android:textColor="#000000"
         android:textSize="24sp"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/whiteTransparentBack"
         app:layout_constraintTop_toBottomOf="@+id/errorsEnd"
         tools:visibility="visible" />
 
@@ -178,12 +175,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gameOverImage" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="49dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

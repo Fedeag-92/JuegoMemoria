@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Juego extends AppCompatActivity implements View.OnClickListener {
-    private int points, finalPoints, difficulty, hits, errors, errorsMax, turns, elapsed;
+    private int points, finalPoints, difficulty, hits, errors, errorsMax, cantCards, elapsed;
     private boolean gameFinish, runningTime,lostGame;
     private TextView user;
     private TextView pointsState;
@@ -56,17 +56,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
 
-        errorSounds = new ArrayList<>();
-        hitSounds = new ArrayList<>();
-
-        errorSounds.add(R.raw.doh1);
-        errorSounds.add(R.raw.doh2);
-        errorSounds.add(R.raw.doh3);
-        errorSounds.add(R.raw.idiota);
-        errorSounds.add(R.raw.nelsonaha);
-        hitSounds.add(R.raw.matanga);
-        hitSounds.add(R.raw.yajuhomero2);
-
+        this.agregarSonidos();
         mp = new MediaPlayer();
 
         chronometer = findViewById(R.id.chronometer);
@@ -74,33 +64,34 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         chronometer.setBase(SystemClock.elapsedRealtime());
         runningTime = false;
         pauseOffset = 0;
+
         user = (TextView) findViewById(R.id.userNameJ);
-        gameFinish = false;
         pointsState = (TextView) findViewById(R.id.pointsJ);
         TextView errorsState = (TextView) findViewById(R.id.errorsJ);
         buttonBack = (ImageView) findViewById(R.id.btnBackJ);
-        buttonBack.setOnClickListener(this);
         showVerif = (ImageView) findViewById(R.id.errorOrHit);
+        buttonSound = (ToggleButton) findViewById(R.id.btnSoundJ);
 
+        //Animaciones desvanecimiento acierto o error
         Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
+        fadeIn.setInterpolator(new DecelerateInterpolator());
         fadeIn.setDuration(200);
-
         Animation fadeOut = new AlphaAnimation(1, 0);
         fadeOut.setStartOffset(200);
         fadeOut.setDuration(200);
-
-        animation = new AnimationSet(false); //change to false
+        animation = new AnimationSet(false);
         animation.addAnimation(fadeOut);
         animation.addAnimation(fadeIn);
 
-        buttonSound = (ToggleButton) findViewById(R.id.btnSoundJ);
+        buttonBack.setOnClickListener(this);
         buttonSound.setOnClickListener(this);
 
         if (!MainActivity.getMediaPlayer().isPlaying())
             buttonSound.setChecked(false);
 
         user.setText(getIntent().getStringExtra("user"));
+
+        gameFinish = false;
         this.hits = 0;
         points = 0;
         images = new ArrayList<>();
@@ -114,26 +105,27 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                     ((ImageView) (findViewById(getResources().getIdentifier("error" + (i + 1), "id", getPackageName())))).setVisibility(View.INVISIBLE);
                 }
                 errorsState.setText("Errores: SIN LIMITES");
-                turns = 6;
+                cantCards = 6;
                 errorsMax = Integer.MAX_VALUE;
                 break;
             case 2:
-                turns = 8;
+                cantCards = 8;
                 errorsMax = 7;
                 break;
             case 3:
                 for (int i = 4; i < 6; i++) {
                     ((ImageView) (findViewById(getResources().getIdentifier("error" + (i + 1), "id", getPackageName())))).setVisibility(View.INVISIBLE);
                 }
-                turns = 10;
+                cantCards = 10;
                 errorsMax = 5;
                 break;
         }
-        cells = new ArrayList<ImageView>(turns * 2);
-        paintCells(turns * 2);
-        play(turns);
+        cells = new ArrayList<ImageView>(cantCards * 2);
+        paintCells(cantCards * 2);
+        play(cantCards);
     }
 
+    //Cargar celdas dependiendo la cantidad de cartas segun dificultad
     public void paintCells(int cantCells) {
         for (int j = 0; j < 20; j++) {
             if (j < cantCells)
@@ -143,27 +135,13 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    public void startChronometer() {
-        if (!runningTime) {
-            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-            chronometer.start();
-            runningTime = true;
-        }
-    }
-
-    public void pauseChronometer() {
-        if (runningTime) {
-            chronometer.stop();
-            pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-            runningTime = false;
-        }
-    }
-
+    //No agrega las celdas a la pantalla las cuales no corresponden a la dificultad
     public void quitCell(int j) {
         ImageView card = searchCell(j);
         card.setVisibility(View.GONE);
     }
 
+    //Agrega las celdas a la pantalla
     public void addCell(int j) {
         ImageView card = searchCell(j);
 
@@ -172,7 +150,6 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         card.setEnabled(false);
         card.setSelected(true);
         cells.add(card);
-
     }
 
     public ImageView searchCell(int j) {
@@ -188,29 +165,31 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     public void play(int cantImages) {
         int posCell, posImage, j;
 
+        //Arreglo con los índices de las celdas
         ArrayList<Integer> elements = new ArrayList<>();
         for (int i = 0; i < cantImages * 2; i++) {
             elements.add(i);
         }
 
+        int[] notShow = {android.R.attr.state_enabled, -android.R.attr.state_selected};
+        int[] notShowToo = {-android.R.attr.state_enabled, -android.R.attr.state_selected};
+        int[] show = {-android.R.attr.state_enabled, android.R.attr.state_selected};
+        Drawable drawNotShow = getDrawable(R.drawable.dona);
+
+        // Toma una imagen al azar y la coloca en un posicion al azar, y luego en otra posicion al azar coloca la misma imagen.
+        // Despues de esto, quita la imagen usada como las dos posiciones utilizadas
         while (cantImages > 0) {
             j = 0;
             posImage = random.nextInt(images.size());
             while (j < 2) {
                 posCell = elements.get(random.nextInt(elements.size()));
-
                 d = new StateListDrawable();
-
-                int[] notShow = {android.R.attr.state_enabled, -android.R.attr.state_selected};
-                int[] notShowToo = {-android.R.attr.state_enabled, -android.R.attr.state_selected};
-                int[] show = {-android.R.attr.state_enabled, android.R.attr.state_selected};
-                Drawable drawNotShow = getDrawable(R.drawable.dona);
                 Drawable drawShow = getDrawable(images.get(posImage));
                 d.addState(notShowToo, drawNotShow);
                 d.addState(show, drawShow);
                 d.addState(notShow, drawNotShow);
                 cells.get(posCell).setImageDrawable(d);
-                cells.get(posCell).setTag(images.get(posImage));
+                cells.get(posCell).setTag(images.get(posImage)); //Tag para comparar las imagenes y verificar si dos img son iguales
                 elements.remove(Integer.valueOf(posCell));
                 j++;
             }
@@ -266,27 +245,27 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                     }
                     showVerif.setAnimation(animation);
                     showVerif.setVisibility(View.VISIBLE);
+
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             showVerif.setVisibility(View.INVISIBLE);
                         }
-                    }, 400);
+                    }, 200);
 
                     handler.postDelayed(new Runnable() {
                         public void run() {
                             if (firstImage == secondImage) {
                                 playSound(hitSounds);
-                                turns--;
+                                cantCards--;
                                 hits++;
-                                if (turns <= 0) {
+                                if (cantCards <= 0) {
                                     gameFinish = true;
                                     endGame();
                                 }
                                 firstCard.setVisibility(View.INVISIBLE);
                                 secondCard.setVisibility(View.INVISIBLE);
                             } else {
-                                showVerif.setVisibility(View.INVISIBLE);
                                 playSound(errorSounds);
                                 errors++;
                                 if (errors >= errorsMax) {
@@ -294,7 +273,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                     lostGame=true;
                                     endGame();
                                 }
-                                if (difficulty == 2 || difficulty == 3) {
+                                if (difficulty!=1) {
                                     ImageView errorImg;
                                     ((ImageView) (findViewById(getResources().getIdentifier("error" + (errors - 1), "id", getPackageName())))).setColorFilter(R.color.errorEnable);
                                 }
@@ -370,5 +349,33 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    public void agregarSonidos(){
+        errorSounds = new ArrayList<>();
+        hitSounds = new ArrayList<>();
+        errorSounds.add(R.raw.doh1);
+        errorSounds.add(R.raw.doh2);
+        errorSounds.add(R.raw.doh3);
+        errorSounds.add(R.raw.idiota);
+        errorSounds.add(R.raw.nelsonaha);
+        hitSounds.add(R.raw.matanga);
+        hitSounds.add(R.raw.yajuhomero2);
+    }
+
+    public void startChronometer() {
+        if (!runningTime) {
+            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            chronometer.start();
+            runningTime = true;
+        }
+    }
+
+    public void pauseChronometer() {
+        if (runningTime) {
+            chronometer.stop();
+            pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+            runningTime = false;
+        }
     }
 }

@@ -31,15 +31,14 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextInputEditText user, pass;
-    private TextView tittle;
-    private ImageView imgMain, imgIntro;
+    private TextView title;
+    private ImageView imgMain, imgIntro,btnExit;
     private GifImageView loading;
     private Button btnLogin, btnRegister;
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
     private TextInputLayout box_user, box_pass;
     private final Handler handler = new Handler();
-    private ImageView btnExit;
     public static MediaPlayer mediaPlayer;
 
     @Override
@@ -48,50 +47,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         btnExit = (ImageView) findViewById(R.id.btnExit);
-        btnExit.setOnClickListener(this);
 
+        //Iniciar musica
         mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song);
         mediaPlayer.setVolume(0.07f, 0.07f);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
 
+        //Vinculacion de variables con objetos graficos
         loading = (GifImageView) findViewById(R.id.imgLoading);
         imgMain = (ImageView) findViewById(R.id.imgMain);
         imgIntro = (ImageView) findViewById(R.id.imgIntro);
         box_user = (TextInputLayout) findViewById(R.id.box_username);
         box_pass = (TextInputLayout) findViewById(R.id.box_password);
+        title = (TextView) findViewById(R.id.titleMain);
+        user = (TextInputEditText) findViewById(R.id.userNameMain);
+        pass = (TextInputEditText) findViewById(R.id.passwordMain);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnRegister = (Button) findViewById(R.id.btnRegisterM);
 
+        //Animaciones de inicio de juego y carga.
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
         fadeIn.setDuration(1000);
-
         Animation fadeOut = new AlphaAnimation(1, 0);
         fadeOut.setStartOffset(3250);
         fadeOut.setDuration(1000);
-
         AnimationSet animation = new AnimationSet(false); //change to false
         animation.addAnimation(fadeIn);
         animation.addAnimation(fadeOut);
         loading.setAnimation(animation);
         imgIntro.setAnimation(animation);
 
-        tittle = (TextView) findViewById(R.id.tittleMain);
-        user = (TextInputEditText) findViewById(R.id.userNameMain);
-        pass = (TextInputEditText) findViewById(R.id.passwordMain);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnRegister = (Button) findViewById(R.id.btnRegisterM);
+        title.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
 
-        tittle.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
-
+        btnExit.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
 
+        //Handler ejecuta el bloque de codigo despues de un determinado tiempo.
         handler.postDelayed(new Runnable() {
             public void run() {
                 imgIntro.setVisibility(View.GONE);
                 loading.setVisibility(View.GONE);
                 imgMain.setVisibility(View.VISIBLE);
-                tittle.setVisibility(View.VISIBLE);
+                title.setVisibility(View.VISIBLE);
                 box_pass.setVisibility(View.VISIBLE);
                 box_user.setVisibility(View.VISIBLE);
                 btnLogin.setVisibility(View.VISIBLE);
@@ -111,25 +111,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String username = user.getText().toString();
                 String password = pass.getText().toString();
                 if (username.length() != 0 && password.length() != 0) {
-                    ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) loading.getLayoutParams();
-                    layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.UNSET;
-                    layoutParams.topToTop = R.id.tittleMain;
-                    layoutParams.topMargin = 0;
-                    loading.setLayoutParams(layoutParams);
-                    loading.setVisibility(View.VISIBLE);
 
+                    this.modificarPosLoading();
                     long random = (long) (Math.random() * 2000 + 1000);
                     handler.postDelayed(new Runnable() {
                         public void run() {
                             if (verificarPassword(username, password)) {
-                                loading.setVisibility(View.INVISIBLE);
                                 Intent i = new Intent(MainActivity.this, Dificultad.class);
                                 i.putExtra("user", user.getText().toString());
                                 startActivity(i);
                             } else {
                                 Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
-                                loading.setVisibility(View.INVISIBLE);
                             }
+                            loading.setVisibility(View.INVISIBLE);
                         }
                     }, random);
                 } else {
@@ -186,6 +180,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         user.setText("");
         pass.setText("");
+    }
+
+    public void modificarPosLoading(){
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) loading.getLayoutParams();
+        layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.UNSET;
+        layoutParams.topToTop = R.id.titleMain;
+        layoutParams.topMargin = 0;
+        loading.setLayoutParams(layoutParams);
+        loading.setVisibility(View.VISIBLE);
     }
 
 }
