@@ -76,7 +76,7 @@
         app:srcCompat="@drawable/exit" />
 
     <TextView
-        android:id="@+id/tittleMain"
+        android:id="@+id/titleMain"
         android:layout_width="350dp"
         android:layout_height="45dp"
         android:layout_marginTop="60dp"
@@ -125,7 +125,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tittleMain"
+        app:layout_constraintTop_toBottomOf="@+id/titleMain"
         tools:visibility="visible">
 
         <com.google.android.material.textfield.TextInputEditText

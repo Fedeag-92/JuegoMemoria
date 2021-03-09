@@ -17,27 +17,27 @@ public class Registro extends AppCompatActivity {
     private ConexionSQLiteHelper dbHelper;
     private SQLiteDatabase db;
     private TextInputEditText txt_nombre, txt_apellido, txt_username, txt_password;
-    private TextView tittleAppRegistro, tittleRegistro;
+    private TextView titleAppRegistro, titleRegistro;
     private ImageView buttonBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
+        conectarBD();
 
-        tittleAppRegistro = (TextView)findViewById(R.id.tittleR);
-        tittleRegistro = (TextView)findViewById(R.id.subtittleR);
-
-        tittleAppRegistro.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
-        tittleRegistro.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
-
+        //Vinculacion de variables con objetos graficos
+        titleAppRegistro = (TextView)findViewById(R.id.titleR);
+        titleRegistro = (TextView)findViewById(R.id.subtitleR);
         txt_nombre = (TextInputEditText) findViewById(R.id.nombre);
         txt_apellido = (TextInputEditText) findViewById(R.id.apellido);
         txt_username = (TextInputEditText) findViewById(R.id.username);
         txt_password = (TextInputEditText) findViewById(R.id.passwordReg);
         buttonBack = (ImageView) findViewById(R.id.btnAtrasR);
-        dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
-        db = dbHelper.getWritableDatabase();
+
+        //Setea la fuente a los titulos
+        titleAppRegistro.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
+        titleRegistro.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/simpson.ttf"));
     }
 
     public void clickRegistro(View view) {
@@ -70,4 +70,10 @@ public class Registro extends AppCompatActivity {
     public void clickRegresar(View view) {
         onBackPressed();
     }
+
+    public void conectarBD(){
+        dbHelper = new ConexionSQLiteHelper(this, "bd_juegomemoria", null, 1);
+        db = dbHelper.getWritableDatabase();
+    }
 }
+
