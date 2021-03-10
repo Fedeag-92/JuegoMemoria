@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Juego extends AppCompatActivity implements View.OnClickListener {
-    private int points, finalPoints, difficulty, hits, errors, errorsMax, cantCards, elapsed;
+    private int points, difficulty, hits, errors, errorsMax, cantCards, elapsed;
     private boolean gameFinish, runningTime,lostGame;
     private TextView user;
     private TextView pointsState;
@@ -259,26 +259,28 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
                                 playSound(hitSounds);
                                 cantCards--;
                                 hits++;
-                                if (cantCards <= 0) {
-                                    gameFinish = true;
-                                    endGame();
-                                }
+
                                 firstCard.setVisibility(View.INVISIBLE);
                                 secondCard.setVisibility(View.INVISIBLE);
                             } else {
                                 playSound(errorSounds);
                                 errors++;
-                                if (errors >= errorsMax) {
-                                    gameFinish = true;
-                                    lostGame=true;
-                                    endGame();
-                                }
+
                                 if (difficulty!=1) {
                                     ImageView errorImg;
                                     ((ImageView) (findViewById(getResources().getIdentifier("error" + (errors - 1), "id", getPackageName())))).setColorFilter(R.color.errorEnable);
                                 }
                             }
                             points = (hits * 100) / (errors);
+                            if (cantCards <= 0) {
+                                gameFinish = true;
+                                endGame();
+                            }
+                            else if (errors >= errorsMax) {
+                                gameFinish = true;
+                                lostGame = true;
+                                endGame();
+                            }
                             pointsState.setText("Puntaje: " + points);
                             for (int i = 0; i < cells.size(); i++) {
                                 if (cells.get(i).getVisibility() == View.VISIBLE){
@@ -314,20 +316,15 @@ public class Juego extends AppCompatActivity implements View.OnClickListener {
     public void endGame() {
         pauseChronometer();
         elapsed = (int) (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
-        calculateFinalPoints();
         Intent i = new Intent(Juego.this, FinJuego.class);
         i.putExtra("user", this.user.getText());
-        i.putExtra("points", this.finalPoints);
+        i.putExtra("points", this.points);
         i.putExtra("difficulty", this.difficulty);
         i.putExtra("errors", this.errors);
         i.putExtra("time", elapsed);
         i.putExtra("lostGame", this.lostGame);
         finish();
         startActivity(i);
-    }
-
-    public void calculateFinalPoints() {
-        finalPoints = ((hits * 100) / ((errors-1) + elapsed)) * 10;
     }
 
     @Override

@@ -73,11 +73,14 @@ public class FinJuego extends AppCompatActivity {
                 dif = "Dificil";
             }
             ((TextView) findViewById(R.id.pointsEnd)).setText("Puntaje: " + points);
-            ((TextView) findViewById(R.id.errorsEnd)).setText("Errores: " + (errors -1));
+            ((TextView) findViewById(R.id.errorsEnd)).setText("Errores: " + (--errors));
             ((TextView) findViewById(R.id.difficultyRanking)).setText("Dificultad: " + dif);
             String timeString = "";
             if (time > 60) {
-                timeString = timeString + time / 60 + ":" + time % 60;
+                if(time % 60 < 10)
+                    timeString = timeString + time / 60 + ":0" + time % 60;
+                else
+                    timeString = timeString + time / 60 + ":" + time % 60;
                 ((TextView) findViewById(R.id.timeEnd)).setText("Tiempo: " + timeString);
             } else
                 ((TextView) findViewById(R.id.timeEnd)).setText("Tiempo: 00:" + time);
